@@ -25,5 +25,14 @@ test:
     - echo "Running react test suite......"
 deploy:
   stage: deploy
+  only:
+    - master
+  dependencies:
+    - build
+    - test
   script:
-    - npm run-script deploy
+    - pip3 install awscli
+    - aws configure set profile bucket-prod
+    - aws configure set aws_access_key_id "$ACCESS_KEY_ID"
+    - aws configure set aws_secret_access_key "$SECRET_ACCESS_KEY"
+    - aws s3 sync ./build/ s3://rapicgitlabdev
