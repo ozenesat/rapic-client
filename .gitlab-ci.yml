@@ -7,29 +7,38 @@ variables:
   AWS_SECRET_ACCESS_KEY: $SECRET_ACCESS_KEY
 #This declares the pipeline stages  
 stages:
-  - build
+  - install
   - test
   - deploy
 cache:
   paths:
   - node_modules/
-build:
-  stage: build
+prodInstall:
+  stage: install
   script:
     - npm install
-    - npm run-script build
-test:
+  artifacts:
+    untracked: true
+unitTesting:
   stage: test
+  dependencies:
+    - prodInstall
   script:
-    - echo "Running react test suite......"
-deploy:
+    - npm install
+    - npm run build
+    - npm test
+  artifacts:
+    untracked: true
+deployingProd:
   stage: deploy
   only:
     - master
   dependencies:
-    - build
-    - test
+    - prodInstall
+    - unitTesting
   script:
+    - npm install
+    - npm run build
     - pip3 install awscli
     - aws configure set profile bucket-prod
     - aws configure set aws_access_key_id "$ACCESS_KEY_ID"
