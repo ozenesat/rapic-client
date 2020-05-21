@@ -6,6 +6,7 @@ import Home from './Home';
 import Deneme from './Deneme';
 import Layout from './layout'
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
   <React.StrictMode>
