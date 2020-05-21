@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import { constants } from '../../../utils/constants'
-import NavLink from '../../../components/NavLink'
+// import { constants } from '../../../utils/constants'
+// import NavLink from '../../../components/NavLink'
 
 
 const authenticatedOptions = (
   <>
-    <NavLink path="#my-projects" title={constants.MY_PROJECTS}/>
+    {/* <NavLink path="#my-projects" title={constants.MY_PROJECTS}/> */}
     <NavDropdown title="Authorization" id="nav-dropdown">
       <Nav.Link href="#change-password">Change Password</Nav.Link>
       <Nav.Link href="#sign-out">Sign Out</Nav.Link>
@@ -28,7 +28,7 @@ const Header = ({ user }) => (
       <Navbar.Brand href="/">
        Rapic.io
       </Navbar.Brand>
-      <NavLink path="deneme" title="Features"/>
+      {/*<NavLink path="deneme" title="Features"/>*/}
       <Nav.Link href="deneme">Pricing</Nav.Link>
       <Nav.Link href="deneme">Docs</Nav.Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
