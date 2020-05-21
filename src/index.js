@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './index.css';
-import App from './App';
+import Home from './Home';
+import Deneme from './Deneme';
+import Layout from './layout'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route exact path={'/'} component={Home} />
+          <Route exact path={'/deneme'} component={Deneme} />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
