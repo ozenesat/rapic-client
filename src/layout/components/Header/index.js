@@ -26,7 +26,7 @@ const Header = ({ user }) => (
   <div>
     <Navbar expand="md">
       <Navbar.Brand href="/">
-       Rapic.io
+       Rapic
       </Navbar.Brand>
       {/*<NavLink path="deneme" title="Features"/>*/}
       <Nav.Link href="deneme">Pricing</Nav.Link>
