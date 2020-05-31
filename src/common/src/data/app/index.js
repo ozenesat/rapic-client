@@ -23,7 +23,7 @@ export const data = {
       path: '#products',
       offset: '70',
     },
-    {
+    /*{
       label: 'Pricing',
       path: '#pricing',
       offset: '70',
@@ -32,7 +32,7 @@ export const data = {
       label: 'Docs',
       path: '#docs',
       offset: '70',
-    },
+    },*/
   ],
   services: [
     {

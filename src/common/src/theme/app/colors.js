@@ -19,6 +19,7 @@ const colors = {
   slogan: '#35BF2E',
   primaryButton: '#35BF2E',
   primaryBoxShadow: ' 0px 9px 19.74px 1.26px rgba(82, 104, 219, 0.57) ',
+  rapicGreen: '#35BF2E'
 };
 
 export default colors;

@@ -53,11 +53,11 @@ const Navbar = () => {
             menuItems={data.navItems}
             offset={-84}
           />
-          <NavbarRight>
+          {/*<NavbarRight>
             <li>
               <Link href="#">Login</Link>
             </li>
-          </NavbarRight>
+          </NavbarRight>*/}
           {/* end of main menu */}
 
           <Button

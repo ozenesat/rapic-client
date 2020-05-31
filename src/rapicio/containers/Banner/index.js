@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import Text from 'common/src/components/Text';
 import Input from 'common/src/components/Input';
 import Image from 'common/src/components/Image';
@@ -11,8 +11,51 @@ import Section, {
   Subscribe,
   ImageGroup,
 } from './banner.style';
+import { validateEmail } from '../../utils/utils';
+import Api from '../../services/api';
 
 const Banner = () => {
+  const [registered, setRegistered] = useState(false);
+  const [email, setEmail] = useState("");
+  const [validationError, setValidationError] = useState({email: false});
+  
+  const handleEmailChange = (event) => {
+    setEmail(String(event));
+    if (!validateEmail(event) && event !== "") {
+      setValidationError({email: true});
+    } else {
+      setValidationError({email: false});
+    }
+  };
+
+  const onSubmit = () => {
+    if (email !== "") {
+      Api.register(email, email, Date.now(), true).then((result) => {
+        setRegistered(true);
+      }).catch((response) => {
+        console.log("failed to register");
+      });
+      setRegistered(true);
+    }
+  }
+
+  var showRegister = () => {
+    return (
+      <Fragment>
+        <Input
+          inputType="email"
+          placeholder="Enter Email Address"
+          iconPosition="left"
+          aria-label="email"
+          value={String(email)}
+          onChange={handleEmailChange}
+        />
+        <Button disabled={validationError.email} title="Get Early Access" style={!validationError.email ? {background: '#35BF2E'} : {}} onClick={onSubmit} type="submit" />
+      </Fragment>
+    );
+  }
+    
+
   return (
     <Section id="features">
       <Container>
@@ -20,7 +63,11 @@ const Banner = () => {
           <BannerContent>
             <Heading
               as="h1"
-              content="Develop and run serverless backends"
+              content={"Develop & run"}
+            />
+            <Heading
+              as="h1"
+              content={"serverless backends"}
             />
 
             <Text
@@ -30,13 +77,16 @@ const Banner = () => {
             />
 
             <Subscribe>
-              <Input
-                inputType="email"
-                placeholder="Enter Email Address"
-                iconPosition="left"
-                aria-label="email"
-              />
-              <Button title="Get Early Access" style={{background: '#35BF2E'}} type="submit" />
+              {
+                registered ? 
+                <Text
+                  className="banner-thanks"
+                  content={`Thank you! We will notify you on ${email}.`}
+                />
+                : 
+                showRegister()
+              }
+              
             </Subscribe>
           </BannerContent>
         </ContentWrapper>

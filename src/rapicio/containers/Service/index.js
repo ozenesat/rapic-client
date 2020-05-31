@@ -14,7 +14,7 @@ import { data } from 'common/src/data/app';
 
 const Service = () => {
   return (
-    <Section id="service">
+    <Section id="products">
       <Container>
         <Zoom>
           <SectionHeading

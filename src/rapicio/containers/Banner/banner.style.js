@@ -15,10 +15,10 @@ export const ContentWrapper = styled.div`
 
   @media only screen and (max-width: 1440px) {
     min-height: auto;
-    background-size: 50%;
+    background-size: 45%;
   }
   @media only screen and (max-width: 1024px) {
-    background-size: 45%;
+    background-size: 35%;
   }
   @media only screen and (max-width: 999px) {
     background: transparent;
@@ -89,6 +89,26 @@ export const BannerContent = styled.div`
   }
   .banner-caption {
     color: ${themeGet('colors.paragraph', '#02073E')};
+    font-size: 18px;
+    line-height: 33px;
+    font-weight: 400;
+    margin-bottom: 0;
+    @media only screen and (max-width: 1440px) {
+      font-size: 16px;
+    }
+    @media only screen and (max-width: 1024px) {
+      line-height: 33px;
+    }
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    @media only screen and (max-width: 480px) {
+      font-size: 16px;
+    }
+  }
+  .banner-thanks {
+    color: ${themeGet('colors.rapicGreen', '#02073E')};
     font-size: 18px;
     line-height: 33px;
     font-weight: 400;
