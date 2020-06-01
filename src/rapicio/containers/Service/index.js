@@ -22,7 +22,7 @@ const Service = () => {
             title="Fully adaptable to required features"
           />
         </Zoom>
-        {/*<ServiceWrapper>
+        {<ServiceWrapper>
           {data.services.map(service => (
             <Fade key={service.id} up delay={100 * service.id}>
               <BlogPost
@@ -30,16 +30,11 @@ const Service = () => {
                 thumbUrl={service.icon}
                 title={service.title}
                 excerpt={service.desc}
-                link={
-                  <Link href={service.link}>
-                    Learn More <Icon icon={chevronRight} />
-                  </Link>
-                }
               />
             </Fade>
           ))}
         </ServiceWrapper>
-      */}
+      }
       </Container>
     </Section>
   );

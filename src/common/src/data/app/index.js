@@ -1,9 +1,9 @@
 import serviceIcon1 from '../../assets/image/app/services/1.png';
 import serviceIcon2 from '../../assets/image/app/services/2.png';
 import serviceIcon3 from '../../assets/image/app/services/3.png';
-import serviceIcon4 from '../../assets/image/app/services/4.png';
-import serviceIcon5 from '../../assets/image/app/services/5.png';
-import serviceIcon6 from '../../assets/image/app/services/6.png';
+// import serviceIcon4 from '../../assets/image/app/services/4.png';
+// import serviceIcon5 from '../../assets/image/app/services/5.png';
+// import serviceIcon6 from '../../assets/image/app/services/6.png';
 import support1 from '../../assets/image/app/support1.png';
 import support2 from '../../assets/image/app/support2.png';
 import news1 from '../../assets/image/app/news/1.png';
@@ -38,28 +38,28 @@ export const data = {
     {
       id: 1,
       icon: serviceIcon1,
-      title: 'Email Subscription',
+      title: 'Serverless database',
       desc:
-        'We’re driven beyond just finishing projects. We want to find smart solutions.',
+        'File management that allows you to upload or download files. Manage your users, send emails, text messages and more with auto-scaling database',
       link: '#',
     },
     {
       id: 2,
       icon: serviceIcon2,
-      title: 'Bolt Performance',
+      title: 'Integrated parties',
       desc:
-        'We’re driven beyond just finishing projects. We want to find smart solutions.',
+        'You can integrate listed third-party tools (Zapier, Stripe) that allows you to either charge your customers, email them, and more messaging features.',
       link: '#',
     },
     {
       id: 3,
       icon: serviceIcon3,
-      title: 'Secure Transaction',
+      title: 'Api endpoints',
       desc:
-        'We’re driven beyond just finishing projects. We want to find smart solutions.',
+        'Pre-configured connection to the endpoints that is ready to GET / POST / DELETE data. It scales as you scale, backend as a service.',
       link: '#',
     },
-    {
+    /*{
       id: 4,
       icon: serviceIcon4,
       title: 'Multiple Options',
@@ -82,7 +82,7 @@ export const data = {
       desc:
         'We’re driven beyond just finishing projects. We want to find smart solutions.',
       link: '#',
-    },
+    },*/
   ],
   workHardList: [
     { id: 1, title: 'Medical and vision' },
