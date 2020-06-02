@@ -16,28 +16,30 @@ import Api from '../../services/api';
 
 const Banner = () => {
   const [registered, setRegistered] = useState(false);
-  const [email, setEmail] = useState("");
-  const [validationError, setValidationError] = useState({email: false});
-  
-  const handleEmailChange = (event) => {
+  const [email, setEmail] = useState('');
+  const [validationError, setValidationError] = useState({ email: false });
+
+  const handleEmailChange = event => {
     setEmail(String(event));
-    if (!validateEmail(event) && event !== "") {
-      setValidationError({email: true});
+    if (!validateEmail(event) && event !== '') {
+      setValidationError({ email: true });
     } else {
-      setValidationError({email: false});
+      setValidationError({ email: false });
     }
   };
 
   const onSubmit = () => {
-    if (email !== "") {
-      Api.register(email, email, Date.now(), true).then((result) => {
-        setRegistered(true);
-      }).catch((response) => {
-        console.log("failed to register");
-      });
+    if (email !== '') {
+      Api.register(email, email, Date.now(), true)
+        .then(result => {
+          setRegistered(true);
+        })
+        .catch(response => {
+          console.log('failed to register');
+        });
       setRegistered(true);
     }
-  }
+  };
 
   var showRegister = () => {
     return (
@@ -50,43 +52,40 @@ const Banner = () => {
           value={String(email)}
           onChange={handleEmailChange}
         />
-        <Button disabled={validationError.email} title="Get Early Access" style={!validationError.email ? {background: '#35BF2E'} : {}} onClick={onSubmit} type="submit" />
+        <Button
+          disabled={validationError.email}
+          title="Get Early Access"
+          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          onClick={onSubmit}
+          type="submit"
+        />
       </Fragment>
     );
-  }
-    
+  };
 
   return (
-    <Section id="features">
+    <Section id="#">
       <Container>
         <ContentWrapper>
           <BannerContent>
-            <Heading
-              as="h1"
-              content={"Develop & run"}
-            />
-            <Heading
-              as="h1"
-              content={"serverless backends"}
-            />
+            <Heading as="h1" content={'Develop & run'} />
+            <Heading as="h1" content={'serverless backends'} />
 
             <Text
               className="banner-caption"
-              content="Now you can focus on building the product 
+              content="Now you can focus on building the product
               with minimum coding than hustling backend structure, data storage, user auth, payment and more..."
             />
 
             <Subscribe>
-              {
-                registered ? 
+              {registered ? (
                 <Text
                   className="banner-thanks"
                   content={`Thank you! We will notify you on ${email}.`}
                 />
-                : 
+              ) : (
                 showRegister()
-              }
-              
+              )}
             </Subscribe>
           </BannerContent>
         </ContentWrapper>

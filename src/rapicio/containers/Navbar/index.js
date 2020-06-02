@@ -40,7 +40,7 @@ const Navbar = () => {
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
-          href="/"
+          href="/#"
           logoSrc={LogoImage}
           title="Rapic.io"
           className="main-logo"

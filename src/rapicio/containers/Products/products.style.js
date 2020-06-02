@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { themeGet } from 'styled-system';
-import illustration from 'common/src/assets/image/app/circle1.gif';
+import illustration from 'common/src/assets/image/app/product.png';
 
 const Section = styled.section``;
 
@@ -92,7 +92,7 @@ export const BannerContent = styled.div`
     font-size: 18px;
     line-height: 33px;
     font-weight: 400;
-    margin-bottom: 0;
+    margin-bottom: 20;
     @media only screen and (max-width: 1440px) {
       font-size: 16px;
     }

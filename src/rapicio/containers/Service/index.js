@@ -14,15 +14,15 @@ import { data } from 'common/src/data/app';
 
 const Service = () => {
   return (
-    <Section id="products">
+    <Section id="features">
       <Container>
         <Zoom>
           <SectionHeading
-            slogan="No backend necessary"
-            title="Fully adaptable to required features"
+            slogan="No backend necessary!"
+            title="Fully adaptable to required features."
           />
         </Zoom>
-        {<ServiceWrapper>
+        <ServiceWrapper>
           {data.services.map(service => (
             <Fade key={service.id} up delay={100 * service.id}>
               <BlogPost
@@ -30,11 +30,15 @@ const Service = () => {
                 thumbUrl={service.icon}
                 title={service.title}
                 excerpt={service.desc}
+                /* link={
+                  <Link href={service.link}>
+                    Learn More <Icon icon={chevronRight} />
+                  </Link>
+                }*/
               />
             </Fade>
           ))}
         </ServiceWrapper>
-      }
       </Container>
     </Section>
   );

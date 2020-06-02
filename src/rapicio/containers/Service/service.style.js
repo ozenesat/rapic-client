@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { themeGet } from 'styled-system';
-
+import illustration from 'common/src/assets/image/app/features.png';
 const Section = styled.div`
-  background-color: #f9fbfd;
+  background-image: url(${illustration});
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 100px 0 120px;
   @media screen and (max-width: 1440px) {
     padding: 50px 0 70px;
@@ -15,7 +19,7 @@ const Section = styled.div`
 
 export const ServiceWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 1px;
   @media screen and (max-width: 411px) and (max-height: 823px) and (orientation: landscape) {
     grid-template-columns: repeat(2, 1fr);
@@ -31,7 +35,7 @@ export const ServiceWrapper = styled.div`
   }
 
   .react-reveal {
-    border: 1px solid ${themeGet('colors.border')};
+    border: 0px solid ${themeGet('colors.border')};
     box-sizing: content-box;
     width: 100%;
     height: 100%;
@@ -68,15 +72,20 @@ export const ServiceWrapper = styled.div`
     }
     .thumbnail {
       margin-bottom: 25px;
+      text-align: center;
     }
     .title {
       font-weight: bold;
       font-size: 18px;
+      text-align: center;
       line-height: 30px;
       color: #0f2137;
       @media screen and (max-width: 480px) {
         text-align: center;
       }
+    }
+    .content {
+      text-align: justify;
     }
     .excerpt {
       font-size: 16px;
