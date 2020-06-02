@@ -18,8 +18,8 @@ const Service = () => {
       <Container>
         <Zoom>
           <SectionHeading
-            slogan="No backend necessary"
-            title="Fully adaptable to required features"
+            slogan="No backend necessary!"
+            title="Fully adaptable to required features."
           />
         </Zoom>
         <ServiceWrapper>

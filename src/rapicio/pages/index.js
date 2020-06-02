@@ -4,14 +4,12 @@ import Sticky from 'react-stickynode';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'common/src/theme/app';
 import { ResetCSS } from 'common/src/assets/css/style';
-import {
-  GlobalStyle,
-  ContentWrapper,
-} from '../containers/rapic.style';
+import { GlobalStyle, ContentWrapper } from '../containers/rapic.style';
 import { DrawerProvider } from 'common/src/contexts/DrawerContext';
 import Navbar from '../containers/Navbar';
 import Banner from '../containers/Banner';
 import Service from '../containers/Service';
+import Products from '../containers/Products';
 // import Pricing from '../containers/Pricing';
 import Footer from '../containers/Footer';
 
@@ -40,6 +38,7 @@ export default () => {
           </Sticky>
           <Banner />
           <Service />
+          <Products />
           {/*<Pricing />*/}
           <Footer />
         </ContentWrapper>

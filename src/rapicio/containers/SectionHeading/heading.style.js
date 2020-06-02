@@ -14,11 +14,13 @@ const HGroup = styled.hgroup`
     line-height: 40px;
     margin: 0;
   }
-  h2 {
+  h1 {
     color: ${themeGet('colors.textPrimary')};
-    font-weight: 700;
-    font-size: 24px;
+    font-family: Imprima;
+    font-weight: 300;
+    font-size: 2.5em;
     line-height: 50px;
+    padding: 0.1em;
     letter-spacing: -0.5px;
     margin: 0;
     @media screen and (max-width: 480px) {
