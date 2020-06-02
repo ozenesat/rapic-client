@@ -10,6 +10,7 @@ import Navbar from '../containers/Navbar';
 import Banner from '../containers/Banner';
 import Service from '../containers/Service';
 import Products from '../containers/Products';
+import Login from '../containers/Login';
 // import Pricing from '../containers/Pricing';
 import Footer from '../containers/Footer';
 
@@ -36,6 +37,7 @@ export default () => {
               <Navbar />
             </DrawerProvider>
           </Sticky>
+          <Login />
           <Banner />
           <Service />
           <Products />
