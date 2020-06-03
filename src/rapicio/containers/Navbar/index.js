@@ -10,6 +10,7 @@ import Link from 'common/src/components/Link';
 import Button from 'common/src/components/Button';
 import Logo from 'common/src/components/UIElements/Logo';
 import Container from 'common/src/components/UI/ContainerTwo';
+import Login from '../Login';
 import NavbarWrapper, {
   MenuArea,
   MobileMenu,
@@ -53,11 +54,13 @@ const Navbar = () => {
             menuItems={data.navItems}
             offset={-84}
           />
-          {/*<NavbarRight>
+          <NavbarRight>
             <li>
-              <Link href="#">Login</Link>
+              <Link label="login" path="#login" href="/login" component={Login}>
+                Login
+              </Link>
             </li>
-          </NavbarRight>*/}
+          </NavbarRight>
           {/* end of main menu */}
 
           <Button
@@ -109,7 +112,9 @@ const Navbar = () => {
               </li>
             ))}
             <li>
-              <Link href="#">Login</Link>
+              <Link href="/#" component={Login}>
+                Login
+              </Link>
             </li>
           </Scrollspy>
         </Container>

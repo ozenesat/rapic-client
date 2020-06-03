@@ -85,7 +85,7 @@ export const ServiceWrapper = styled.div`
       }
     }
     .content {
-      text-align: justify;
+      text-align: center;
     }
     .excerpt {
       font-size: 16px;
