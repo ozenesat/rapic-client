@@ -37,14 +37,11 @@ const Login = () => {
 
   const handlePass = event => {
     setPassword(event);
-    console.log(password, 'p');
   };
 
   const onSubmit = () => {
     if (email !== '' && password !== '') {
-      console.log(username, password, 'eup');
       Api.login(username, password)
-        .then(res => console.log(res, 'res'))
         .then(() => Router.replace('/#')) // bu calismiyor
         .catch(response => {
           console.log('failed to login');
