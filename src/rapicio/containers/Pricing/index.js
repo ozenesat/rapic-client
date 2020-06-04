@@ -76,33 +76,33 @@ const Pricing = () => {
                 ${priceTable.price}/<span>per mo.</span>
               </div>
               <ul className="featureList">
-                  {priceTable.features.map(feature => (
-                    <FeatureItem key={feature.id}>
-                      {isTablet ? (
-                        feature.isAvailable ? (
-                          feature.name
-                        ) : (
-                          <Icon
-                            icon={closeCircled}
-                            size={18}
-                            style={{ color: '#CED7E1' }}
-                          />
-                        )
-                      ) : feature.isAvailable ? (
-                        <Icon
-                          icon={ic_check_circle}
-                          size={18}
-                          style={{ color: '#3CC68A' }}
-                        />
+                {priceTable.features.map(feature => (
+                  <FeatureItem key={feature.id}>
+                    {isTablet ? (
+                      feature.isAvailable ? (
+                        feature.name
                       ) : (
                         <Icon
                           icon={closeCircled}
                           size={18}
                           style={{ color: '#CED7E1' }}
                         />
-                      )}
-                    </FeatureItem>
-                  ))}
+                      )
+                    ) : feature.isAvailable ? (
+                      <Icon
+                        icon={ic_check_circle}
+                        size={18}
+                        style={{ color: '#3CC68A' }}
+                      />
+                    ) : (
+                      <Icon
+                        icon={closeCircled}
+                        size={18}
+                        style={{ color: '#CED7E1' }}
+                      />
+                    )}
+                  </FeatureItem>
+                ))}
               </ul>
               <Button
                 title="Choose Plan"
