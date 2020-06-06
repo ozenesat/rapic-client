@@ -13,7 +13,7 @@ import Products from '../containers/Products';
 // import Pricing from '../containers/Pricing';
 import Footer from '../containers/Footer';
 
-export default () => {
+function LandingPage () {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -45,4 +45,6 @@ export default () => {
       </Fragment>
     </ThemeProvider>
   );
-};
+}
+
+export default LandingPage

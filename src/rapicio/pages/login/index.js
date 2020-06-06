@@ -10,7 +10,7 @@ import Navbar from '../../containers/Navbar';
 import Login from '../../containers/Login';
 import Footer from '../../containers/Footer';
 
-export default () => {
+function LoginPage () {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -40,3 +40,5 @@ export default () => {
     </ThemeProvider>
   );
 };
+
+export default LoginPage

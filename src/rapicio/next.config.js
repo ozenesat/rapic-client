@@ -23,5 +23,11 @@ module.exports = withPlugins(
   ],
   {
     distDir: '../../dist/functions/next',
+    exportPathMap: () => {
+      return {
+        "/": { page: "/" },
+        "/login": { page: "/login" }
+      }
+    }
   }
 );
