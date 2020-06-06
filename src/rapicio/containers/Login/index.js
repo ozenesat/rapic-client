@@ -63,16 +63,6 @@ const Login = () => {
           value={email}
           onChange={handleEmailChange}
         />
-        <h3> User Name: </h3>
-        <Input
-          inputType="text"
-          placeholder="Enter User Name"
-          iconPosition="left"
-          aria-label="username"
-          name="username"
-          value={username}
-          onChange={handleUser}
-        />
         <h3> Password: </h3>
         <Input
           required
@@ -94,6 +84,17 @@ const Login = () => {
       </Fragment>
     );
   };
+
+  /*<h3> User Name: </h3>
+  <Input
+    inputType="text"
+    placeholder="Enter User Name"
+    iconPosition="left"
+    aria-label="username"
+    name="username"
+    value={username}
+    onChange={handleUser}
+  />*/
 
   return (
     <Section id="login">

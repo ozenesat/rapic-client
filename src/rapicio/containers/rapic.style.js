@@ -3,7 +3,7 @@ import { themeGet } from 'styled-system';
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'PT Sans', sans-serif;
   }
 
   h1,
@@ -12,17 +12,17 @@ export const GlobalStyle = createGlobalStyle`
   h4,
   h5,
   h6 {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'PT Sans', sans-serif;
     margin-top: 0;
   }
-  p{
-    font-family: 'DM Sans', sans-serif;
+  p {
+    font-family: 'PT Sans', sans-serif;
   }
 
   section {
     position: relative;
   }
-  
+
 `;
 
 export const ContentWrapper = styled.div`

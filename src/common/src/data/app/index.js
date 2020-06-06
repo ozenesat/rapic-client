@@ -1,7 +1,7 @@
 import serviceIcon1 from '../../assets/image/app/services/1.png';
 import serviceIcon2 from '../../assets/image/app/services/2.png';
+import serviceIcon3 from '../../assets/image/app/services/3.png';
 import serviceIcon4 from '../../assets/image/app/services/4.png';
-import serviceIcon5 from '../../assets/image/app/services/5.png';
 import support1 from '../../assets/image/app/support1.png';
 import support2 from '../../assets/image/app/support2.png';
 import news1 from '../../assets/image/app/news/1.png';
@@ -35,36 +35,37 @@ export const data = {
   services: [
     {
       id: 1,
-      icon: serviceIcon2,
-      title: 'Serverless Database',
+      icon: serviceIcon1,
+      title: 'Client Libraries',
       desc:
-        'File management that allows you to upload or download files. Manage your users, send emails, text messages, and more with auto-scaling database,',
+        'Send a HTTP request to an API and use data in your function. Conditions, filters & checks. You can process the data and act accordingly.',
       // link: '#',
     },
     {
       id: 2,
-      icon: serviceIcon1,
-      title: 'Integrated Parties',
+      icon: serviceIcon2,
+      title: 'Serverless Database',
       desc:
-        'You can intgrate listed third-party tools that allows you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe(soon). ',
+        'File management that allows you to upload or download files. Manage your users, send emails, text messages, and more with auto-scaling database.',
       // link: '#',
     },
     {
       id: 3,
+      icon: serviceIcon3,
+      title: 'Integrated Parties',
+      desc:
+        'You can intgrate listed third-party tools that allows you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe (soon).',
+      // link: '#',
+    },
+    {
+      id: 4,
       icon: serviceIcon4,
       title: 'API Endpoints',
       desc:
         "Pre-configured connection to endpoints provide you enabling the user's data to browser. Queries happen client-side, and there is nothing to manage or worry about.",
       // link: '#',
     },
-    {
-      id: 4,
-      icon: serviceIcon5,
-      title: 'HTTP Functions',
-      desc:
-        'Send a HTTP request to an API and use data in your function. Conditions, filters & checks. You can process the data and act accordingly.',
-      // link: '#',
-    },
+
     // {
     //   id: 5,
     //   icon: serviceIcon5,

@@ -57,7 +57,7 @@ const Navbar = () => {
           <NavbarRight>
             <li>
               <Link label="login" path="#login" href="/login" component={Login}>
-                Login
+                <Button title="LOGIN" type="submit" />
               </Link>
             </li>
           </NavbarRight>
