@@ -1,15 +1,26 @@
-import React, { Fragment } from 'react';
-import Head from 'next/head';
-import Sticky from 'react-stickynode';
-import { ThemeProvider } from 'styled-components';
-import { theme } from 'common/src/theme/app';
-import { ResetCSS } from 'common/src/assets/css/style';
-import { GlobalStyle, ContentWrapper } from '../../containers/rapic.style';
-import { DrawerProvider } from 'common/src/contexts/DrawerContext';
-import Navbar from '../../containers/Navbar';
-import Projects from '../../containers/Projects';
+import React, { Fragment, useContext, useEffect } from "react";
+import Head from "next/head";
+import Sticky from "react-stickynode";
+import { ThemeProvider } from "styled-components";
+import { theme } from "common/src/theme/app";
+import { ResetCSS } from "common/src/assets/css/style";
+import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
+import { DrawerProvider } from "common/src/contexts/DrawerContext";
+import Navbar from "../../containers/Navbar";
+import Dashboard from "../../containers/Dashboard";
+import API from "../../services/api";
+import { useActionState, useAppState } from "../../components/AppContext";
 
-export default () => {
+function DashboardPage({ projects }) {
+  const globalState = useAppState();
+  const setGlobalState = useActionState();
+
+  useEffect(() => {
+    console.log(globalState);
+
+    setGlobalState({ type: "ADD_PROJECTS", payload: projects });
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -32,9 +43,18 @@ export default () => {
               <Navbar />
             </DrawerProvider>
           </Sticky>
-          <Projects />
+          <Dashboard />
         </ContentWrapper>
       </Fragment>
     </ThemeProvider>
   );
-};
+}
+
+export async function getStaticProps({ params }) {
+  const projects = await API.getRapicProjects();
+
+  // Pass post data to the page via props
+  return { props: { projects } };
+}
+
+export default DashboardPage;

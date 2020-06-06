@@ -1,63 +1,71 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const HeadingWrapper = styled.div`
-  width: 100%;
+export const Content = styled.div`
   display: flex;
-  flex-direction: row;
+  flex: 0.75;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  margin: 5px 0 40px 40px;
+  margin-top: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  height: fit-content;
+`;
+
+export const ProjectContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 30px;
+`;
+
+export const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
+export const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 0.25;
+  height: 100vh;
+  overflow-x: hidden;
+`;
+
+export const MenuButton = styled.a`
+  display: flex;
+  height: 35px;
+  align-items: center;
+  color: black;
+  cursor: pointer;
+  border-bottom: 1px solid #dedfe0;
+  padding-left: 5px;
+  :hover {
+    background-color: #d6f3d6;
+  }
+`;
+
+export const Title = styled.span`
+  font-size: 22px;
+  font-weight: bold;
+`;
+export const TitleWrapper = styled.div`
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
-  h1 {
-    font-family: Imprima;
-    font-size: 44px;
-  }
-  button {
+  height: 50px;
+  border-bottom: 1px solid #dedfe0;
+  .add-button {
+    min-height: 30px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 10px;
+    background-color: transparent;
+    color: black;
     border-radius: 5px;
-    max-height: 40px;
-    @media screen and (max-width: 600px) {
-      max-height: 60px;
-    }
-    color: #fff;
-    background-color: #35bf2e;
-    :hover {
-      opacity: 0.7;
-    }
+    border: 1px solid #dedfe0;
   }
 `;
-
-const Card = styled.button`
-  background-color: #fff;
-  padding: 20px;
-  cursor: pointer;
-  text-align: left;
-  font-family: Somatic;
-  min-width: 300px;
-  border-width: 0;
-  border-top-width: 8px;
-  border-top-color: #35bf2e;
-  border-top-style: solid;
-  border-radius: 3px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
-  :hover {
-    border-color: #ff7b00;
-  }
-
-  h2 {
-    font-size: 22px;
-  }
-  h3 {
-    font-size: 16px;
-    font-weight: normal;
-  }
-`;
-
-const CardWrapper = styled.div`
-  display: grid;
-  flex: 1;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-auto-rows: 150px;
-  grid-gap: 20px;
-  margin: 30px 0 30px 0;
-`;
-
-export { HeadingWrapper, Card, CardWrapper };

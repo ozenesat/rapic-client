@@ -8,7 +8,7 @@ const valideteUrl = rapicUrl + "users/"; // check it!
 const refreshUrl = rapicUrl + "refresh/"; // learn the related url!
 
 const faketoken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkxNDg3Nzc2LCJqdGkiOiJhYWNiMDRlNDE2NWM0Y2JkYTUxODM1ZDFkM2M3NjliYyIsInVzZXJfaWQiOjUxOH0.xjFLwgV1yNavq_xXTLrPY-e2u3r-Ex2qMr3X45VWl10";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMTMzNTgyLCJqdGkiOiJiNGRmOGFkNmJkMmI0ZDA5YTMyMGYwMDk3ZmM2ZmFhYSIsInVzZXJfaWQiOjUxOH0.gje8xpkBz2vnDz7VKKKjMR-_HEB8RYhTtOiVMmxdRFo";
 class Api {
   // observe that using e-mail as username !!!
   async register(username, email, password, registerOnly) {
@@ -139,11 +139,15 @@ class Api {
         .then((response) => {
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
-            reject(data);
+            console.log("failed to get projects");
+            reject([]);
           }
           resolve(data);
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          console.log(err.message);
+          reject([]);
+        });
     });
   }
 
@@ -161,11 +165,55 @@ class Api {
         .then((response) => {
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
-            reject("failed to create projects");
+            reject("failed to create enpoint");
           }
           resolve(data);
         })
         .catch((err) => reject(err));
+    });
+  }
+
+  async createRapicEndpoint(endpoint) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "POST",
+        url: rapicUrl + "rapicmodel/",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${faketoken}`,
+        },
+        data: JSON.stringify(endpoint),
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to create enpoint");
+          }
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+
+  getEndpointsByProjeId(id) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "GET",
+        url: `${rapicUrl}rapicapp/${id}/models/`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${faketoken}`,
+        },
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            console.log("failed to create enpoint");
+            reject([]);
+          }
+          resolve(data);
+        })
+        .catch((err) => reject([]));
     });
   }
 }

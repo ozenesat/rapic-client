@@ -1,32 +1,32 @@
-import React, { useState, useRef, Fragment } from 'react';
-import Fade from 'react-reveal/Fade';
-import ScrollSpyMenu from 'common/src/components/ScrollSpyMenu';
-import Scrollspy from 'react-scrollspy';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
-import { Icon } from 'react-icons-kit';
-import { androidMenu } from 'react-icons-kit/ionicons/androidMenu';
-import { androidClose } from 'react-icons-kit/ionicons/androidClose';
-import Link from 'common/src/components/Link';
-import Button from 'common/src/components/Button';
-import Logo from 'common/src/components/UIElements/Logo';
-import Container from 'common/src/components/UI/ContainerTwo';
-import Login from '../Login';
+import React, { useState, useRef, Fragment } from "react";
+import Fade from "react-reveal/Fade";
+import ScrollSpyMenu from "common/src/components/ScrollSpyMenu";
+import Scrollspy from "react-scrollspy";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import { Icon } from "react-icons-kit";
+import { androidMenu } from "react-icons-kit/ionicons/androidMenu";
+import { androidClose } from "react-icons-kit/ionicons/androidClose";
+import Link from "common/src/components/Link";
+import Button from "common/src/components/Button";
+import Logo from "common/src/components/UIElements/Logo";
+import Container from "common/src/components/UI/ContainerTwo";
+import Login from "../Login";
 import NavbarWrapper, {
   MenuArea,
   MobileMenu,
   NavbarRight,
-} from './navbar.style';
-import LogoImage from 'common/src/assets/image/app/logo.png';
+} from "./navbar.style";
+import LogoImage from "common/src/assets/image/app/logo.png";
 
-import { data } from 'common/src/data/app';
+import { data } from "common/src/data/app";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [isLandingPage, setIsLandingPage] = useState(page === 'landing');
+  const [isLandingPage, setIsLandingPage] = useState(page === "landing");
 
   const scrollItems = [];
 
-  data.navItems.forEach(item => {
+  data.navItems.forEach((item) => {
     scrollItems.push(item.path.slice(1));
   });
 
@@ -52,7 +52,7 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : []}
+            menuItems={isLandingPage ? data.navItems : data.navItems}
             offset={-84}
           />
           <NavbarRight>
@@ -75,7 +75,7 @@ const Navbar = ({ page }) => {
             icon={
               mobileMenu ? (
                 <Icon
-                  style={{ color: '#02073E' }}
+                  style={{ color: "#02073E" }}
                   className="bar"
                   size={32}
                   icon={androidClose}
@@ -83,7 +83,7 @@ const Navbar = ({ page }) => {
               ) : (
                 <Fade>
                   <Icon
-                    style={{ color: '#02073E' }}
+                    style={{ color: "#02073E" }}
                     className="close"
                     icon={androidMenu}
                     size={32}
@@ -99,7 +99,7 @@ const Navbar = ({ page }) => {
       </Container>
 
       {/* start mobile menu */}
-      <MobileMenu className={`mobile-menu ${mobileMenu ? 'active' : ''}`}>
+      <MobileMenu className={`mobile-menu ${mobileMenu ? "active" : ""}`}>
         <Container>
           <Scrollspy
             className="menu"

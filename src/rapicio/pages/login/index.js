@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react';
-import Head from 'next/head';
-import Sticky from 'react-stickynode';
-import { ThemeProvider } from 'styled-components';
-import { theme } from 'common/src/theme/app';
-import { ResetCSS } from 'common/src/assets/css/style';
-import { GlobalStyle, ContentWrapper } from '../../containers/rapic.style';
-import { DrawerProvider } from 'common/src/contexts/DrawerContext';
-import Navbar from '../../containers/Navbar';
-import Login from '../../containers/Login';
-import Footer from '../../containers/Footer';
+import React, { Fragment, useContext } from "react";
+import Head from "next/head";
+import Sticky from "react-stickynode";
+import { ThemeProvider } from "styled-components";
+import { theme } from "common/src/theme/app";
+import { ResetCSS } from "common/src/assets/css/style";
+import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
+import { DrawerProvider } from "common/src/contexts/DrawerContext";
+import Navbar from "../../containers/Navbar";
+import Login from "../../containers/Login";
+import Footer from "../../containers/Footer";
 
-function LoginPage () {
+function LoginPage() {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -39,6 +39,6 @@ function LoginPage () {
       </Fragment>
     </ThemeProvider>
   );
-};
+}
 
-export default LoginPage
+export default LoginPage;

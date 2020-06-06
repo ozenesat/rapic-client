@@ -1,78 +1,49 @@
-import React from "react";
+import React, { Fragment } from "react";
+import Head from "next/head";
+import Sticky from "react-stickynode";
+import { ThemeProvider } from "styled-components";
+import { theme } from "common/src/theme/app";
+import { ResetCSS } from "common/src/assets/css/style";
 import Container from "common/src/components/UI/ContainerTwo";
-import Heading from "common/src/components/Heading";
-import Button from "common/src/components/Button";
-import API from "../../services/api";
-import Router from "next/router";
+import { DrawerProvider } from "common/src/contexts/DrawerContext";
 
-import ProjectModal from "../ProjectModal";
-import { Card, CardWrapper, HeadingWrapper } from "./projects.style";
+import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
+import Navbar from "../../containers/Navbar";
+import Menu from "../../containers/Projects/Menu";
+import { Content, ProjectContainer } from "./projects.style";
 
-class Projects extends React.Component {
-  state = {
-    projects: [],
-    isModalOpen: false,
-    isLoading: true,
-  };
+function Projects({ children, endpoints }) {
+  return (
+    <ThemeProvider theme={theme}>
+      <Fragment>
+        <Head>
+          <title>Rapic - fast backend</title>
+          <meta name="theme-color" content="#FF7B00" />
+          <meta name="Description" content="Rapic io landing page" />
 
-  componentWillMount() {
-    API.getRapicProjects()
-      .then((projects) => this.setState({ projects, isLoading: false }))
-      .catch((err) => this.setState({ projects: [], isLoading: false }));
-  }
-
-  setModalState = (isModalOpen) => {
-    this.setState({ isModalOpen });
-  };
-
-  createProject = (name, description) => {
-    const { projects } = this.state;
-    API.createProject({ name, description })
-      .then((project) => {
-        this.setModalState(false);
-        this.setState({ projects: [project, ...projects] });
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
-
-  renderProjects = () => {
-    const { projects } = this.state;
-    if (projects.length < 1) {
-      return <span>There is no project found.</span>;
-    }
-
-    return projects.map(({ name, description, id }) => (
-      <Card onClick={() => Router.push(`/project/${id}`)}>
-        <Heading as="h2" content={name} />
-        <Heading as="h3" content={description} />
-        <Heading as="h3" content={`${0} objects`} />
-      </Card>
-    ));
-  };
-
-  render() {
-    const { isModalOpen, isLoading } = this.state;
-    return (
-      <Container>
-        <HeadingWrapper>
-          <Heading as="h1" content="My Projects" />
-          <Button
-            title="New Project"
-            onClick={() => this.setModalState(true)}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Imprima:400,400i,700,700i|DM+Sans:400,400i,500,500i,700,700i&display=swap"
           />
-        </HeadingWrapper>
-        <CardWrapper>
-          {isLoading ? <span>Loading..</span> : this.renderProjects()}
-        </CardWrapper>
-        <ProjectModal
-          isModalOpen={isModalOpen}
-          closeModal={() => this.setModalState(false)}
-          createProject={this.createProject}
-        />
-      </Container>
-    );
-  }
+        </Head>
+        <ResetCSS />
+        <GlobalStyle />
+        <ContentWrapper>
+          <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
+            <DrawerProvider>
+              <Navbar />
+            </DrawerProvider>
+          </Sticky>
+          <Container>
+            <ProjectContainer>
+              <Menu endpoints={endpoints} />
+              <Content>{children}</Content>
+            </ProjectContainer>
+          </Container>
+        </ContentWrapper>
+      </Fragment>
+    </ThemeProvider>
+  );
 }
+
 export default Projects;

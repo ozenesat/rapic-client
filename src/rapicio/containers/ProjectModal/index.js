@@ -1,30 +1,65 @@
-import Modal from 'react-modal';
-import Heading from 'common/src/components/Heading';
-import Input from 'common/src/components/Input';
-import Button from 'common/src/components/Button';
-
+import { useContext } from "react";
+import Modal from "react-modal";
+import Heading from "common/src/components/Heading";
+import Input from "common/src/components/Input";
+import Button from "common/src/components/Button";
+import { useActionState } from "../../components/AppContext";
+import API from "../../services/api";
+import { Loading } from "../../components/Loading";
 import {
   Title,
   Content,
   Section,
   ButtonWrapper,
   ModalStyles,
-} from './projectmodal.style';
+} from "./projectmodal.style";
 
-function ProjectModal({ isModalOpen, closeModal, createProject }) {
-  const [name, onChangeName] = React.useState('');
-  const [description, onChangeDescription] = React.useState('');
+function ProjectModal({ isModalOpen, closeModal }) {
+  const [name, onChangeName] = React.useState("");
+  const [description, onChangeDescription] = React.useState("");
+  const [isLoading, setLoading] = React.useState(false);
+  const setGlobalState = useActionState();
 
   function checkInputs() {
     if (!name || !description) {
-      alert('Please fill all field.');
+      alert("Please fill all field.");
     } else {
       createProject(name, description);
     }
   }
 
+  function createProject(name, description) {
+    setLoading(true);
+    API.createProject({
+      name,
+      description,
+      auth_method: "undefined",
+      rapic_models: [],
+    })
+      .then((project) => {
+        setLoading(false);
+        setGlobalState({ type: "ADD_PROJECTS", payload: [project] });
+        handleCloseModal();
+      })
+      .catch((err) => {
+        setLoading(false);
+        alert(err);
+      });
+  }
+
+  function handleCloseModal() {
+    onChangeName("");
+    onChangeDescription("");
+    closeModal();
+  }
+
   return (
-    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={ModalStyles}>
+    <Modal
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
+      style={ModalStyles}
+      ariaHideApp={false}
+    >
       <Heading as="h2" content="Add a new projects" />
       <Content>
         <Section>
@@ -61,8 +96,9 @@ function ProjectModal({ isModalOpen, closeModal, createProject }) {
             id="create-project"
             onClick={() => checkInputs()}
           />
-          <Button title="Cancel" id="cancel" onClick={closeModal} />
+          <Button title="Cancel" id="cancel" onClick={handleCloseModal} />
         </ButtonWrapper>
+        {isLoading && <Loading />}
       </Content>
     </Modal>
   );

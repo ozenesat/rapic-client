@@ -6,6 +6,10 @@ import "@redq/reuse-modal/es/index.css";
 import { AppProvider } from "../components/AppContext";
 
 class MyApp extends App {
+  static async getInitialProps(ctx) {
+    console.log(ctx);
+    return {};
+  }
   render() {
     const { Component, pageProps } = this.props;
     return (
@@ -18,4 +22,9 @@ class MyApp extends App {
     );
   }
 }
+
+MyApp.getInitialProps = async (ctx) => {
+  return { projects: [] };
+};
+
 export default MyApp;
