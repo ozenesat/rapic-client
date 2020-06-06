@@ -4,24 +4,24 @@ import { themeGet } from 'styled-system';
 import illustration from 'common/src/assets/image/app/home.png';
 
 const Section = styled.section`
-  background-image: url(${illustration});
-  background-color: transparent;
-  background-size: 37.1%;
-  background-position: right center;
-  background-repeat: no-repeat;
-  min-height: 70vh;
-  @media only screen and (max-width: 1440px) {
-    min-height: auto;
-    background-size: 45%;
-  }
-  @media only screen and (max-width: 1024px) {
-    background-size: 35%;
-  }
-  @media only screen and (max-width: 999px) {
-    background: transparent;
-    background-image: none;
-    min-height: auto;
-  }
+background-image: url(${illustration});
+background-color: transparent;
+background-size: 37%;
+background-position: right center;
+background-repeat: no-repeat;
+min-height: 70vh;
+@media only screen and (max-width: 1440px) {
+  min-height: auto;
+  background-size: 45%;
+}
+@media only screen and (max-width: 1024px) {
+  background-size: 35%;
+}
+@media only screen and (max-width: 999px) {
+  background: transparent;
+  background-image: none;
+  min-height: auto;
+}
 `;
 
 export const ContentWrapper = styled.div``;
