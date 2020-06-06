@@ -33,7 +33,7 @@ function LandingPage () {
         <ContentWrapper>
           <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
             <DrawerProvider>
-              <Navbar />
+              <Navbar page="landing" />
             </DrawerProvider>
           </Sticky>
           <Banner />

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Fragment } from 'react';
 import Fade from 'react-reveal/Fade';
 import ScrollSpyMenu from 'common/src/components/ScrollSpyMenu';
 import Scrollspy from 'react-scrollspy';
@@ -20,8 +20,9 @@ import LogoImage from 'common/src/assets/image/app/logo.png';
 
 import { data } from 'common/src/data/app';
 
-const Navbar = () => {
+const Navbar = ({page}) => {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [isLandingPage, setIsLandingPage] = useState(page === "landing");
 
   const scrollItems = [];
 
@@ -51,18 +52,19 @@ const Navbar = () => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={data.navItems}
+            menuItems={isLandingPage ? data.navItems : []}
             offset={-84}
           />
           <NavbarRight>
             <li>
-              <Link label="login" path="#login" href="/login" component={Login}>
-                Login
-              </Link>
+              {isLandingPage ?
+                (<Link label="login" path="#login" href="/login" component={Login}>
+                  Login
+                </Link>) : null
+              }
             </li>
-          </NavbarRight>
+          </NavbarRight> 
           {/* end of main menu */}
-
           <Button
             className="menubar"
             icon={
