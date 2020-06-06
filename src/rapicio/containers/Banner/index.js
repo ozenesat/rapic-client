@@ -68,15 +68,16 @@ const Banner = () => {
       <Container>
         <ContentWrapper>
           <BannerContent>
-            <Heading as="h1" content={'Develop & run'} />
-            <Heading as="h1" content={'serverless backends'} />
-
+            <Heading
+              as="h1"
+              content={
+                'Ship and Scale your API 10x faster without touching any server or database'
+              }
+            />
             <Text
               className="banner-caption"
-              content="Now you can focus on building the product
-              with minimum coding than hustling backend structure, data storage, user auth, payment and more..."
+              content="Rapic gives you API endpoints that can store data and run codeletes all together by rest calls. With ready to use user authentication, lots of integration, and easy to pluq client libraries..."
             />
-
             <Subscribe>
               {registered ? (
                 <Text

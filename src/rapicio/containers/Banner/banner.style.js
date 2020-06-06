@@ -1,18 +1,15 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { themeGet } from 'styled-system';
-import illustration from 'common/src/assets/image/app/circle1.gif';
+import illustration from 'common/src/assets/image/app/home.png';
 
-const Section = styled.section``;
-
-export const ContentWrapper = styled.div`
+const Section = styled.section`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 50%;
+  background-size: 37%;
   background-position: right center;
   background-repeat: no-repeat;
   min-height: 70vh;
-
   @media only screen and (max-width: 1440px) {
     min-height: auto;
     background-size: 45%;
@@ -27,10 +24,12 @@ export const ContentWrapper = styled.div`
   }
 `;
 
+export const ContentWrapper = styled.div``;
+
 export const Illustration = styled.div``;
 
 export const BannerContent = styled.div`
-  max-width: 38%;
+  max-width: 48%;
   width: 100%;
   padding-top: 100px;
   padding-bottom: 150px;

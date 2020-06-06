@@ -6,6 +6,7 @@ const NavbarWrapper = styled.header`
   width: 100%;
   padding: 15px 0 16px;
   background-color: white;
+  opacity: 0.89;
   z-index: 9999;
   transition: all 0.3s ease;
   @media only screen and (max-width: 1366px) {
@@ -105,7 +106,6 @@ export const MenuArea = styled.nav`
 
 export const NavbarRight = styled.ul`
   display: flex;
-  align-items: center;
   margin-left: auto;
   @media only screen and (max-width: 411px) and (max-height: 812px) and (orientation: landscape) {
     display: none;
@@ -114,7 +114,19 @@ export const NavbarRight = styled.ul`
     display: none;
   }
   li {
-    margin-left: 38px;
+    margin-left: 60px;
+    button {
+      background-color: transparent;
+      color: black;
+      border: 0.05em solid black;
+      min-width: 6.5em;
+      min-height: 3.5em;
+      border-radius: 0.35em;
+      @media only screen and (max-width: 480px) {
+        min-width: 100%;
+        margin-top: 15px;
+      }
+    }
     a {
       color: ${themeGet('colors.menu', '#02073E')};
       font-family: DM Sans;

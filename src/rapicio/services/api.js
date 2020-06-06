@@ -112,7 +112,7 @@ class Api {
           return response.json();
         })
         .then(async data => {
-          this.access = data.access;
+          document.cookie.access = data.access;
           resolve('success');
         })
         .catch(function(error) {

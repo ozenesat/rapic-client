@@ -20,9 +20,9 @@ import LogoImage from 'common/src/assets/image/app/logo.png';
 
 import { data } from 'common/src/data/app';
 
-const Navbar = ({page}) => {
+const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [isLandingPage, setIsLandingPage] = useState(page === "landing");
+  const [isLandingPage, setIsLandingPage] = useState(page === 'landing');
 
   const scrollItems = [];
 
@@ -57,13 +57,18 @@ const Navbar = ({page}) => {
           />
           <NavbarRight>
             <li>
-              {isLandingPage ?
-                (<Link label="login" path="#login" href="/login" component={Login}>
-                  Login
-                </Link>) : null
-              }
+              {isLandingPage ? (
+                <Link
+                  label="login"
+                  path="#login"
+                  href="/login"
+                  component={Login}
+                >
+                  <Button title="LOGIN" type="submit" />
+                </Link>
+              ) : null}
             </li>
-          </NavbarRight> 
+          </NavbarRight>
           {/* end of main menu */}
           <Button
             className="menubar"
