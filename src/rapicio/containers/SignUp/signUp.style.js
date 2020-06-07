@@ -215,7 +215,7 @@ const EyeButton = styled.button`
   outline: none;
   cursor: pointer;
   box-shadow: none;
-  display: block;
+  display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;

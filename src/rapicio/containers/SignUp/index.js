@@ -5,24 +5,25 @@ import Image from 'common/src/components/Image';
 import Button from 'common/src/components/Button';
 import Heading from 'common/src/components/Heading';
 import Container from 'common/src/components/UI/ContainerTwo';
-import { EyeButton } from './login.style';
+import { EyeButton } from './signUp.style';
 import Router from 'next/router';
 import Section, {
   ContentWrapper,
   BannerContent,
   Subscribe,
   ImageGroup,
-} from './login.style';
+} from './signUp.style';
 import { validateEmail } from '../../utils/utils';
 import Api from '../../services/api';
 
-const Login = () => {
+const SignUp = () => {
   /* when related page is ready remove registered parts and push the page into the related one. */
-  const [login, setLogin] = useState(false);
+  const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState('');
   const [validationError, setValidationError] = useState({ email: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const handleEmailChange = event => {
     setEmail(event);
@@ -41,16 +42,22 @@ const Login = () => {
     setPassword(event);
   };
 
+  const handleConfirmation = event => {
+    setPasswordConfirmation(event);
+  };
+
   const onSubmit = () => {
     if (email !== '' && password !== '') {
-      Api.login(email, password).catch(response => {
-        console.log('failed to login');
-      });
-      setLogin(true);
+      Api.register(username, password)
+        .then(() => Router.replace('/#')) // bu calismiyor
+        .catch(response => {
+          console.log('failed to login');
+        });
+      setRegistered(true);
     }
   };
 
-  var showLogin = () => {
+  var showRegister = () => {
     return (
       <Fragment>
         <h3> E-mail: </h3>
@@ -62,6 +69,16 @@ const Login = () => {
           value={email}
           onChange={handleEmailChange}
         />
+        <h3> User Name: </h3>
+        <Input
+          inputType="text"
+          placeholder="Enter User Name"
+          iconPosition="left"
+          aria-label="username"
+          name="username"
+          value={username}
+          onChange={handleUser}
+        />
         <h3> Password: </h3>
         <Input
           required
@@ -71,6 +88,18 @@ const Login = () => {
           name="password"
           value={password}
           onChange={handlePass}
+          passwordShowHide={password}
+        />
+        <EyeButton></EyeButton>
+        <h3> Confirmation: </h3>
+        <Input
+          required
+          inputType="password"
+          placeholder="Re-enter Password"
+          aria-label="password"
+          name="password"
+          value={passwordConfirmation}
+          onChange={handleConfirmation}
           passwordShowHide={password}
         />
         <EyeButton></EyeButton>
@@ -85,31 +114,20 @@ const Login = () => {
     );
   };
 
-  /*<h3> User Name: </h3>
-  <Input
-    inputType="text"
-    placeholder="Enter User Name"
-    iconPosition="left"
-    aria-label="username"
-    name="username"
-    value={username}
-    onChange={handleUser}
-  />*/
-
   return (
-    <Section id="login">
+    <Section id="signup">
       <Container>
         <ContentWrapper>
           <BannerContent>
-            <h1> Login </h1>
+            <h1> Sign-Up! </h1>
             <Subscribe>
-              {login ? (
+              {registered ? (
                 <Text
                   className="banner-thanks"
                   content={`${email}, Welcome to the Rapic!`}
                 />
               ) : (
-                showLogin()
+                showRegister()
               )}
             </Subscribe>
           </BannerContent>
@@ -119,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
