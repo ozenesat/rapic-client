@@ -9,15 +9,17 @@ const Content = styled.div`
   flex-direction: column;
   font-size: 17px;
 
+  button: active {
+    opacity: 0.6;
+  }
+
   .project-name {
-    width: 80%;
     margin-top: 10px;
     margin-bottom: 10px;
     font-family: DM Sans;
   }
 
   .project-description {
-    width: 80%;
     height: 40%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -43,4 +45,15 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export { Title, Content, Section, ButtonWrapper };
+const ModalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    width: '50%',
+  },
+};
+
+export { Title, Content, Section, ButtonWrapper, ModalStyles };

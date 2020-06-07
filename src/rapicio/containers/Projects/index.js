@@ -1,50 +1,79 @@
+import React from 'react';
 import Container from 'common/src/components/UI/ContainerTwo';
 import Heading from 'common/src/components/Heading';
 import Button from 'common/src/components/Button';
+import API from '../../services/api';
+import Router from 'next/router';
 
 import ProjectModal from '../ProjectModal';
 import { Card, CardWrapper, HeadingWrapper } from './projects.style';
 
-function Projects() {
-  const [isModalOpen, setIsOpen] = React.useState(false);
-  const [projects] = React.useState([]);
+class Projects extends React.Component {
+  state = {
+    projects: [],
+    isModalOpen: false,
+    isLoading: true,
+  };
 
-  function createProject(name, description) {
-    const project = { name, description, objectCount: 0 };
-    projects.push(project);
-    closeModal();
+  componentWillMount() {
+    API.getRapicProjects()
+      .then(projects => this.setState({ projects, isLoading: false }))
+      .catch(err => this.setState({ projects: [], isLoading: false }));
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  setModalState = isModalOpen => {
+    this.setState({ isModalOpen });
+  };
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  createProject = (name, description) => {
+    API.createProject({ name, description })
+      .then(project => {
+        this.setModalState(false);
+        this.setState(prevState => ({
+          projects: prevState.projects.push(project),
+        }));
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
 
-  return (
-    <Container innerHeight="100%">
-      <HeadingWrapper>
-        <Heading as="h1" content="My Projects" />
-        <Button title="New Project" onClick={() => openModal()} />
-      </HeadingWrapper>
-      <CardWrapper>
-        {projects.map(({ name, description, objectsCount }) => (
-          <Card>
-            <Heading as="h2" content={name} />
-            <Heading as="h3" content={description} />
-            <Heading as="h3" content={`${objectsCount} objects`} />
-          </Card>
-        ))}
-      </CardWrapper>
-      <ProjectModal
-        isModalOpen={isModalOpen}
-        closeModal={closeModal}
-        createProject={createProject}
-      />
-    </Container>
-  );
+  renderProjects = () => {
+    const { projects } = this.state;
+    if (projects.length < 1) {
+      return <span>There is no project found.</span>;
+    }
+
+    return projects.map(({ name, description, id }) => (
+      <Card onClick={() => Router.push(`/project/${id}`)}>
+        <Heading as="h2" content={name} />
+        <Heading as="h3" content={description} />
+        <Heading as="h3" content={`${0} objects`} />
+      </Card>
+    ));
+  };
+
+  render() {
+    const { isModalOpen, projects, isLoading } = this.state;
+    return (
+      <Container>
+        <HeadingWrapper>
+          <Heading as="h1" content="My Projects" />
+          <Button
+            title="New Project"
+            onClick={() => this.setModalState(true)}
+          />
+        </HeadingWrapper>
+        <CardWrapper>
+          {isLoading ? <span>Loading..</span> : this.renderProjects()}
+        </CardWrapper>
+        <ProjectModal
+          isModalOpen={isModalOpen}
+          closeModal={() => this.setModalState(false)}
+          createProject={this.createProject}
+        />
+      </Container>
+    );
+  }
 }
-
 export default Projects;

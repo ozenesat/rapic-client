@@ -7,6 +7,8 @@ const loginUrl = rapicUrl + 'api/token/';
 const valideteUrl = rapicUrl + 'users/'; // check it!
 const refreshUrl = rapicUrl + 'refresh/'; // learn the related url!
 
+const faketoken =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkxNDg2MjE1LCJqdGkiOiI3YzZiMjdhNjZlODE0YTNkOWMxNTY1ZTIxNjUwMzEzOCIsInVzZXJfaWQiOjUxOH0.OO3Kn6R9WtLPWPqQaYBWXItMP03iksjpvu5HjaMsXu0';
 class Api {
   // observe that using e-mail as username !!!
   async register(username, email, password, registerOnly) {
@@ -121,6 +123,49 @@ class Api {
         .catch(function(error) {
           reject('failed to access' + error);
         });
+    });
+  }
+
+  async getRapicProjects() {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'GET',
+        url: rapicUrl + 'rapicapp/',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${faketoken}`,
+        },
+      })
+        .then(response => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject(data);
+          }
+          resolve(data);
+        })
+        .catch(err => reject(err));
+    });
+  }
+
+  async createProject(project) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
+        url: rapicUrl + 'rapicapp/',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${faketoken}`,
+        },
+        data: JSON.stringify(project),
+      })
+        .then(response => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject('failed to create projects');
+          }
+          resolve(data);
+        })
+        .catch(err => reject(err));
     });
   }
 }

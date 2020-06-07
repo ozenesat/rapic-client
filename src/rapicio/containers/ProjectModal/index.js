@@ -3,27 +3,28 @@ import Heading from 'common/src/components/Heading';
 import Input from 'common/src/components/Input';
 import Button from 'common/src/components/Button';
 
-import { Title, Content, Section, ButtonWrapper } from './projectmodal.style';
-
-const customStyles = {
-  content: {
-    top: '25%',
-    left: '35%',
-    right: '35%',
-    bottom: '25%',
-  },
-};
+import {
+  Title,
+  Content,
+  Section,
+  ButtonWrapper,
+  ModalStyles,
+} from './projectmodal.style';
 
 function ProjectModal({ isModalOpen, closeModal, createProject }) {
   const [name, onChangeName] = React.useState('');
   const [description, onChangeDescription] = React.useState('');
 
+  function checkInputs() {
+    if (!name || !description) {
+      alert('Please fill all field.');
+    } else {
+      createProject(name, description);
+    }
+  }
+
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onRequestClose={closeModal}
-      style={customStyles}
-    >
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={ModalStyles}>
       <Heading as="h2" content="Add a new projects" />
       <Content>
         <Section>
@@ -58,7 +59,7 @@ function ProjectModal({ isModalOpen, closeModal, createProject }) {
           <Button
             title="Create Project"
             id="create-project"
-            onClick={() => createProject(name, description)}
+            onClick={() => checkInputs()}
           />
           <Button title="Cancel" id="cancel" onClick={closeModal} />
         </ButtonWrapper>

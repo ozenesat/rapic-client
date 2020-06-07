@@ -31,7 +31,7 @@ const Card = styled.button`
   cursor: pointer;
   text-align: left;
   font-family: Somatic;
-
+  min-width: 300px;
   border-width: 0;
   border-top-width: 8px;
   border-top-color: #35bf2e;
@@ -49,7 +49,6 @@ const Card = styled.button`
     font-size: 16px;
     font-weight: normal;
   }
-  min-width: 300px;
 `;
 
 const CardWrapper = styled.div`
@@ -58,8 +57,7 @@ const CardWrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-auto-rows: 150px;
   grid-gap: 20px;
-  margin-top: 75px;
-  height: 100%;
+  margin: 30px 0 30px 0;
 `;
 
 export { HeadingWrapper, Card, CardWrapper };
