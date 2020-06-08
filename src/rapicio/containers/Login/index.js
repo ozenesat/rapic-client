@@ -71,7 +71,7 @@ const Login = () => {
           name="password"
           value={password}
           onChange={handlePass}
-          passwordShowHide={password}
+          passwordShowHide={true}
         />
         <EyeButton></EyeButton>
         <Button

@@ -119,7 +119,7 @@ const Navbar = ({ page }) => {
               </li>
             ))}
             <li>
-              <Link href="/#" component={Login}>
+              <Link href="/login" component={Login}>
                 Login
               </Link>
             </li>

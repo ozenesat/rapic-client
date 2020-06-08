@@ -17,7 +17,7 @@ const Section = styled.section`
   @media only screen and (max-width: 1024px) {
     background-size: 35%;
   }
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 899px) {
     background: transparent;
     background-image: none;
     min-height: auto;
@@ -43,8 +43,8 @@ export const BannerContent = styled.div`
   @media only screen and (max-width: 1024px) {
     max-width: 44%;
   }
-  @media only screen and (max-width: 999px) {
-    max-width: 100%;
+  @media only screen and (max-width: 899px) {
+    max-width: 30em;
     padding-top: 30px;
     padding-bottom: 80px;
   }
@@ -75,13 +75,11 @@ export const BannerContent = styled.div`
       margin-bottom: 20px;
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 899px) {
       font-size: 34px;
       margin-bottom: 10px;
-      text-align: center;
     }
     @media only screen and (max-width: 480px) {
-      font-size: 23px;
       margin-bottom: 20px;
       line-height: 40px;
     }
@@ -137,7 +135,6 @@ export const Subscribe = styled.div`
   }
   @media only screen and (max-width: 768px) {
     max-width: 80%;
-    margin: 0 auto;
   }
   @media only screen and (max-width: 480px) {
     max-width: 100%;
@@ -146,7 +143,6 @@ export const Subscribe = styled.div`
   }
 
   @media only screen and (max-width: 480px) {
-    align-items: center;
   }
   .reusecore__input {
     width: 100%;

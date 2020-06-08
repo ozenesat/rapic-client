@@ -121,7 +121,7 @@ const Input = ({
             {...props}
             id={htmlFor}
             name={htmlFor}
-            type={state.toggle ? 'password' : 'text'}
+            type={state.toggle ? 'text' : 'password'}
             value={state.value}
             onChange={handleOnChange}
             onBlur={handleOnBlur}
@@ -130,7 +130,7 @@ const Input = ({
           {passwordShowHide && (
             <EyeButton
               onClick={handleToggle}
-              className={state.toggle ? 'eye' : 'eye-closed'}
+              className={state.toggle ? 'eye-closed' : 'eye'}
             >
               <span />
             </EyeButton>
