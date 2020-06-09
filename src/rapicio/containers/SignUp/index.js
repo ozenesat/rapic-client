@@ -14,13 +14,17 @@ import Section, {
   ImageGroup,
 } from './signUp.style';
 import { validateEmail } from '../../utils/utils';
+import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
 
 const SignUp = () => {
   /* when related page is ready remove registered parts and push the page into the related one. */
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState('');
-  const [validationError, setValidationError] = useState({ email: false });
+  const [validationError, setValidationError] = useState({
+    email: false,
+    password: false,
+  });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -29,6 +33,7 @@ const SignUp = () => {
     setEmail(event);
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
+      console.log(validationError.email);
     } else {
       setValidationError({ email: false });
     }
@@ -40,6 +45,11 @@ const SignUp = () => {
 
   const handlePass = event => {
     setPassword(event);
+    if (!validatePassword(event) && event !== '') {
+      setValidationError({ password: true });
+    } else {
+      setValidationError({ password: false });
+    }
   };
 
   const handleConfirmation = event => {
@@ -47,6 +57,7 @@ const SignUp = () => {
   };
 
   const onSubmit = () => {
+    console.log('hey');
     if (email !== '' && password !== '') {
       Api.register(username, password)
         .then(() => Router.replace('/#')) // bu calismiyor
@@ -104,9 +115,13 @@ const SignUp = () => {
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={validationError.email}
+          disabled={validationError.email && validationError.Password}
           title="Submit!"
-          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          style={
+            !validationError.email && !validationError.Password
+              ? { background: '#35BF2E' }
+              : { background: 'gray' }
+          }
           onClick={onSubmit}
           type="submit"
         />

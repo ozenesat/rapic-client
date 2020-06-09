@@ -23,13 +23,16 @@ const Login = () => {
   const [validationError, setValidationError] = useState({ email: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [longEnough, setLongEnough] = useState(false);
+  const [disable, setDisable] = useState(!validationError.email && longEnough);
   const handleEmailChange = event => {
     setEmail(event);
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
+      setDisable(!validationError.email && longEnough);
     } else {
       setValidationError({ email: false });
+      setDisable(!validationError.email && longEnough);
     }
   };
 
@@ -39,8 +42,15 @@ const Login = () => {
 
   const handlePass = event => {
     setPassword(event);
+    if (password.length > 5 && event !== '') {
+      setLongEnough(true);
+      setDisable(!validationError.email && longEnough);
+    } else {
+      console.log(password, 'pd1');
+      setLongEnough(false);
+      setDisable(!validationError.email && longEnough);
+    }
   };
-
   const onSubmit = () => {
     if (email !== '' && password !== '') {
       Api.login(email, password).catch(response => {
@@ -49,12 +59,15 @@ const Login = () => {
       setLogin(true);
     }
   };
-
+  // let disable = (!validationError.email && !longEnough)
+  console.log('di', disable, 'le', longEnough, 've', !validationError.email);
   var showLogin = () => {
     return (
       <Fragment>
         <h3> E-mail: </h3>
         <Input
+          autoFocus
+          required
           inputType="email"
           placeholder="Enter Email Address"
           aria-label="email"
@@ -75,9 +88,9 @@ const Login = () => {
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={validationError.email}
+          disabled={!disable}
           title="Submit!"
-          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          style={disable ? { background: '#35BF2E' } : { background: 'grey' }}
           onClick={onSubmit}
           type="submit"
         />
