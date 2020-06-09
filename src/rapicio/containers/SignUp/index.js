@@ -14,19 +14,25 @@ import Section, {
   ImageGroup,
 } from './signUp.style';
 import { validateEmail } from '../../utils/utils';
+import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
 
 const SignUp = () => {
   /* when related page is ready remove registered parts and push the page into the related one. */
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState('');
-  const [validationError, setValidationError] = useState({ email: false });
+  const [validationError, setValidationError] = useState({
+    email: false,
+    password: false,
+  });
+  const [controller, setController] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const handleEmailChange = event => {
     setEmail(event);
+    onController();
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
     } else {
@@ -40,6 +46,12 @@ const SignUp = () => {
 
   const handlePass = event => {
     setPassword(event);
+    onController(event);
+    if (!validatePassword(event) && event !== '') {
+      setValidationError({ password: true });
+    } else {
+      setValidationError({ password: false });
+    }
   };
 
   const handleConfirmation = event => {
@@ -56,7 +68,23 @@ const SignUp = () => {
       setRegistered(true);
     }
   };
-
+  const onController = () => {
+    if (password !== '') {
+      if (validationError.password) {
+        setController(true);
+      } else {
+        setController(false);
+      }
+    } else {
+      if (email === '') {
+        setController(false);
+      } else if (validationError.email) {
+        setController(true);
+      }
+    }
+  };
+  console.log(controller, 'cnt', validationError.password, 'pass');
+  // {!validationError.password && !validationError.email ? '8 digit password required.' : ''}
   var showRegister = () => {
     return (
       <Fragment>
@@ -88,8 +116,9 @@ const SignUp = () => {
           name="password"
           value={password}
           onChange={handlePass}
-          passwordShowHide={password}
+          passwordShowHide={true}
         />
+        {controller ? '8 digit password required.' : ''}
         <EyeButton></EyeButton>
         <h3> Confirmation: </h3>
         <Input
@@ -100,13 +129,17 @@ const SignUp = () => {
           name="password"
           value={passwordConfirmation}
           onChange={handleConfirmation}
-          passwordShowHide={password}
+          passwordShowHide={true}
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={validationError.email}
+          disabled={validationError.email || validationError.password}
           title="Submit!"
-          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          style={
+            !validationError.email && !validationError.password
+              ? { background: '#35BF2E' }
+              : { background: 'gray' }
+          }
           onClick={onSubmit}
           type="submit"
         />

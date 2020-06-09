@@ -162,6 +162,7 @@ export const Subscribe = styled.div`
       min-height: 60px;
       padding: 0 24px;
       border-radius: 8px;
+      margin-bottom: 0.25em;
       ::placeholder {
         color: ${rgba('#02073E', 0.4)};
         opacity: 1; /* Firefox */

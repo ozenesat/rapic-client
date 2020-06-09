@@ -14,6 +14,7 @@ import Section, {
   ImageGroup,
 } from './login.style';
 import { validateEmail } from '../../utils/utils';
+import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
 
 const Login = () => {
@@ -23,7 +24,6 @@ const Login = () => {
   const [validationError, setValidationError] = useState({ email: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const handleEmailChange = event => {
     setEmail(event);
     if (!validateEmail(event) && event !== '') {
@@ -39,6 +39,13 @@ const Login = () => {
 
   const handlePass = event => {
     setPassword(event);
+    if (!validatePassword(event) && event !== '') {
+      setValidationError({ password: true });
+      console.log(validationError.password, 'password-error');
+    } else {
+      setValidationError({ password: false });
+      console.log(validationError.password, 'password-error');
+    }
   };
 
   const onSubmit = () => {
@@ -55,6 +62,8 @@ const Login = () => {
       <Fragment>
         <h3> E-mail: </h3>
         <Input
+          autoFocus
+          required
           inputType="email"
           placeholder="Enter Email Address"
           aria-label="email"
@@ -75,9 +84,13 @@ const Login = () => {
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={validationError.email}
+          disabled={validationError.email || validationError.password}
           title="Submit!"
-          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          style={
+            !validationError.email && !validationError.password
+              ? { background: '#35BF2E' }
+              : { background: 'gray' }
+          }
           onClick={onSubmit}
           type="submit"
         />
