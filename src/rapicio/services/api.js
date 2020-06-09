@@ -8,9 +8,10 @@ const valideteUrl = rapicUrl + 'users/'; // check it!
 const refreshUrl = rapicUrl + 'refresh/'; // learn the related url!
 
 class Api {
+  // observe that using e-mail as username !!!
   async register(username, email, password, registerOnly) {
     let data = {
-      username: username,
+      username: email,
       email: email,
       password: password,
     };
@@ -44,9 +45,10 @@ class Api {
         });
     });
   }
-  async login(username, password) {
+  // observe that using e-mail as username !!!
+  async login(email, password) {
     let data = {
-      username: username,
+      username: email,
       password: password,
     };
     return new Promise((resolve, reject) => {
