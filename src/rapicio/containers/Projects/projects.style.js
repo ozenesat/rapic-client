@@ -6,7 +6,7 @@ const HeadingWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
   h1 {
     font-family: Imprima;
     font-size: 44px;
@@ -17,12 +17,8 @@ const HeadingWrapper = styled.div`
     @media screen and (max-width: 600px) {
       max-height: 60px;
     }
-    color: #4a4a4a;
-    background: linear-gradient(
-      180deg,
-      rgba(216, 216, 216, 1) 0%,
-      rgba(179, 179, 179, 1) 100%
-    );
+    color: #fff;
+    background-color: #35bf2e;
     :hover {
       opacity: 0.7;
     }
@@ -30,46 +26,40 @@ const HeadingWrapper = styled.div`
 `;
 
 const Card = styled.button`
-  background-color: #d8d8d8;
-  width: 23%;
-  height: 150px;
-  margin-bottom: 20px;
-  @media screen and (max-width: 1200px) {
-    width: 32%;
-  }
-  @media screen and (max-width: 991px) {
-    width: 48%;
-  }
-  @media screen and (max-width: 600px) {
-    width: 100%;
-  }
+  background-color: #fff;
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  font-family: Somatic;
 
   border-width: 0;
-  border-top-width: 5px;
-  border-color: #35bf2e;
+  border-top-width: 8px;
+  border-top-color: #35bf2e;
   border-top-style: solid;
-  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
   :hover {
     border-color: #ff7b00;
   }
+
   h2 {
-    font-size: 24px;
-    font-family: Imprima;
+    font-size: 22px;
   }
   h3 {
-    font-size: 18px;
-    font-family: Imprima;
+    font-size: 16px;
     font-weight: normal;
   }
+  min-width: 300px;
 `;
 
 const CardWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 50px;
-  flex-flow: row wrap;
-  width: 100%;
-  height: auto;
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 150px;
+  grid-gap: 20px;
+  margin-top: 75px;
+  height: 100%;
 `;
 
 export { HeadingWrapper, Card, CardWrapper };

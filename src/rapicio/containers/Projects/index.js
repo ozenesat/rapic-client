@@ -1,39 +1,48 @@
 import Container from 'common/src/components/UI/ContainerTwo';
 import Heading from 'common/src/components/Heading';
 import Button from 'common/src/components/Button';
-import { Modal, openModal, closeModal } from '@redq/reuse-modal';
 
+import ProjectModal from '../ProjectModal';
 import { Card, CardWrapper, HeadingWrapper } from './projects.style';
 
 function Projects() {
+  const [isModalOpen, setIsOpen] = React.useState(false);
+  const [projects] = React.useState([]);
+
+  function createProject(name, description) {
+    const project = { name, description, objectCount: 0 };
+    projects.push(project);
+    closeModal();
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
-    <Container>
+    <Container innerHeight="100%">
       <HeadingWrapper>
         <Heading as="h1" content="My Projects" />
-        <Button title="New Project" onClick={() => openModal({})} />
+        <Button title="New Project" onClick={() => openModal()} />
       </HeadingWrapper>
       <CardWrapper>
-        <Card>
-          <Heading as="h2" content="Project Example #1" />
-          <Heading as="h3" content="Lorem impus description" />
-        </Card>
-        <Card>
-          <Heading as="h2" content="Project Example #2" />
-          <Heading as="h3" content="Lorem impus description" />
-        </Card>
-        <Card>
-          <Heading as="h2" content="Project Example #3" />
-          <Heading as="h3" content="Lorem impus description" />
-        </Card>
-        <Card>
-          <Heading as="h2" content="Project Example #4" />
-          <Heading as="h3" content="Lorem impus description" />
-        </Card>
-        <Card>
-          <Heading as="h2" content="Project Example #4" />
-          <Heading as="h3" content="Lorem impus description" />
-        </Card>
+        {projects.map(({ name, description, objectsCount }) => (
+          <Card>
+            <Heading as="h2" content={name} />
+            <Heading as="h3" content={description} />
+            <Heading as="h3" content={`${objectsCount} objects`} />
+          </Card>
+        ))}
       </CardWrapper>
+      <ProjectModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        createProject={createProject}
+      />
     </Container>
   );
 }
