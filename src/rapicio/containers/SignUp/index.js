@@ -25,15 +25,16 @@ const SignUp = () => {
     email: false,
     password: false,
   });
+  const [controller, setController] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const handleEmailChange = event => {
     setEmail(event);
+    onController();
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
-      console.log(validationError.email);
     } else {
       setValidationError({ email: false });
     }
@@ -45,6 +46,7 @@ const SignUp = () => {
 
   const handlePass = event => {
     setPassword(event);
+    onController(event);
     if (!validatePassword(event) && event !== '') {
       setValidationError({ password: true });
     } else {
@@ -57,7 +59,6 @@ const SignUp = () => {
   };
 
   const onSubmit = () => {
-    console.log('hey');
     if (email !== '' && password !== '') {
       Api.register(username, password)
         .then(() => Router.replace('/#')) // bu calismiyor
@@ -67,7 +68,23 @@ const SignUp = () => {
       setRegistered(true);
     }
   };
-
+  const onController = () => {
+    if (password !== '') {
+      if (validationError.password) {
+        setController(true);
+      } else {
+        setController(false);
+      }
+    } else {
+      if (email === '') {
+        setController(false);
+      } else if (validationError.email) {
+        setController(true);
+      }
+    }
+  };
+  console.log(controller, 'cnt', validationError.password, 'pass');
+  // {!validationError.password && !validationError.email ? '8 digit password required.' : ''}
   var showRegister = () => {
     return (
       <Fragment>
@@ -99,8 +116,9 @@ const SignUp = () => {
           name="password"
           value={password}
           onChange={handlePass}
-          passwordShowHide={password}
+          passwordShowHide={true}
         />
+        {controller ? '8 digit password required.' : ''}
         <EyeButton></EyeButton>
         <h3> Confirmation: </h3>
         <Input
@@ -111,14 +129,14 @@ const SignUp = () => {
           name="password"
           value={passwordConfirmation}
           onChange={handleConfirmation}
-          passwordShowHide={password}
+          passwordShowHide={true}
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={validationError.email && validationError.Password}
+          disabled={validationError.email || validationError.password}
           title="Submit!"
           style={
-            !validationError.email && !validationError.Password
+            !validationError.email && !validationError.password
               ? { background: '#35BF2E' }
               : { background: 'gray' }
           }

@@ -14,6 +14,7 @@ import Section, {
   ImageGroup,
 } from './login.style';
 import { validateEmail } from '../../utils/utils';
+import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
 
 const Login = () => {
@@ -23,16 +24,12 @@ const Login = () => {
   const [validationError, setValidationError] = useState({ email: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [longEnough, setLongEnough] = useState(false);
-  const [disable, setDisable] = useState(!validationError.email && longEnough);
   const handleEmailChange = event => {
     setEmail(event);
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
-      setDisable(!validationError.email && longEnough);
     } else {
       setValidationError({ email: false });
-      setDisable(!validationError.email && longEnough);
     }
   };
 
@@ -42,15 +39,15 @@ const Login = () => {
 
   const handlePass = event => {
     setPassword(event);
-    if (password.length > 5 && event !== '') {
-      setLongEnough(true);
-      setDisable(!validationError.email && longEnough);
+    if (!validatePassword(event) && event !== '') {
+      setValidationError({ password: true });
+      console.log(validationError.password, 'password-error');
     } else {
-      console.log(password, 'pd1');
-      setLongEnough(false);
-      setDisable(!validationError.email && longEnough);
+      setValidationError({ password: false });
+      console.log(validationError.password, 'password-error');
     }
   };
+
   const onSubmit = () => {
     if (email !== '' && password !== '') {
       Api.login(email, password).catch(response => {
@@ -59,8 +56,7 @@ const Login = () => {
       setLogin(true);
     }
   };
-  // let disable = (!validationError.email && !longEnough)
-  console.log('di', disable, 'le', longEnough, 've', !validationError.email);
+
   var showLogin = () => {
     return (
       <Fragment>
@@ -88,9 +84,13 @@ const Login = () => {
         />
         <EyeButton></EyeButton>
         <Button
-          disabled={!disable}
+          disabled={validationError.email || validationError.password}
           title="Submit!"
-          style={disable ? { background: '#35BF2E' } : { background: 'grey' }}
+          style={
+            !validationError.email && !validationError.password
+              ? { background: '#35BF2E' }
+              : { background: 'gray' }
+          }
           onClick={onSubmit}
           type="submit"
         />
