@@ -6,7 +6,7 @@ import Button from 'common/src/components/Button';
 import Heading from 'common/src/components/Heading';
 import Container from 'common/src/components/UI/ContainerTwo';
 import { EyeButton } from './login.style';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Section, {
   ContentWrapper,
   BannerContent,
@@ -21,11 +21,16 @@ const Login = () => {
   /* when related page is ready remove registered parts and push the page into the related one. */
   const [login, setLogin] = useState(false);
   const [email, setEmail] = useState('');
-  const [validationError, setValidationError] = useState({ email: false });
+  const [validationError, setValidationError] = useState({
+    email: false,
+    password: false,
+  });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const handleEmailChange = event => {
     setEmail(event);
+    setSubmitted(false);
     if (!validateEmail(event) && event !== '') {
       setValidationError({ email: true });
     } else {
@@ -39,21 +44,28 @@ const Login = () => {
 
   const handlePass = event => {
     setPassword(event);
+    setSubmitted(false);
     if (!validatePassword(event) && event !== '') {
       setValidationError({ password: true });
-      console.log(validationError.password, 'password-error');
     } else {
       setValidationError({ password: false });
-      console.log(validationError.password, 'password-error');
     }
   };
+  const router = useRouter();
 
-  const onSubmit = () => {
+  const onSubmit = e => {
+    e.preventDefault();
     if (email !== '' && password !== '') {
-      Api.login(email, password).catch(response => {
-        console.log('failed to login');
-      });
-      setLogin(true);
+      Api.login(email, password);
+      // Globalden user veya accesstoken cekilebilir
+      if (document.cookie) {
+        setLogin(true);
+        // hazir olunca path'i update et!
+        router.push('/#');
+      } else {
+        setLogin(false);
+        setSubmitted(true);
+      }
     }
   };
 
@@ -94,6 +106,14 @@ const Login = () => {
           onClick={onSubmit}
           type="submit"
         />
+        {submitted ? (
+          <Text
+            style={{ color: 'red', marginTop: '0.25em' }}
+            content="Incorrect username or password."
+          />
+        ) : (
+          ''
+        )}
       </Fragment>
     );
   };
