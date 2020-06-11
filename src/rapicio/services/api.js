@@ -15,6 +15,7 @@ class Api {
       email: email,
       password: password,
     };
+    console.log(data, 'data');
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
@@ -32,7 +33,7 @@ class Api {
             reject(response.json());
           } else {
             if (!registerOnly) {
-              this.login(username, password).then(res => {
+              this.login(email, password).then(res => {
                 resolve(res);
               });
             } else {
