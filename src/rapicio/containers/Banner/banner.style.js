@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { themeGet } from 'styled-system';
-import illustration from 'common/src/assets/image/app/home.png';
+import illustration from 'common/src/assets/image/app/home2.gif';
 
 const Section = styled.section`
   background-image: url(${illustration});

@@ -30,15 +30,15 @@ const SignUp = () => {
   const [passError, setPassError] = useState(false);
   const [disable, setDisable] = useState(false);
 
-  const handleEmailChange = event => {
-    setEmail(event);
+  const handleEmailChange = mail => {
+    setEmail(mail);
     setSubmitted(false);
-    if (!validateEmail(event) && email.length !== 0) {
+    if (!validateEmail(mail) && mail !== '') {
       setEmailError(true);
       setDisable(true);
     } else {
       setEmailError(false);
-      if (passError || password.length < 8 || email.length === 0) {
+      if (passError || password === '' || mail === '') {
         setDisable(true);
       } else {
         setDisable(false);
@@ -46,19 +46,19 @@ const SignUp = () => {
     }
   };
 
-  const handleUser = event => {
-    setUsername(event);
+  const handleUser = user => {
+    setUsername(user);
   };
 
-  const handlePass = event => {
-    setPassword(event);
+  const handlePass = pass => {
+    setPassword(pass);
     setSubmitted(false);
-    if (!validatePassword(event) && password.length !== 0) {
+    if (!validatePassword(pass) && pass !== '') {
       setPassError(true);
       setDisable(true);
     } else {
       setPassError(false);
-      if (emailError || email.length === 0 || password.length === 0) {
+      if (emailError || email === '' || pass === '') {
         setDisable(true);
       } else {
         setDisable(false);
@@ -66,8 +66,8 @@ const SignUp = () => {
     }
   };
 
-  const handleConfirmation = event => {
-    setPasswordConfirmation(event);
+  const handleConfirmation = confirmation => {
+    setPasswordConfirmation(confirmation);
   };
   const router = useRouter();
   const onSubmit = e => {
