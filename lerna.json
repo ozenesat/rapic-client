@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "src/common",
+    "src/rapicio"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true
+}

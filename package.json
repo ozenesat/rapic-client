@@ -1,39 +1,55 @@
 {
   "name": "rapicio",
-  "version": "0.1.0",
+  "description": "Rapic io frontend",
+  "version": "0.0.1",
   "private": true,
-  "dependencies": {
-    "bootstrap": "^4.5.0",
-    "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+  "author": "Eren Algan",
+  "license": "",
+  "repository": {
+    "type": "git",
+    "url": ""
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2"
+    "@babel/cli": "^7.8.3",
+    "cpx": "^1.5.0",
+    "cross-env": "^7.0.0",
+    "firebase-tools": "7.12.1",
+    "husky": "^4.2.1",
+    "lerna": "^3.20.2",
+    "lint-staged": "^10.0.3",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.1"
   },
+  "workspaces": [
+    "src/common",
+    "src/rapicio"
+  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test"
+    "clean": "lerna clean --yes && rimraf node_modules",
+    "start": "lerna run --parallel dev",
+    "preweb": "cpx \"src/common/src/assets/image/**/*.*\" \"src/rapicio/static\" -C",
+    "next-dev": "yarn workspace next-landing run dev",
+    "next-build": "rimraf dist && yarn workspace next-landing run build",
+    "next-start": "yarn workspace next-landing run start",
+    "next-export": "yarn workspace next-landing run export",
+    "prebuild-public": "rimraf \"dist/functions/**\" && rimraf \"dist/public\"",
+    "build-public": "cpx \"src/common/src/assets/**/*.*\" \"dist/public/static\" -C && cpx \"public/**/*.*\" \"dist/public\" -C && cpx \"src/rapicio/public/**/*.*\" \"dist/public\" -C",
+    "build-funcs": "babel \"src/functions\" --out-dir \"dist/functions\"",
+    "copy-deps": "cpx \"src/rapicio/*{package.json,package-lock.json,yarn.lock}\" \"dist/functions\" -C",
+    "install-deps": "cd \"dist/functions\" && yarn",
+    "netlify-deploy": "yarn workspace next-landing run netlify-build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "lint-staged": {
+    "*.{js,md,css}": [
+      "prettier --trailing-comma es5 --single-quote --write"
     ]
+  },
+  "dependencies": {
+    "polished": "^3.4.4"
   }
 }
