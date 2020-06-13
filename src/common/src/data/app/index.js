@@ -8,9 +8,14 @@ import news1 from '../../assets/image/app/news/1.png';
 import news2 from '../../assets/image/app/news/2.png';
 import news3 from '../../assets/image/app/news/3.png';
 import news4 from '../../assets/image/app/news/4.png';
+import LogoImage from '../../assets/image/app/logo.png';
 
 export const data = {
   navItems: [
+    {
+      path: '/#',
+      offset: '0',
+    },
     {
       label: 'Features',
       path: '#features',
@@ -32,6 +37,59 @@ export const data = {
       offset: '70',
     },*/
   ],
+  footerItems: {
+    first: [
+      {
+        label: 'Home',
+        path: '/#',
+        offset: '70',
+      },
+      {
+        label: 'Features',
+        path: '#features',
+        offset: '70',
+      },
+      {
+        label: 'Products',
+        path: '#products',
+        offset: '70',
+      },
+    ],
+    //   second: [
+    //   {
+    //     label: 'Home',
+    //     path: '/#',
+    //     offset: '70',
+    //   },
+    //   {
+    //     label: 'Features',
+    //     path: '#features',
+    //     offset: '70',
+    //   },
+    //   {
+    //     label: 'Products',
+    //     path: '#products',
+    //     offset: '70',
+    //   },
+    // ],
+    third: [
+      {
+        label: 'Github',
+        path: 'https://github.com/rapic',
+        offset: '70',
+      },
+      {
+        label: 'LinkedIn',
+        path: 'https://www.linkedin.com/company/rapic/',
+        offset: '70',
+      },
+      {
+        label: 'Instagram',
+        path: 'https://www.instagram.com/rapic.io/',
+        offset: '70',
+      },
+    ],
+  },
   services: [
     {
       id: 1,
