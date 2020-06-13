@@ -21,25 +21,8 @@ const Footer = () => {
             Copyright &copy; {new Date().getFullYear()}
           </Copyright>
           <FooterWidget>
-            <h3>About-1</h3>
-            <a href="/#" offset="70" className="widgetListItem">
-              Home
-            </a>
-            <a href="#features" offset="70" className="widgetListItem">
-              Features
-            </a>
-            <a href="#products" offset="70" className="widgetListItem">
-              Products
-            </a>
-          </FooterWidget>
-          <FooterWidget>
-            <h3>About-2</h3>
-            <li>
-              <AnchorLink href="/#" offset="70">
-                Home
-              </AnchorLink>
-            </li>
-            {data.navItems.map((menu, index) => (
+            <h3>About</h3>
+            {data.footerItems.first.map((menu, index) => (
               <li key={`menu_key${index}`}>
                 <AnchorLink href={menu.path} offset={menu.offset}>
                   {menu.label}
@@ -47,18 +30,23 @@ const Footer = () => {
               </li>
             ))}
           </FooterWidget>
-          <FooterWidget>
-            <h3>About-3</h3>
-            <li>
-              <AnchorLink href="/#" offset="70">
-                Home
-              </AnchorLink>
-            </li>
-            {data.navItems.map((menu, index) => (
+          {/*<FooterWidget>
+            <h3>Help-2</h3>
+            {data.footerItems.second.map((menu, index) => (
               <li key={`menu_key${index}`}>
                 <AnchorLink href={menu.path} offset={menu.offset}>
                   {menu.label}
                 </AnchorLink>
+              </li>
+            ))}
+          </FooterWidget>*/}
+          <FooterWidget>
+            <h3>Follow us</h3>
+            {data.footerItems.third.map((menu, index) => (
+              <li key={`menu_key${index}`}>
+                <Link href={menu.path} target="_blank" offset={menu.offset}>
+                  {menu.label}
+                </Link>
               </li>
             ))}
           </FooterWidget>
