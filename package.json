@@ -18,7 +18,12 @@
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.1"
+    "rimraf": "^3.0.1",
+    "next": "^9.2.2",
+    "next-compose-plugins": "^2.2.0",
+    "next-fonts": "1.0.3",
+    "next-optimized-images": "^2.5.4",
+    "next-transpile-modules": "^3.0.2"
   },
   "workspaces": [
     "src/common",
