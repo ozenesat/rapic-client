@@ -22,7 +22,6 @@ export const GlobalStyle = createGlobalStyle`
   section {
     position: relative;
   }
-
 `;
 
 export const ContentWrapper = styled.div`

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import InputField, { EyeButton } from './input.style';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import InputField, { EyeButton } from "./input.style";
 const Input = ({
   label,
   value,
@@ -19,7 +19,7 @@ const Input = ({
   const [state, setState] = useState({
     toggle: false,
     focus: false,
-    value: '',
+    value: "",
   });
 
   // toggle function
@@ -31,7 +31,7 @@ const Input = ({
   };
 
   // add focus class
-  const handleOnFocus = event => {
+  const handleOnFocus = (event) => {
     setState({
       ...state,
       focus: true,
@@ -40,7 +40,7 @@ const Input = ({
   };
 
   // remove focus class
-  const handleOnBlur = event => {
+  const handleOnBlur = (event) => {
     setState({
       ...state,
       focus: false,
@@ -49,7 +49,8 @@ const Input = ({
   };
 
   // handle input value
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
+    console.log(event);
     setState({
       ...state,
       value: event.target.value,
@@ -59,10 +60,10 @@ const Input = ({
 
   // get input focus class
   const getInputFocusClass = () => {
-    if (state.focus === true || state.value !== '') {
-      return 'is-focus';
+    if (state.focus === true || state.value !== "") {
+      return "is-focus";
     } else {
-      return '';
+      return "";
     }
   };
 
@@ -70,11 +71,11 @@ const Input = ({
   let inputElement, htmlFor;
 
   // Add all classs to an array
-  const addAllClasses = ['reusecore__input'];
+  const addAllClasses = ["reusecore__input"];
 
   // Add is-material class
   if (isMaterial) {
-    addAllClasses.push('is-material');
+    addAllClasses.push("is-material");
   }
 
   // Add icon position class if input element has icon
@@ -89,24 +90,24 @@ const Input = ({
 
   // if lable is not empty
   if (label) {
-    htmlFor = label.replace(/\s+/g, '_').toLowerCase();
+    htmlFor = label.replace(/\s+/g, "_").toLowerCase();
   }
 
   // Label position
-  const LabelPosition = isMaterial === true ? 'bottom' : 'top';
+  const LabelPosition = isMaterial === true ? "bottom" : "top";
 
   // Label field
   const LabelField = label && <label htmlFor={htmlFor}>{label}</label>;
 
   // Input type check
   switch (inputType) {
-    case 'textarea':
+    case "textarea":
       inputElement = (
         <textarea
           {...props}
           id={htmlFor}
           name={htmlFor}
-          value={state.value}
+          value={value}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}
@@ -114,14 +115,14 @@ const Input = ({
       );
       break;
 
-    case 'password':
+    case "password":
       inputElement = (
         <div className="field-wrapper">
           <input
             {...props}
             id={htmlFor}
             name={htmlFor}
-            type={state.toggle ? 'text' : 'password'}
+            type={state.toggle ? "text" : "password"}
             value={state.value}
             onChange={handleOnChange}
             onBlur={handleOnBlur}
@@ -130,7 +131,7 @@ const Input = ({
           {passwordShowHide && (
             <EyeButton
               onClick={handleToggle}
-              className={state.toggle ? 'eye-closed' : 'eye'}
+              className={state.toggle ? "eye-closed" : "eye"}
             >
               <span />
             </EyeButton>
@@ -147,7 +148,7 @@ const Input = ({
             id={htmlFor}
             name={htmlFor}
             type={inputType}
-            value={state.value}
+            value={value}
             onChange={handleOnChange}
             onBlur={handleOnBlur}
             onFocus={handleOnFocus}
@@ -159,12 +160,12 @@ const Input = ({
 
   return (
     <InputField
-      className={`${addAllClasses.join(' ')} ${getInputFocusClass()}`}
+      className={`${addAllClasses.join(" ")} ${getInputFocusClass()}`}
     >
-      {LabelPosition === 'top' && LabelField}
+      {LabelPosition === "top" && LabelField}
       {inputElement}
       {isMaterial && <span className="highlight" />}
-      {LabelPosition === 'bottom' && LabelField}
+      {LabelPosition === "bottom" && LabelField}
     </InputField>
   );
 };
@@ -178,7 +179,7 @@ Input.propTypes = {
   label: PropTypes.string,
 
   /** The input value, required for a controlled component. */
-  // value: PropTypes.oneOf(['string', 'number']),
+  value: PropTypes.string,
 
   /** Make default input into material style input. */
   isMaterial: PropTypes.bool,
@@ -188,11 +189,11 @@ Input.propTypes = {
 
   /** Set input type of the input element. Default type is text. */
   inputType: PropTypes.oneOf([
-    'text',
-    'email',
-    'password',
-    'number',
-    'textarea',
+    "text",
+    "email",
+    "password",
+    "number",
+    "textarea",
   ]),
 
   /** Add icon in input field. This prop will not work with password
@@ -201,7 +202,7 @@ Input.propTypes = {
   icon: PropTypes.object,
 
   /** Set input field icon position. Default position is 'left'. */
-  iconPosition: PropTypes.oneOf(['left', 'right']),
+  iconPosition: PropTypes.oneOf(["left", "right"]),
 
   /**
    * @ignore
@@ -224,9 +225,9 @@ Input.propTypes = {
 
 /** Inout default type. */
 Input.defaultProps = {
-  inputType: 'text',
+  inputType: "text",
   isMaterial: false,
-  iconPosition: 'left',
+  iconPosition: "left",
   onBlur: () => {},
   onFocus: () => {},
   onChange: () => {},

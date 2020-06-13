@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import Head from "next/head";
 import Sticky from "react-stickynode";
 import { ThemeProvider } from "styled-components";
@@ -7,10 +7,20 @@ import { ResetCSS } from "common/src/assets/css/style";
 import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
 import { DrawerProvider } from "common/src/contexts/DrawerContext";
 import Navbar from "../../containers/Navbar";
-import Login from "../../containers/Login";
-import Footer from "../../containers/Footer";
+import Dashboard from "../../containers/Dashboard";
+import API from "../../services/api";
+import { useActionState, useAppState } from "../../components/AppContext";
 
-function LoginPage() {
+function DashboardPage({ projects }) {
+  const globalState = useAppState();
+  const setGlobalState = useActionState();
+
+  useEffect(() => {
+    console.log(globalState);
+
+    setGlobalState({ type: "ADD_PROJECTS", payload: projects });
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -33,12 +43,18 @@ function LoginPage() {
               <Navbar />
             </DrawerProvider>
           </Sticky>
-          <Login />
-          <Footer />
+          <Dashboard />
         </ContentWrapper>
       </Fragment>
     </ThemeProvider>
   );
 }
 
-export default LoginPage;
+export async function getStaticProps({ params }) {
+  const projects = await API.getRapicProjects();
+
+  // Pass post data to the page via props
+  return { props: { projects } };
+}
+
+export default DashboardPage;

@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import Head from 'next/head';
 import Sticky from 'react-stickynode';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { theme } from 'common/src/theme/app';
 import { ResetCSS } from 'common/src/assets/css/style';
+
 import { GlobalStyle, ContentWrapper } from '../containers/rapic.style';
 import { DrawerProvider } from 'common/src/contexts/DrawerContext';
 import Navbar from '../containers/Navbar';
@@ -12,6 +13,10 @@ import Service from '../containers/Service';
 import Products from '../containers/Products';
 // import Pricing from '../containers/Pricing';
 import Footer from '../containers/Footer';
+import Heading from 'common/src/components/Heading';
+import Container from 'common/src/components/UI/ContainerTwo';
+import Button from 'common/src/components/Button';
+import Projects from '../containers/Projects';
 
 function LandingPage () {
   return (
