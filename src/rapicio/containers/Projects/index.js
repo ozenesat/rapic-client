@@ -1,12 +1,12 @@
-import React from 'react';
-import Container from 'common/src/components/UI/ContainerTwo';
-import Heading from 'common/src/components/Heading';
-import Button from 'common/src/components/Button';
-import API from '../../services/api';
-import Router from 'next/router';
+import React from "react";
+import Container from "common/src/components/UI/ContainerTwo";
+import Heading from "common/src/components/Heading";
+import Button from "common/src/components/Button";
+import API from "../../services/api";
+import Router from "next/router";
 
-import ProjectModal from '../ProjectModal';
-import { Card, CardWrapper, HeadingWrapper } from './projects.style';
+import ProjectModal from "../ProjectModal";
+import { Card, CardWrapper, HeadingWrapper } from "./projects.style";
 
 class Projects extends React.Component {
   state = {
@@ -17,23 +17,22 @@ class Projects extends React.Component {
 
   componentWillMount() {
     API.getRapicProjects()
-      .then(projects => this.setState({ projects, isLoading: false }))
-      .catch(err => this.setState({ projects: [], isLoading: false }));
+      .then((projects) => this.setState({ projects, isLoading: false }))
+      .catch((err) => this.setState({ projects: [], isLoading: false }));
   }
 
-  setModalState = isModalOpen => {
+  setModalState = (isModalOpen) => {
     this.setState({ isModalOpen });
   };
 
   createProject = (name, description) => {
+    const { projects } = this.state;
     API.createProject({ name, description })
-      .then(project => {
+      .then((project) => {
         this.setModalState(false);
-        this.setState(prevState => ({
-          projects: prevState.projects.push(project),
-        }));
+        this.setState({ projects: [project, ...projects] });
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -54,7 +53,7 @@ class Projects extends React.Component {
   };
 
   render() {
-    const { isModalOpen, projects, isLoading } = this.state;
+    const { isModalOpen, isLoading } = this.state;
     return (
       <Container>
         <HeadingWrapper>
