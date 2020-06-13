@@ -7,7 +7,7 @@ import {
   FieldsWrapper,
   Field,
   ButtonWrapper,
-} from "./add/add.style";
+} from "../../../../pagestyles/projects/endpoints/add/add.style";
 import {
   Title,
   Section,

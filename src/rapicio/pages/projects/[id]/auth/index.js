@@ -1,5 +1,5 @@
 import Projects from "../../../../containers/Projects";
-import { Container, Text, RadioWrapper } from "./auth.style";
+import { Container, Text, RadioWrapper } from "../../../../pagestyles/projects/auth/auth.style";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import Radio from "common/src/components/Radio";
