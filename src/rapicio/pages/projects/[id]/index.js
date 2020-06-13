@@ -6,7 +6,7 @@ import {
   Section,
   ButtonWrapper,
 } from "./../../../containers/ProjectModal/projectmodal.style";
-import { Container, DangerZoneWrapper, Line } from "./project.style";
+import { Container, DangerZoneWrapper, Line } from "../../../pagestyles/projects/project.style";
 import API from "../../../services/api";
 import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
