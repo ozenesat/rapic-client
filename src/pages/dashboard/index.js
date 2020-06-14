@@ -48,4 +48,16 @@ function DashboardPage({ projects }) {
   );
 }
 
+export async function getStaticProps({ params }) {
+  let projects = [];
+  try {
+    projects = await API.getRapicProjects();
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Pass post data to the page via props
+  return { props: { projects } };
+}
+
 export default DashboardPage;
