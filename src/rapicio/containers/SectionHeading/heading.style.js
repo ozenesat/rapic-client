@@ -17,8 +17,9 @@ const HGroup = styled.hgroup`
   h1 {
     color: ${themeGet('colors.textPrimary')};
     font-family: Imprima;
+    color: #000;
     font-weight: 300;
-    font-size: 2.5em;
+    font-size: 40px;
     line-height: 50px;
     padding: 0.1em;
     letter-spacing: -0.5px;

@@ -55,10 +55,10 @@ export const BannerContent = styled.div`
   }
   h1 {
     font-family: Imprima;
-    font-size: 48px;
+    font-size: 40px;
     line-height: 70px;
     font-weight: 700;
-    color: ${themeGet('colors.menu', '#02073e')};
+    color: #000;
     margin-bottom: 24px;
     letter-spacing: -1px;
     margin-top: 0;
@@ -88,9 +88,9 @@ export const BannerContent = styled.div`
     }
   }
   .banner-caption {
-    color: ${themeGet('colors.paragraph', '#02073E')};
+    color: #000;
     font-size: 18px;
-    line-height: 33px;
+    line-height: 28px;
     font-weight: 400;
     margin-bottom: 20;
     @media only screen and (max-width: 1440px) {
@@ -107,12 +107,15 @@ export const BannerContent = styled.div`
       font-size: 16px;
     }
   }
-  .banner-thanks {
-    color: ${themeGet('colors.rapicGreen', '#02073E')};
+  .banner-content {
+    color: #475b5b;
     font-size: 18px;
-    line-height: 33px;
+    line-height: 21px;
     font-weight: 400;
     margin-bottom: 0;
+    h3 {
+      color: #000;
+    }
     @media only screen and (max-width: 1440px) {
       font-size: 16px;
     }

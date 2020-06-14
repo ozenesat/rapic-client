@@ -6,7 +6,7 @@ import Image from 'common/src/components/Image';
 import Link from 'common/src/components/Link';
 import { Section, FooterWidget, FooterBottom, Copyright } from './footer.style';
 import { data } from 'common/src/data/app';
-import Logo from 'common/src/assets/image/app/logo.png';
+import Logo from 'common/src/assets/image/app/footer_logo.png';
 
 const Footer = () => {
   // Find & Add `Help & Follow Us` items into data/app then call on lists below.

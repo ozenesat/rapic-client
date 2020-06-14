@@ -55,9 +55,9 @@ export const BannerContent = styled.div`
   h1 {
     font-family: Imprima;
     font-size: 48px;
-    line-height: 70px;
+    line-height: 54px;
     font-weight: 700;
-    color: ${themeGet('colors.menu', '#02073e')};
+    color: ${themeGet('colors.menu', '#000')};
     margin-bottom: 24px;
     letter-spacing: -1px;
     margin-top: 0;
@@ -87,9 +87,9 @@ export const BannerContent = styled.div`
     }
   }
   .banner-caption {
-    color: ${themeGet('colors.paragraph', '#02073E')};
+    color: ${themeGet('colors.paragraph', '#000')};
     font-size: 18px;
-    line-height: 33px;
+    line-height: 28px;
     font-weight: 400;
     margin-bottom: 0;
     @media only screen and (max-width: 1440px) {

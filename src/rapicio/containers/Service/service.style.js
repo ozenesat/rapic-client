@@ -41,7 +41,8 @@ export const ServiceWrapper = styled.div`
     height: 100%;
   }
   .serviceItem {
-    padding: 50px 50px 60px;
+    padding: 50px 30px 60px;
+    min-height: max-content;
     @media screen and (max-width: 480px) {
       padding: 25px 25px 20px;
       display: flex;
@@ -65,9 +66,10 @@ export const ServiceWrapper = styled.div`
     }
     &:hover {
       box-shadow: 0px 20px 50px rgba(59, 90, 136, 0.05);
+      padding: 50px 30px 10px;
       cursor: pointer;
       &::before {
-        opacity: 1;
+        opacity: 0.9;
       }
     }
     .thumbnail {
@@ -76,10 +78,10 @@ export const ServiceWrapper = styled.div`
     }
     .title {
       font-weight: bold;
-      font-size: 18px;
+      font-size: 24px;
       text-align: center;
       line-height: 30px;
-      color: #0f2137;
+      color: #000;
       @media screen and (max-width: 480px) {
         text-align: center;
       }
@@ -88,9 +90,9 @@ export const ServiceWrapper = styled.div`
       text-align: center;
     }
     .excerpt {
-      font-size: 16px;
-      line-height: 30px;
-      color: #343d48;
+      font-size: 18px;
+      line-height: 21px;
+      color: #475b5b;
       @media screen and (max-width: 480px) {
         text-align: center;
       }

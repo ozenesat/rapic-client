@@ -4,10 +4,11 @@ import Text from 'common/src/components/Text';
 import Heading from 'common/src/components/Heading';
 import Container from 'common/src/components/UI/ContainerTwo';
 import Section, { ContentWrapper, BannerContent } from './products.style';
+import { data } from 'common/src/data/app';
 
 const Products = () => {
   return (
-    <Section id="products">
+    <Section id="product">
       <Container>
         <ContentWrapper>
           <BannerContent>
@@ -16,12 +17,14 @@ const Products = () => {
               className="banner-caption"
               content="Now you can focus on building your app instead of managing servers or worrying about consistency."
             />
-            <Heading as="h3" content={'Logic'} />
-            <Text content="Transfrom data to fit any schema. You can also make a conditional flow using methods." />
-            <Heading as="h3" content={'Data'} />
-            <Text content="Insert any data to your database. Simply connect the dots by using the method including GET/POST/DELETE!" />
-            <Heading as="h3" content={'Integrations'} />
-            <Text content="Build entire workflows are super easy to have Zapier, Stripe, and launching more..." />
+            <div className="banner-content">
+              {data.products.map(product => (
+                <>
+                  <Heading as="h3" content={product.title} />
+                  <Text content={product.desc} />
+                </>
+              ))}
+            </div>
           </BannerContent>
         </ContentWrapper>
       </Container>
