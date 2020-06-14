@@ -6,16 +6,13 @@ import illustration from 'common/src/assets/image/app/home2.gif';
 const Section = styled.section`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 37%;
+  background-size: 50%;
   background-position: right center;
   background-repeat: no-repeat;
   min-height: 70vh;
   @media only screen and (max-width: 1440px) {
     min-height: auto;
     background-size: 45%;
-  }
-  @media only screen and (max-width: 1024px) {
-    background-size: 35%;
   }
   @media only screen and (max-width: 999px) {
     background: transparent;
@@ -31,14 +28,14 @@ export const Illustration = styled.div``;
 export const BannerContent = styled.div`
   max-width: 48%;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 150px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
   }
   @media only screen and (max-width: 1400px) {
-    padding-top: 60px;
-    padding-bottom: 100px;
+    padding-top: 1px;
+    padding-bottom: 1px;
   }
   @media only screen and (max-width: 1024px) {
     max-width: 44%;
@@ -46,11 +43,11 @@ export const BannerContent = styled.div`
   @media only screen and (max-width: 999px) {
     max-width: 100%;
     padding-top: 30px;
-    padding-bottom: 80px;
+    padding-bottom: 30px;
   }
   @media only screen and (max-width: 480px) {
     padding-top: 30px;
-    padding-bottom: 60px;
+    padding-bottom: 30px;
   }
   h1 {
     font-family: Imprima;
@@ -87,7 +84,7 @@ export const BannerContent = styled.div`
     }
   }
   .banner-caption {
-    color: ${themeGet('colors.paragraph', '#000')};
+    color: #000;
     font-size: 18px;
     line-height: 28px;
     font-weight: 400;
@@ -107,7 +104,7 @@ export const BannerContent = styled.div`
     }
   }
   .banner-thanks {
-    color: ${themeGet('colors.rapicGreen', '#02073E')};
+    color: #02073E;
     font-size: 18px;
     line-height: 33px;
     font-weight: 400;
