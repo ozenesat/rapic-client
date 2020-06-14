@@ -85,34 +85,4 @@ const ProjectPage = ({ project }) => {
   );
 };
 
-export async function getStaticPaths() {
-  const projects = await API.getRapicProjects();
-  const paths = projects ? projects.map((project) => ({
-    params: { id: `${project.id}` },
-  })) : [];
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const project = {
-    id: 104,
-    name: "Deneme",
-    description: "deneme project",
-    auth_method: "undefined",
-    endpoints: [
-      {
-        id: 1,
-        name: "getproject",
-        description: "return all projects",
-        fields: [{ id: 1, name: "id", fieldtype: 1 }],
-      },
-    ],
-  };
-  return { props: { project } };
-}
-
 export default ProjectPage;

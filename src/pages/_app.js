@@ -7,7 +7,6 @@ import { AppProvider } from "../components/AppContext";
 
 class MyApp extends App {
   static async getInitialProps(ctx) {
-    console.log(ctx);
     return {};
   }
   render() {

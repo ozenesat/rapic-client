@@ -16,8 +16,6 @@ function DashboardPage({ projects }) {
   const setGlobalState = useActionState();
 
   useEffect(() => {
-    console.log(globalState);
-
     setGlobalState({ type: "ADD_PROJECTS", payload: projects });
   }, []);
 
@@ -48,13 +46,6 @@ function DashboardPage({ projects }) {
       </Fragment>
     </ThemeProvider>
   );
-}
-
-export async function getStaticProps({ params }) {
-  const projects = await API.getRapicProjects();
-
-  // Pass post data to the page via props
-  return { props: { projects } };
 }
 
 export default DashboardPage;

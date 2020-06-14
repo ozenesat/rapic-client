@@ -73,7 +73,6 @@ const Login = () => {
     if (email !== '' && password !== '') {
       Api.login(email, password)
         .then((res) => {
-          console.log(res, 'res')
           document.cookie = `refresh = ${res.refresh}`
           // setGlobalState({ access: res.access, user: email })
         })
