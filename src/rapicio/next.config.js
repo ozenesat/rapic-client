@@ -22,7 +22,8 @@ module.exports = withPlugins(
     withCSS,
   ],
   {
-    distDir: '../../dist/functions/next',
+    target: 'serverless',
+    // distDir: '../../dist/functions/next',
     exportPathMap: () => {
       return {
         "/": { page: "/" },
