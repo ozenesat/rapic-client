@@ -15,7 +15,7 @@ function Dashboard() {
   const globalState = useAppState();
 
   function renderProjects() {
-    return globalState.projects.map(({ name, description, id }) => (
+    return globalState.projects && globalState.projects.map(({ name, description, id }) => (
       <Link href="/projects/[id]" as={`/projects/${id}`}>
         <Card>
           <Heading as="h2" content={name} />

@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { route } from "next/dist/next-server/server/router";
 
 const ProjectPage = ({ project }) => {
-  console.log({ project });
+  // console.log({ project });
   const router = useRouter();
   const { id } = router.query;
   const [name, onChangeName] = useState("");
@@ -31,7 +31,7 @@ const ProjectPage = ({ project }) => {
   }, []);
 
   return (
-    <Projects endpoints={project.endpoints}>
+    <Projects endpoints={project && project.endpoints}>
       <Container>
         <Heading as="h2" content="Projects Settings" />
         <Content>
@@ -87,9 +87,10 @@ const ProjectPage = ({ project }) => {
 
 export async function getStaticPaths() {
   const projects = await API.getRapicProjects();
-  const paths = projects.map((project) => ({
+  const paths = projects ? projects.map((project) => ({
     params: { id: `${project.id}` },
-  }));
+  })) : [];
+
   return {
     paths,
     fallback: true,

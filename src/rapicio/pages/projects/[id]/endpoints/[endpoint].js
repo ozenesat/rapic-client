@@ -24,9 +24,9 @@ function Endpoints({ project, endpoint }) {
   const router = useRouter();
   const { id } = router.query;
 
-  const [name, onChangeName] = useState(endpoint.name);
-  const [description, onChangeDescription] = useState(endpoint.description);
-  const [fields, addField] = useState(endpoint.fields);
+  const [name, onChangeName] = useState(endpoint && endpoint.name);
+  const [description, onChangeDescription] = useState(endpoint && endpoint.description);
+  const [fields, addField] = useState(endpoint && endpoint.fields);
 
   function covertFieldType(type) {
     const types = {
@@ -66,12 +66,11 @@ function Endpoints({ project, endpoint }) {
       app: id * 1,
       model_name: name,
       description,
-      rapicfields: fields.map((item) => {
+      rapicfields: fields && fields.map((item) => {
         item.fieldtype = 1;
         return item;
       }),
     };
-    console.log(enpoint);
   }
 
   function checkFields() {
@@ -89,7 +88,7 @@ function Endpoints({ project, endpoint }) {
   }
 
   return (
-    <Projects endpoints={project.endpoints}>
+    <Projects endpoints={project && project.endpoints}>
       <Container>
         <Heading as="h2" content="Enpoint Settings" />
         <Content>
@@ -123,7 +122,7 @@ function Endpoints({ project, endpoint }) {
             onClick={() => handleAddField()}
           />
           <FieldsWrapper>
-            {fields.map((item, index) => (
+            {fields && fields.map((item, index) => (
               <Field>
                 <DropdownMenu
                   content={

@@ -52,7 +52,7 @@ function EndpointAddPage({ project }) {
       app: id * 1,
       model_name: name,
       description,
-      rapicfields: fields.map((item) => {
+      rapicfields: fields && fields.map((item) => {
         item.fieldtype = 1;
         return item;
       }),
@@ -113,7 +113,7 @@ function EndpointAddPage({ project }) {
             onClick={() => handleAddField()}
           />
           <FieldsWrapper>
-            {fields.map((item, index) => (
+            {fields && fields.map((item, index) => (
               <Field>
                 <DropdownMenu
                   content={item.fieldtype !== "" ? item.fieldtype : "TYPE >"}

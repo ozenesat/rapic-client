@@ -6,7 +6,7 @@ import Radio from "common/src/components/Radio";
 
 function Auth({ project }) {
   return (
-    <Projects endpoints={project.endpoints}>
+    <Projects endpoints={project && project.endpoints}>
       <Container>
         <Heading as="h2" content="Authentication" />
         <Text>Control access to your Rapic API endpoints: </Text>

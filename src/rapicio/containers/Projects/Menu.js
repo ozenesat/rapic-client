@@ -45,7 +45,7 @@ function Menu({ endpoints }) {
           />
         </TitleWrapper>
 
-        {endpoints.map((enpoint) => (
+        {endpoints && endpoints.map((enpoint) => (
           <Link
             href={`/projects/[id]/endpoints/${enpoint.name}`}
             as={`/projects/${id}/endpoints/${enpoint.name}`}
