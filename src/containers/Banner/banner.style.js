@@ -29,12 +29,14 @@ export const Illustration = styled.div``;
 export const BannerContent = styled.div`
   max-width: 48%;
   width: 100%;
+  padding-top: 100px;
+  padding-bottom: 150px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
   }
   @media only screen and (max-width: 1400px) {
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 60px;
+    padding-bottom: 100px;
   }
   @media only screen and (max-width: 1024px) {
     max-width: 44%;
@@ -42,11 +44,11 @@ export const BannerContent = styled.div`
   @media only screen and (max-width: 999px) {
     max-width: 100%;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 80px;
   }
   @media only screen and (max-width: 480px) {
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 60px;
   }
   h1 {
     font-family: Imprima;

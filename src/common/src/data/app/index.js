@@ -38,23 +38,23 @@ export const data = {
     },*/
   ],
   footerItems: {
-    first: [
-      {
-        label: 'Home',
-        path: '/#',
-        offset: '70',
-      },
-      {
-        label: 'Features',
-        path: '#features',
-        offset: '70',
-      },
-      {
-        label: 'Products',
-        path: '#products',
-        offset: '70',
-      },
-    ],
+    // first: [
+    //   {
+    //     label: 'Home',
+    //     path: '/#',
+    //     offset: '70',
+    //   },
+    //   {
+    //     label: 'Features',
+    //     path: '#features',
+    //     offset: '70',
+    //   },
+    //   {
+    //     label: 'Products',
+    //     path: '#products',
+    //     offset: '70',
+    //   },
+    // ],
     //   second: [
     //   {
     //     label: 'Home',
@@ -77,16 +77,19 @@ export const data = {
         label: 'Github',
         path: 'https://github.com/rapic',
         offset: '70',
+        icon: <i class="fab fa-github fa-3x"></i>
       },
       {
         label: 'Facebook',
         path: 'https://www.facebook.com/getrapic/',
         offset: '70',
+        icon:<i class="fab fa-facebook fa-3x"></i>
       },
       {
         label: 'Instagram',
         path: 'https://www.instagram.com/getrapic/',
         offset: '70',
+        icon:<i class="fab fa-instagram fa-3x"></i>
       },
     ],
   },

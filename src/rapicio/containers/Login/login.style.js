@@ -31,8 +31,6 @@ export const Illustration = styled.div``;
 export const BannerContent = styled.div`
   max-width: 38%;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 150px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
   }

@@ -20,7 +20,7 @@ const Footer = () => {
             </a>
             Copyright &copy; {new Date().getFullYear()}
           </Copyright>
-          <FooterWidget>
+          {/*<FooterWidget>
             <h3>About</h3>
             {data.footerItems.first.map((menu, index) => (
               <li key={`menu_key${index}`}>
@@ -30,7 +30,7 @@ const Footer = () => {
               </li>
             ))}
           </FooterWidget>
-          {/*<FooterWidget>
+          <FooterWidget>
             <h3>Help-2</h3>
             {data.footerItems.second.map((menu, index) => (
               <li key={`menu_key${index}`}>
@@ -41,11 +41,10 @@ const Footer = () => {
             ))}
           </FooterWidget>*/}
           <FooterWidget>
-            <h3>Follow us</h3>
             {data.footerItems.third.map((menu, index) => (
               <li key={`menu_key${index}`}>
                 <Link href={menu.path} target="_blank" offset={menu.offset}>
-                  {menu.label}
+                  {menu.icon}
                 </Link>
               </li>
             ))}

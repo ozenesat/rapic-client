@@ -36,14 +36,13 @@ export const FooterWidget = styled.div`
   margin-right: 15px;
   margin-bottom: 60px;
   display: flex;
-  flex-direction: column;
-
+  flex-direction: row;
   &:last-child {
     margin-right: 0;
   }
   .widgetListItem {
     a {
-      color: ${rgba('#02073e', 0.8)};
+      color: ${rgba('#01173e', 0.8)};
       font-size: 14px;
       line-height: 2;
       &:hover {
@@ -55,7 +54,7 @@ export const FooterWidget = styled.div`
 
 export const FooterBottom = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   border-top: 1px solid #d9e0e7;
   padding: 20px 0;
   @media screen and (max-width: 768px) {
@@ -69,7 +68,7 @@ export const Copyright = styled.p`
   line-height: 18px;
   margin: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   @media screen and (max-width: 480px) {
     flex-direction: column;
   }

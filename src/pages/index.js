@@ -32,6 +32,8 @@ function LandingPage () {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Imprima:400,400i,700,700i|DM+Sans:400,400i,500,500i,700,700i&display=swap"
           />
+          {/*<!-- Font Awesome icons (free version)-->*/}
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         </Head>
         <ResetCSS />
         <GlobalStyle />

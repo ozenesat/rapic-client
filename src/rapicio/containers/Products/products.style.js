@@ -1,30 +1,31 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { themeGet } from 'styled-system';
-import illustration from 'common/src/assets/image/app/home2.gif';
+import illustration from 'common/src/assets/image/app/producthd.gif';
 
-const Section = styled.section`
+const Section = styled.section``;
+
+export const ContentWrapper = styled.div`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 45%;
+  background-size: 50%;
   background-position: right center;
   background-repeat: no-repeat;
   min-height: 70vh;
+
   @media only screen and (max-width: 1440px) {
     min-height: auto;
-    background-size: 55%;
+    background-size: 45%;
   }
   @media only screen and (max-width: 1024px) {
-    background-size: 55%;
+    background-size: 35%;
   }
-  @media only screen and (max-width: 899px) {
+  @media only screen and (max-width: 999px) {
     background: transparent;
     background-image: none;
     min-height: auto;
   }
 `;
-
-export const ContentWrapper = styled.div``;
 
 export const Illustration = styled.div``;
 
@@ -43,8 +44,8 @@ export const BannerContent = styled.div`
   @media only screen and (max-width: 1024px) {
     max-width: 44%;
   }
-  @media only screen and (max-width: 899px) {
-    max-width: 30em;
+  @media only screen and (max-width: 999px) {
+    max-width: 100%;
     padding-top: 30px;
     padding-bottom: 80px;
   }
@@ -54,7 +55,7 @@ export const BannerContent = styled.div`
   }
   h1 {
     font-family: Imprima;
-    font-size: 48px;
+    font-size: 40px;
     line-height: 70px;
     font-weight: 700;
     color: #000;
@@ -75,11 +76,13 @@ export const BannerContent = styled.div`
       margin-bottom: 20px;
     }
 
-    @media only screen and (max-width: 899px) {
+    @media only screen and (max-width: 768px) {
       font-size: 34px;
       margin-bottom: 10px;
+      text-align: center;
     }
     @media only screen and (max-width: 480px) {
+      font-size: 23px;
       margin-bottom: 20px;
       line-height: 40px;
     }
@@ -87,9 +90,9 @@ export const BannerContent = styled.div`
   .banner-caption {
     color: #000;
     font-size: 18px;
-    line-height: 33px;
+    line-height: 28px;
     font-weight: 400;
-    margin-bottom: 0;
+    margin-bottom: 20;
     @media only screen and (max-width: 1440px) {
       font-size: 16px;
     }
@@ -104,13 +107,15 @@ export const BannerContent = styled.div`
       font-size: 16px;
     }
   }
-  .banner-thanks {
-    color: #484848;
-    font-size: 48px;
-    line-height: 53px;
+  .banner-content {
+    color: #475b5b;
+    font-size: 18px;
+    line-height: 21px;
     font-weight: 400;
-    text-align: center;
     margin-bottom: 0;
+    h3 {
+      color: #000;
+    }
     @media only screen and (max-width: 1440px) {
       font-size: 16px;
     }
@@ -129,13 +134,13 @@ export const BannerContent = styled.div`
 
 export const Subscribe = styled.div`
   display: flex;
-  flex-direction: column;
   margin-top: 40px;
   @media only screen and (max-width: 1440px) {
     margin-top: 30px;
   }
   @media only screen and (max-width: 768px) {
     max-width: 80%;
+    margin: 0 auto;
   }
   @media only screen and (max-width: 480px) {
     max-width: 100%;
@@ -144,6 +149,7 @@ export const Subscribe = styled.div`
   }
 
   @media only screen and (max-width: 480px) {
+    align-items: center;
   }
   .reusecore__input {
     width: 100%;
@@ -173,16 +179,56 @@ export const Subscribe = styled.div`
     }
   }
   button {
-    max-width: 10em;
+    background-color: #ff7b00;
+    min-width: 150px;
     border-radius: 8px;
-    margin-top: 1em;
 
     @media only screen and (max-width: 480px) {
+      min-width: 100%;
       margin-top: 15px;
     }
   }
-  h3 {
-    margin-top: 1em;
+`;
+
+export const SponsoredBy = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    display: block;
+  }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    display: block;
+    margin-top: 25px;
+  }
+  @media only screen and (max-width: 1440px) {
+    margin-top: 30px;
+  }
+  @media only screen and (max-width: 768px) {
+    margin-top: 30px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 480px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sponsoredBy {
+    color: ${rgba('#566272', 0.6)};
+    font-size: 16px;
+    margin-right: 21px;
+    margin-bottom: 0;
+    @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+      margin: 0 0 20px 0;
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+      margin: 0 0 15px 0;
+    }
+    @media only screen and (max-width: 480px) {
+      margin-bottom: 15px;
+    }
   }
 `;
 
@@ -199,63 +245,5 @@ export const ImageGroup = styled.div`
     }
   }
 `;
-
-const EyeButton = styled.button`
-  width: 43px;
-  height: 40px;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  top: 0;
-  right: 0;
-  position: absolute;
-  outline: none;
-  cursor: pointer;
-  box-shadow: none;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-
-  > span {
-    width: 12px;
-    height: 12px;
-    display: block;
-    border: solid 1px ${themeGet('colors.textColor', '#484848')};
-    border-radius: 75% 15%;
-    transform: rotate(45deg);
-    position: relative;
-
-    &:before {
-      content: '';
-      display: block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      left: 3px;
-      top: 3px;
-      position: absolute;
-      border: solid 1px ${themeGet('colors.textColor', '#484848')};
-    }
-  }
-
-  &.eye-closed {
-    > span {
-      &:after {
-        content: '';
-        display: block;
-        width: 1px;
-        height: 20px;
-        left: calc(50% - 1px / 2);
-        top: -4px;
-        position: absolute;
-        background-color: ${themeGet('colors.textColor', '#484848')};
-        transform: rotate(-12deg);
-      }
-    }
-  }
-`;
-
-export { EyeButton };
 
 export default Section;
