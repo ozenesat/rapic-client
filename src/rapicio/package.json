@@ -10,7 +10,6 @@
     "export": "next build && next export",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "now-build": "next build && next export -o dist",
     "netlify-build": "next build && next export"
   },
   "dependencies": {
