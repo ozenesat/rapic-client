@@ -87,27 +87,38 @@ const Login = () => {
           autoFocus
           required
           inputType="email"
-          placeholder="Enter Email Address"
+          placeholder="Enter your email address"
           aria-label="email"
           name="email"
           value={email}
           onChange={handleEmailChange}
         />
+        {emailError ? (
+          <Text
+            style={{ color: 'red', marginTop: '0.25em' }}
+            content="Please enter a valid email address."
+          />
+        ) : (
+          <Text
+            style={{ color: 'transparent', marginTop: '0.25em' }}
+            content="."
+          />
+        )}
         <h3> Password: </h3>
         <Input
           required
           inputType="password"
-          placeholder="Enter Password"
+          placeholder="Enter your password"
           aria-label="password"
           name="password"
           value={password}
           onChange={handlePass}
           passwordShowHide={true}
         />
-        {disable ? (
+        {passError ? (
           <Text
             style={{ color: 'red', marginTop: '0.25em' }}
-            content="Designated password is required."
+            content="The password is required."
           />
         ) : (
           <Text

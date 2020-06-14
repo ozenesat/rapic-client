@@ -50,7 +50,7 @@ export const MenuArea = styled.nav`
     opacity: 1;
     visibility: visible;
     transition: all 0.3s ease;
-    margin-left: 100px;
+    margin-left: 62px;
     @media only screen and (max-width: 1366px) {
       margin-right: 13px;
     }
