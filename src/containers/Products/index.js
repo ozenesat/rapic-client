@@ -12,7 +12,7 @@ const Products = () => {
       <Container>
         <ContentWrapper>
           <BannerContent>
-            <Heading as="h1" content={'Zero-management backend'} />
+            <Heading as="h1" content="Zero-management backend"/>
             <Text
               className="banner-caption"
               content="Now you can focus on building your app instead of managing servers or worrying about consistency."

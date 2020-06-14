@@ -9,10 +9,11 @@ const Section = styled.section`
   background-size: 45%;
   background-position: right center;
   background-repeat: no-repeat;
-  min-height: 70vh;
+  min-height: 80vh;
   @media only screen and (max-width: 1440px) {
     min-height: auto;
     background-size: 45%;
+    min-height: 70vh;
   }
   @media only screen and (max-width: 999px) {
     background: transparent;
