@@ -22,8 +22,8 @@ export const data = {
       offset: '70',
     },
     {
-      label: 'Products',
-      path: '#products',
+      label: 'Product',
+      path: '#product',
       offset: '70',
     },
     /*{
@@ -79,13 +79,13 @@ export const data = {
         offset: '70',
       },
       {
-        label: 'LinkedIn',
-        path: 'https://www.linkedin.com/company/rapic/',
+        label: 'Facebook',
+        path: 'https://www.facebook.com/getrapic/',
         offset: '70',
       },
       {
         label: 'Instagram',
-        path: 'https://www.instagram.com/rapic.io/',
+        path: 'https://www.instagram.com/getrapic/',
         offset: '70',
       },
     ],
@@ -140,6 +140,23 @@ export const data = {
     //     'We’re driven beyond just finishing projects. We want to find smart solutions.',
     //   link: '#',
     // },
+  ],
+  products: [
+    {
+      title: 'Logic',
+      desc:
+        'Transfrom data to fit any schema. You can also make a conditional flow using methods.',
+    },
+    {
+      title: 'Data',
+      desc:
+        'Insert any data to your database. Simply connect the dots by using the method including GET/POST/DELETE!',
+    },
+    {
+      title: 'Integrations',
+      desc:
+        'Build entire workflows are super easy to have Zapier, Stripe, and launching more...',
+    },
   ],
   // workHardList: [
   //   { id: 1, title: 'Medical and vision' },

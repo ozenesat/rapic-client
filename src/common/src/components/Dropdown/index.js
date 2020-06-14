@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   DropdownMenuWrapper,
   DropdownMenuItemsWrapper,
   DropdownMenuItemWrapper,
-} from './dropdown.style';
+} from "./dropdown.style";
 
-const DropdownMenu = props => {
+const DropdownMenu = (props) => {
   const [menuState, setMenuState] = useState({
     show: false,
   });
 
   useEffect(() => {
-    window.addEventListener('click', handleDocumentClick);
+    window.addEventListener("click", handleDocumentClick);
     return () => {
-      window.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener("click", handleDocumentClick);
     };
   });
 
   const handleToggle = () => {
-    setMenuState(prevState => ({
+    setMenuState((prevState) => ({
       ...menuState,
       show: !prevState.show,
     }));
@@ -30,19 +30,32 @@ const DropdownMenu = props => {
     }
   };
 
-  const { content, dropdownItems, dropdownDirection, className } = props;
+  const {
+    content,
+    dropdownItems,
+    dropdownDirection,
+    className,
+
+    onSelect,
+  } = props;
 
   return (
-    <DropdownMenuWrapper onClick={e => e.stopPropagation()}>
+    <DropdownMenuWrapper
+      onClick={(e) => e.stopPropagation()}
+      className={className}
+    >
       <span onClick={handleToggle}>{content}</span>
       {menuState.show && (
-        <DropdownMenuItemsWrapper
-          className={className}
-          dropdownDirection={dropdownDirection}
-        >
+        <DropdownMenuItemsWrapper dropdownDirection={dropdownDirection}>
           {dropdownItems &&
             dropdownItems.map((item, index) => (
-              <DropdownMenuItemWrapper key={index} onClick={handleToggle}>
+              <DropdownMenuItemWrapper
+                key={index}
+                onClick={() => {
+                  handleToggle();
+                  onSelect(item);
+                }}
+              >
                 {item}
               </DropdownMenuItemWrapper>
             ))}
