@@ -1,14 +1,13 @@
 import axios from "axios";
 
 // var jwtDecode = require('jwt-decode');
-
 const rapicUrl = "https://rapicapi.herokuapp.com/";
 const loginUrl = rapicUrl + "api/token/";
 const valideteUrl = rapicUrl + "users/"; // check it!
 const refreshUrl = rapicUrl + "refresh/"; // learn the related url!
-
 const faketoken =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMTMzNTgyLCJqdGkiOiJiNGRmOGFkNmJkMmI0ZDA5YTMyMGYwMDk3ZmM2ZmFhYSIsInVzZXJfaWQiOjUxOH0.gje8xpkBz2vnDz7VKKKjMR-_HEB8RYhTtOiVMmxdRFo";
+
 class Api {
   // observe that using e-mail as username !!!
   async register(username, email, password, registerOnly) {
@@ -17,7 +16,6 @@ class Api {
       email: email,
       password: password,
     };
-    console.log(data, 'data');
     return new Promise((resolve, reject) => {
       axios({
         method: "post",
@@ -64,15 +62,15 @@ class Api {
         },
       })
         .then((response) => {
+          let data = response.data;
           if (response.status < 200 || response.status >= 300) {
             if (response.status === 500) {
               reject("failed to login");
             }
             reject(response.json());
           }
-          document.cookie = `refresh = ${response.data.refresh}`;
-          document.cookie = `access = ${response.data.access}`;
-        })
+          resolve(data);
+          })
         .catch(function(error) {
           reject("failed to login" + error);
         });

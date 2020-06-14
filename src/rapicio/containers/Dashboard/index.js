@@ -27,7 +27,7 @@ function Dashboard() {
   }
 
   return (
-    <Container>
+    <Container id="dashboard">
       <HeadingWrapper>
         <Heading as="h1" content="My Projects" />
         <Button title="New Project" onClick={() => setModalState(true)} />

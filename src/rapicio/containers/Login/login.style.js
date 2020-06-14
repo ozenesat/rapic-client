@@ -6,16 +6,16 @@ import illustration from 'common/src/assets/image/app/home2.gif';
 const Section = styled.section`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 37%;
+  background-size: 45%;
   background-position: right center;
   background-repeat: no-repeat;
   min-height: 70vh;
   @media only screen and (max-width: 1440px) {
     min-height: auto;
-    background-size: 45%;
+    background-size: 55%;
   }
   @media only screen and (max-width: 1024px) {
-    background-size: 35%;
+    background-size: 55%;
   }
   @media only screen and (max-width: 899px) {
     background: transparent;
@@ -31,8 +31,6 @@ export const Illustration = styled.div``;
 export const BannerContent = styled.div`
   max-width: 38%;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 150px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
   }
@@ -57,7 +55,7 @@ export const BannerContent = styled.div`
     font-size: 48px;
     line-height: 70px;
     font-weight: 700;
-    color: ${themeGet('colors.menu', '#02073e')};
+    color: #000;
     margin-bottom: 24px;
     letter-spacing: -1px;
     margin-top: 0;
@@ -85,7 +83,7 @@ export const BannerContent = styled.div`
     }
   }
   .banner-caption {
-    color: ${themeGet('colors.paragraph', '#02073E')};
+    color: #000;
     font-size: 18px;
     line-height: 33px;
     font-weight: 400;
@@ -105,10 +103,11 @@ export const BannerContent = styled.div`
     }
   }
   .banner-thanks {
-    color: ${themeGet('colors.rapicGreen', '#02073E')};
-    font-size: 18px;
-    line-height: 33px;
+    color: #484848;
+    font-size: 48px;
+    line-height: 53px;
     font-weight: 400;
+    text-align: center;
     margin-bottom: 0;
     @media only screen and (max-width: 1440px) {
       font-size: 16px;

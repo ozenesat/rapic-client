@@ -5,7 +5,8 @@ import Image from 'common/src/components/Image';
 import Button from 'common/src/components/Button';
 import Heading from 'common/src/components/Heading';
 import Container from 'common/src/components/UI/ContainerTwo';
-import loading from 'common/src/assets/image/loading.gif';
+
+import { Loading } from "../../components/Loading";
 import { EyeButton } from './login.style';
 import Router, { useRouter } from 'next/router';
 import Section, {
@@ -17,6 +18,8 @@ import Section, {
 import { validateEmail } from '../../utils/utils';
 import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
+import { useActionState, useAppState } from "../../components/AppContext";
+
 
 const Login = () => {
   const [login, setLogin] = useState(false);
@@ -27,6 +30,8 @@ const Login = () => {
   const [passError, setPassError] = useState(false);
   const [disable, setDisable] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const setGlobalState = useActionState();
+  const globalState = useAppState();
 
   const handleEmailChange = mail => {
     setEmail(mail);
@@ -66,17 +71,24 @@ const Login = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (email !== '' && password !== '') {
-      Api.login(email, password);
-      // Globalden user veya accesstoken cekilebilir
-      if (document.cookie) {
-        setLogin(true);
-        // hazir olunca path'i update et!
-        router.push('/#');
-      } else {
-        setLogin(false);
-        setSubmitted(true);
+      Api.login(email, password)
+        .then((res) => {
+          console.log(res, 'res')
+          document.cookie = `refresh = ${res.refresh}`
+          // setGlobalState({ access: res.access, user: email })
+        })
+        .catch(err => console.log(err, 'err'))
+        .finally(()=> {
+          if (document.cookie) {
+          setLogin(true);
+          router.push('/dashboard');
+        } else {
+          setLogin(false);
+          setSubmitted(true);
+        }}
+      )
       }
-    }
+
   };
 
   var showLogin = () => {
@@ -168,12 +180,9 @@ const Login = () => {
             <h1> Login </h1>
             <Subscribe>
               {login ? (
-                <Fragment>
-                  <Text
-                    className="banner-thanks"
-                    content={`${email}, Welcome to the Rapic!`}
-                  />
-                  <img src={loading} alt="loading..." />
+                <Fragment className="banner-thanks">
+                  <h1>{email}, Welcome to the Rapic!</h1>
+                  <Loading />
                 </Fragment>
               ) : (
                 showLogin()

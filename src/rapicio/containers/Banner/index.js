@@ -65,6 +65,7 @@ const Banner = () => {
 
   return (
     <Section id="#">
+      <br/>
       <Container>
         <ContentWrapper>
           <BannerContent>

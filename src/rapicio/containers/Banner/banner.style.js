@@ -6,7 +6,7 @@ import illustration from 'common/src/assets/image/app/home2.gif';
 const Section = styled.section`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 50%;
+  background-size: 45%;
   background-position: right center;
   background-repeat: no-repeat;
   min-height: 70vh;
@@ -28,8 +28,6 @@ export const Illustration = styled.div``;
 export const BannerContent = styled.div`
   max-width: 48%;
   width: 100%;
-  padding-top: 1px;
-  padding-bottom: 1px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
   }
@@ -53,8 +51,8 @@ export const BannerContent = styled.div`
     font-family: Imprima;
     font-size: 48px;
     line-height: 54px;
-    font-weight: 700;
-    color: ${themeGet('colors.menu', '#000')};
+    font-weight: 500;
+    color: #000;
     margin-bottom: 24px;
     letter-spacing: -1px;
     margin-top: 0;
