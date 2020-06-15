@@ -18,7 +18,7 @@ import Section, {
 import { validateEmail } from '../../utils/utils';
 import { validatePassword } from '../../utils/utils';
 import Api from '../../services/api';
-import { useActionState, useAppState } from "../../components/AppContext";
+import { useActionState } from "../../components/AppContext";
 
 
 const Login = () => {
@@ -31,7 +31,6 @@ const Login = () => {
   const [disable, setDisable] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const setGlobalState = useActionState();
-  const globalState = useAppState();
 
   const handleEmailChange = mail => {
     setEmail(mail);
@@ -73,8 +72,12 @@ const Login = () => {
     if (email !== '' && password !== '') {
       Api.login(email, password)
         .then((res) => {
+          console.log(email, 'e')
           document.cookie = `refresh = ${res.refresh}`
-          // setGlobalState({ access: res.access, user: email })
+          setGlobalState({
+            type: "SET_USER",
+            payload: { token: res.access, user: email }
+          })
         })
         .catch(err => console.log(err, 'err'))
         .finally(()=> {
@@ -156,10 +159,21 @@ const Login = () => {
             content="."
           />
         )}
+        {login ? (
+          <Text
+            style={{ color: 'green', marginTop: '0.25em' }}
+            as='h3'
+            content='Welcome to the Rapic!'
+          />
+        ) : (
+          <Text
+            style={{ color: 'transparent', marginTop: '0.25em' }}
+            content="."
+          />
+        )}
       </Fragment>
     );
   };
-
   /*<h3> User Name: </h3>
   <Input
     inputType="text"
@@ -179,10 +193,10 @@ const Login = () => {
             <h1> Login </h1>
             <Subscribe>
               {login ? (
-                <Fragment className="banner-thanks">
-                  <h1>{email}, Welcome to the Rapic!</h1>
+                <>
+                  {showLogin()}
                   <Loading />
-                </Fragment>
+                </>
               ) : (
                 showLogin()
               )}

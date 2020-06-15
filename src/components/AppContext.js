@@ -9,7 +9,8 @@ function reducer(state, action) {
   switch (action.type) {
     case "ADD_PROJECTS":
       return { projects: state.projects.concat(action.payload) };
-      return state;
+    case "SET_USER":
+      return { ...state, ...action.payload };
     default:
       throw new Error();
   }
@@ -19,6 +20,8 @@ export const AppProvider = ({ children }) => {
   const [globalState, setGlobalState] = useReducer(reducer, {
     projects: [],
     endpoints: {},
+    user: null,
+    token: null,
   });
 
   return (

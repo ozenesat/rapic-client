@@ -41,10 +41,10 @@ const Footer = () => {
             ))}
           </FooterWidget>*/}
           <FooterNav>
-            {data.footerItems.third.map((menu, index) => (
-              <li key={`menu_key${index}`}>
+            {data.footerItems.third.map((menu) => (
+              <li key={`menu_key${menu.id}`}>
                 <Link  href={menu.path} style={{ color: 'black', padding: '.25em'}} target="_blank" offset={menu.offset}>
-                  {menu.icon}
+                  <i className={menu.icon}/>
                 </Link>
               </li>
             ))}

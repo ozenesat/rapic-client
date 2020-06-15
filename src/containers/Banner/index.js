@@ -13,12 +13,14 @@ import Section, {
 } from './banner.style';
 import { validateEmail } from '../../utils/utils';
 import Api from '../../services/api';
+import { useAppState } from "../../components/AppContext";
 
 const Banner = () => {
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState('');
   const [validationError, setValidationError] = useState({ email: false });
-
+  const globalState = useAppState();
+  console.log(globalState, 'GS')
   const handleEmailChange = event => {
     setEmail(String(event));
     if (!validateEmail(event) && event !== '') {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Text from 'common/src/components/Text';
 // import Button from 'common/src/components/Button';
 import Heading from 'common/src/components/Heading';
@@ -19,10 +19,10 @@ const Products = () => {
             />
             <div className="banner-content">
               {data.products.map(product => (
-                <>
+                <Fragment key={product.id}>
                   <Heading as="h3" content={product.title} />
                   <Text content={product.desc} />
-                </>
+                </Fragment>
               ))}
             </div>
           </BannerContent>

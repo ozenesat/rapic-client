@@ -11,9 +11,8 @@ import Link from "next/link";
 
 function Dashboard() {
   const [isModalOpen, setModalState] = useState(false);
-
   const globalState = useAppState();
-
+  console.log(globalState, 'GS')
   function renderProjects() {
     return globalState.projects && globalState.projects.map(({ name, description, id }) => (
       <Link href="/projects/[id]" as={`/projects/${id}`}>

@@ -74,22 +74,25 @@ export const data = {
     // ],
     third: [
       {
+        id: 1,
         label: 'Github',
         path: 'https://github.com/rapic',
         offset: '70',
-        icon: <i class="fab fa-github fa-3x"></i>
+        icon:"fab fa-github fa-3x"
       },
       {
+        id: 2,
         label: 'Facebook',
         path: 'https://www.facebook.com/getrapic/',
         offset: '70',
-        icon:<i class="fab fa-facebook fa-3x"></i>
+        icon:"fab fa-facebook fa-3x"
       },
       {
+        id:3,
         label: 'Instagram',
         path: 'https://www.instagram.com/getrapic/',
         offset: '70',
-        icon:<i class="fab fa-instagram fa-3x"></i>
+        icon:"fab fa-instagram fa-3x"
       },
     ],
   },
@@ -146,16 +149,19 @@ export const data = {
   ],
   products: [
     {
+      id: 1,
       title: 'Logic',
       desc:
         'Transfrom data to fit any schema. You can also make a conditional flow using methods.',
     },
     {
+      id: 2,
       title: 'Data',
       desc:
         'Insert any data to your database. Simply connect the dots by using the method including GET/POST/DELETE!',
     },
     {
+      id: 3,
       title: 'Integrations',
       desc:
         'Build entire workflows are super easy to have Zapier, Stripe, and launching more...',
