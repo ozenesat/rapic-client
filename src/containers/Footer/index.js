@@ -4,7 +4,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import Container from 'common/src/components/UI/ContainerTwo';
 import Image from 'common/src/components/Image';
 import Link from 'common/src/components/Link';
-import { Section, FooterWidget, FooterBottom, Copyright } from './footer.style';
+import { Section, FooterWidget, FooterBottom, Copyright, FooterNav } from './footer.style';
 import { data } from 'common/src/data/app';
 import Logo from 'common/src/assets/image/app/footer_logo.png';
 
@@ -40,15 +40,15 @@ const Footer = () => {
               </li>
             ))}
           </FooterWidget>*/}
-          <FooterWidget>
+          <FooterNav>
             {data.footerItems.third.map((menu, index) => (
               <li key={`menu_key${index}`}>
-                <Link href={menu.path} target="_blank" offset={menu.offset}>
+                <Link  href={menu.path} style={{ color: 'black', padding: '.25em'}} target="_blank" offset={menu.offset}>
                   {menu.icon}
                 </Link>
               </li>
             ))}
-          </FooterWidget>
+          </FooterNav>
         </FooterBottom>
       </Container>
     </Section>

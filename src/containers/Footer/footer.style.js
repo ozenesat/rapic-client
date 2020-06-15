@@ -59,6 +59,7 @@ export const FooterBottom = styled.div`
   padding: 20px 0;
   @media screen and (max-width: 768px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
