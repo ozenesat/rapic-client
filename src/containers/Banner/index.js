@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react';
-import Text from 'common/src/components/Text';
-import Input from 'common/src/components/Input';
-import Image from 'common/src/components/Image';
-import Button from 'common/src/components/Button';
-import Heading from 'common/src/components/Heading';
-import Container from 'common/src/components/UI/ContainerTwo';
+import React, { Fragment, useState } from "react";
+import Text from "common/src/components/Text";
+import Input from "common/src/components/Input";
+import Image from "common/src/components/Image";
+import Button from "common/src/components/Button";
+import Heading from "common/src/components/Heading";
+import Container from "common/src/components/UI/ContainerTwo";
 import Section, {
   ContentWrapper,
   BannerContent,
@@ -17,13 +17,13 @@ import { useAppState } from "../../components/AppContext";
 
 const Banner = () => {
   const [registered, setRegistered] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState({ email: false });
   const globalState = useAppState();
   console.log(globalState, 'GS')
   const handleEmailChange = event => {
     setEmail(String(event));
-    if (!validateEmail(event) && event !== '') {
+    if (!validateEmail(event) && event !== "") {
       setValidationError({ email: true });
     } else {
       setValidationError({ email: false });
@@ -31,13 +31,13 @@ const Banner = () => {
   };
 
   const onSubmit = () => {
-    if (email !== '') {
+    if (email !== "") {
       Api.register(email, email, Date.now(), true)
-        .then(result => {
+        .then((result) => {
           setRegistered(true);
         })
-        .catch(response => {
-          console.log('failed to register');
+        .catch((response) => {
+          console.log("failed to register");
         });
       setRegistered(true);
     }
@@ -57,7 +57,7 @@ const Banner = () => {
         <Button
           disabled={validationError.email}
           title="Get Early Access"
-          style={!validationError.email ? { background: '#35BF2E' } : {}}
+          style={!validationError.email ? { background: "#35BF2E" } : {}}
           onClick={onSubmit}
           type="submit"
         />
@@ -67,14 +67,14 @@ const Banner = () => {
 
   return (
     <Section id="#">
-      <br/>
+      <br />
       <Container>
         <ContentWrapper>
           <BannerContent>
             <Heading
               as="h1"
               content={
-                'Ship and Scale your API 10x faster without touching any server or database'
+                "Ship and Scale your API 10x faster without touching any server or database"
               }
             />
             <Text

@@ -70,7 +70,7 @@ class Api {
             reject(response.json());
           }
           resolve(data);
-          })
+        })
         .catch(function(error) {
           reject("failed to login" + error);
         });
@@ -98,6 +98,7 @@ class Api {
         });
     });
   }
+
   async refreshToken() {
     return new Promise((resolve, reject) => {
       axios({

@@ -4,19 +4,21 @@ import Sticky from "react-stickynode";
 import { ThemeProvider } from "styled-components";
 import { theme } from "common/src/theme/app";
 import { ResetCSS } from "common/src/assets/css/style";
-import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
+import { GlobalStyle, ContentWrapper } from "containers/rapic.style";
 import { DrawerProvider } from "common/src/contexts/DrawerContext";
-import Navbar from "../../containers/Navbar";
-import Dashboard from "../../containers/Dashboard";
-import API from "../../services/api";
-import { useActionState, useAppState } from "../../components/AppContext";
+import Navbar from "containers/Navbar";
+import Dashboard from "containers/Dashboard";
+import API from "services/api";
+import { useActionState, useAppState } from "components/AppContext";
 
 function DashboardPage({ projects }) {
   const globalState = useAppState();
   const setGlobalState = useActionState();
 
   useEffect(() => {
-    setGlobalState({ type: "ADD_PROJECTS", payload: projects });
+    if (projects) {
+      setGlobalState({ type: "ADD_PROJECTS", payload: projects });
+    }
   }, []);
 
   return (
@@ -48,16 +50,24 @@ function DashboardPage({ projects }) {
   );
 }
 
-export async function getStaticProps({ params }) {
-  let projects = [];
+// export async function getStaticProps({ params }) {
+//   let projects = [];
+//   try {
+//     projects = await API.getRapicProjects();
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+//   // Pass post data to the page via props
+//   return { props: { projects } };
+// }
+
+DashboardPage.getInitialProps = async (ctx) => {
   try {
-    projects = await API.getRapicProjects();
-  } catch (error) {
-    console.log(error);
+    const projects = await API.getRapicProjects(ctx);
+    return { projects };
+  } catch (err) {
+    return { projects: [] };
   }
-
-  // Pass post data to the page via props
-  return { props: { projects } };
-}
-
+};
 export default DashboardPage;

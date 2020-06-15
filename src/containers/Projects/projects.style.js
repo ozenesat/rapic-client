@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Content = styled.div`
+  position: relative;
   display: flex;
   flex: 0.75;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),

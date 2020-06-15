@@ -33,8 +33,6 @@ function ProjectModal({ isModalOpen, closeModal }) {
     API.createProject({
       name,
       description,
-      auth_method: "undefined",
-      rapic_models: [],
     })
       .then((project) => {
         setLoading(false);

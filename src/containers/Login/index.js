@@ -1,65 +1,64 @@
-import React, { Fragment, useState } from 'react';
-import Text from 'common/src/components/Text';
-import Input from 'common/src/components/Input';
-import Image from 'common/src/components/Image';
-import Button from 'common/src/components/Button';
-import Heading from 'common/src/components/Heading';
-import Container from 'common/src/components/UI/ContainerTwo';
+import React, { Fragment, useState } from "react";
+import Text from "common/src/components/Text";
+import Input from "common/src/components/Input";
+import Image from "common/src/components/Image";
+import Button from "common/src/components/Button";
+import Heading from "common/src/components/Heading";
+import Container from "common/src/components/UI/ContainerTwo";
 
 import { Loading } from "../../components/Loading";
-import { EyeButton } from './login.style';
-import Router, { useRouter } from 'next/router';
+import { EyeButton } from "./login.style";
+import Router, { useRouter } from "next/router";
 import Section, {
   ContentWrapper,
   BannerContent,
   Subscribe,
   ImageGroup,
-} from './login.style';
-import { validateEmail } from '../../utils/utils';
-import { validatePassword } from '../../utils/utils';
-import Api from '../../services/api';
-import { useActionState } from "../../components/AppContext";
-
+} from "./login.style";
+import { validateEmail } from "../../utils/utils";
+import { validatePassword } from "../../utils/utils";
+import Api from "../../services/api";
+import { useActionState, useAppState } from "../../components/AppContext";
 
 const Login = () => {
   const [login, setLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
   const [disable, setDisable] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const setGlobalState = useActionState();
 
-  const handleEmailChange = mail => {
+  const handleEmailChange = (mail) => {
     setEmail(mail);
     setSubmitted(false);
-    if (!validateEmail(mail) && mail !== '') {
+    if (!validateEmail(mail) && mail !== "") {
       setEmailError(true);
       setDisable(true);
     } else {
       setEmailError(false);
-      if (passError || password === '' || mail === '') {
+      if (passError || password === "" || mail === "") {
         setDisable(true);
       } else {
         setDisable(false);
       }
     }
   };
-  const handleUser = user => {
+  const handleUser = (user) => {
     setUsername(user);
   };
 
-  const handlePass = pass => {
+  const handlePass = (pass) => {
     setPassword(pass);
     setSubmitted(false);
-    if (!validatePassword(pass) && pass !== '') {
+    if (!validatePassword(pass) && pass !== "") {
       setPassError(true);
       setDisable(true);
     } else {
       setPassError(false);
-      if (emailError || email === '' || pass === '') {
+      if (emailError || email === "" || pass === "") {
         setDisable(true);
       } else {
         setDisable(false);
@@ -67,9 +66,9 @@ const Login = () => {
     }
   };
   const router = useRouter();
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (email !== '' && password !== '') {
+    if (email !== "" && password !== "") {
       Api.login(email, password)
         .then((res) => {
           console.log(email, 'e')
@@ -79,18 +78,17 @@ const Login = () => {
             payload: { token: res.access, user: email }
           })
         })
-        .catch(err => console.log(err, 'err'))
-        .finally(()=> {
+        .catch((err) => console.log(err, "err"))
+        .finally(() => {
           if (document.cookie) {
-          setLogin(true);
-          router.push('/dashboard');
-        } else {
-          setLogin(false);
-          setSubmitted(true);
-        }}
-      )
-      }
-
+            setLogin(true);
+            router.push("/dashboard");
+          } else {
+            setLogin(false);
+            setSubmitted(true);
+          }
+        });
+    }
   };
 
   var showLogin = () => {
@@ -109,12 +107,12 @@ const Login = () => {
         />
         {emailError ? (
           <Text
-            style={{ color: 'red', marginTop: '0.25em' }}
+            style={{ color: "red", marginTop: "0.25em" }}
             content="Please enter a valid email address."
           />
         ) : (
           <Text
-            style={{ color: 'transparent', marginTop: '0.25em' }}
+            style={{ color: "transparent", marginTop: "0.25em" }}
             content="."
           />
         )}
@@ -131,12 +129,12 @@ const Login = () => {
         />
         {passError ? (
           <Text
-            style={{ color: 'red', marginTop: '0.25em' }}
+            style={{ color: "red", marginTop: "0.25em" }}
             content="The password is required."
           />
         ) : (
           <Text
-            style={{ color: 'transparent', marginTop: '0.25em' }}
+            style={{ color: "transparent", marginTop: "0.25em" }}
             content="."
           />
         )}
@@ -144,18 +142,18 @@ const Login = () => {
         <Button
           disabled={disable}
           title="Submit!"
-          style={!disable ? { background: '#35BF2E' } : { background: 'gray' }}
+          style={!disable ? { background: "#35BF2E" } : { background: "gray" }}
           onClick={onSubmit}
           type="submit"
         />
         {submitted ? (
           <Text
-            style={{ color: 'red', marginTop: '0.25em' }}
+            style={{ color: "red", marginTop: "0.25em" }}
             content="Incorrect username or password."
           />
         ) : (
           <Text
-            style={{ color: 'transparent', marginTop: '0.25em' }}
+            style={{ color: "transparent", marginTop: "0.25em" }}
             content="."
           />
         )}
