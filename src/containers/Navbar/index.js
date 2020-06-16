@@ -20,12 +20,13 @@ import NavbarWrapper, {
 import LogoImage from "common/src/assets/image/app/logo.png";
 import { useActionState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Dashboard from "../Dashboard";
 import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const router = useRouter();
   const [isLandingPage, setIsLandingPage] = useState(page === "landing");
   const [isAuthenticated, setAuthenticated] = useState(false);
   const setGlobalState = useActionState();
@@ -45,38 +46,33 @@ const Navbar = ({ page }) => {
     setMobileMenu(false);
   };
 
-  function handleLogut() {
+  async function handleLogout() {
     clearSessionCookie(null, "rapic_session");
+    await router.replace("/#");
     setAuthenticated(false);
-    Router.replace("/#");
   }
 
-  const defaultRightBarJsx = (
-            <>
-              { isLandingPage ? (
-                <Link
-                label="login"
-                path="#login"
-                href="/login"
-                component={Login}
-              >
-                <Button title="LOGIN" type="submit" />
-              </Link>
-                ) : (
-                <Link
-                label="signup"
-                path="#signup"
-                href="/signup"
-                component={SignUp}
-              >
-                <Button title="SIGN UP" type="submit" />
-              </Link>)
-            } 
-          </>
-  )
+  const renderDefaultRightBar = () => {
+    if (router.pathname == "/login") {
+      return (
+        <Link href="/signup" component={SignUp}>
+          <Button title="Sign Up" className="menu-button" />
+        </Link>
+      );
+    }
+    if (!isAuthenticated) {
+      return (
+        <Link label="login" href="/login" component={Login}>
+          <Button title="Login" className="menu-button" />
+        </Link>
+      );
+    }
 
+    return (
+      <Button title="Logout" className="menu-button" onClick={handleLogout} />
+    );
+  };
 
-  console.log(isAuthenticated, 'isA?')
   const navbarJsx = (
     <NavbarWrapper className="navbar">
       <Container>
@@ -91,24 +87,11 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={(isLandingPage && isAuthenticated) ?data.navItems : data.navLogItems}
+            menuItems={isLandingPage ? data.navItems : data.navLogItems}
             offset={-84}
           />
           <NavbarRight>
-            <li>
-              { isAuthenticated ? (
-                <>
-                <Link
-                label="dasboard"
-                href="/dashboard"
-                component={Dashboard}
-              >
-                <Button title="Dashboard"/>
-              </Link>
-              <Button title="LOGOUT" onClick={handleLogout} />
-              </>
-                ) : defaultRightBarJsx }  
-            </li>
+            <li>{renderDefaultRightBar()}</li>
           </NavbarRight>
 
           {/* end of main menu */}
@@ -172,9 +155,7 @@ const Navbar = ({ page }) => {
     </NavbarWrapper>
   );
 
-  return (
-    navbarJsx
-  )
+  return navbarJsx;
 };
 
 export default Navbar;

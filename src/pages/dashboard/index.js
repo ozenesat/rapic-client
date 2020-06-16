@@ -13,7 +13,6 @@ import { useActionState, useAppState } from "components/AppContext";
 import { withAuth } from "components/withAuth";
 
 function DashboardPage({ projects }) {
-  const globalState = useAppState();
   const setGlobalState = useActionState();
 
   useEffect(() => {

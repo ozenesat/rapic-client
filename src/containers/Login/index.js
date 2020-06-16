@@ -17,44 +17,41 @@ import Section, {
 } from "./login.style";
 import { validateEmail } from "../../utils/utils";
 import { validatePassword } from "../../utils/utils";
-import Api from "../../services/api";
+import API from "../../services/api";
 import { useActionState, useAppState } from "../../components/AppContext";
 
 const Login = () => {
-  const [login, setLogin] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [info, setInfo] = useState({
+    message: "",
+    color: "",
+  });
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+
   const setGlobalState = useActionState();
   const router = useRouter();
 
   const handleEmailChange = (mail) => {
+    setInfo({ message: "", color: "" });
     setEmail(mail);
-    setSubmitted(false);
+
     if (!validateEmail(mail) && mail !== "") {
       setEmailError(true);
       setDisable(true);
     } else {
       setEmailError(false);
-      if (passError || password === "" || mail === "") {
-        setDisable(true);
-      } else {
-        setDisable(false);
-      }
+      setDisable(passError || password === "" || mail === "");
     }
   };
 
-  const handleUser = (user) => {
-    setUsername(user);
-  };
-
   const handlePass = (pass) => {
+    setInfo({ message: "", color: "" });
     setPassword(pass);
-    setSubmitted(false);
+
     if (!validatePassword(pass) && pass !== "") {
       setPassError(true);
       setDisable(true);
@@ -69,24 +66,27 @@ const Login = () => {
   };
 
   const onSubmit = (e) => {
-    setLogin(true);
     e.preventDefault();
+    setLoading(true);
     if (email !== "" && password !== "") {
-      Api.login(email, password)
-        .then((res) => {
-          console.log(res, "res");
+      API.login(email, password)
+        .then(async (res) => {
           setGlobalState({
             type: "SET_USER",
             payload: { token: res.access, user: email },
           });
-          setLogin(false);
-          router.push("/dashboard");
+          await router.push("/dashboard");
+          setLoading(false);
         })
         .catch((err) => {
-          console.log(err, "err")
-          setSubmitted(true)
-    })
-  }
+          console.log(err.message, "err");
+          setInfo({
+            message: "No active account found with the given credentials",
+            color: "red",
+          });
+          setLoading(false);
+        });
+    }
   };
 
   var showLogin = () => {
@@ -103,17 +103,10 @@ const Login = () => {
           value={email}
           onChange={handleEmailChange}
         />
-        {emailError ? (
-          <Text
-            style={{ color: "red", marginTop: "0.25em" }}
-            content="Please enter a valid email address."
-          />
-        ) : (
-          <Text
-            style={{ color: "transparent", marginTop: "0.25em" }}
-            content="."
-          />
-        )}
+        <Text
+          style={{ color: "red", marginTop: "0.25em" }}
+          content={emailError ? "Please enter a valid email address." : ""}
+        />
         <h3> Password: </h3>
         <Input
           required
@@ -125,17 +118,10 @@ const Login = () => {
           onChange={handlePass}
           passwordShowHide={true}
         />
-        {passError ? (
-          <Text
-            style={{ color: "red", marginTop: "0.25em" }}
-            content="The password is required."
-          />
-        ) : (
-          <Text
-            style={{ color: "transparent", marginTop: "0.25em" }}
-            content="."
-          />
-        )}
+        <Text
+          style={{ color: "red", marginTop: "0.25em" }}
+          content={passError ? "The password is required." : ""}
+        />
         <EyeButton></EyeButton>
         <Button
           disabled={disable}
@@ -144,29 +130,10 @@ const Login = () => {
           onClick={onSubmit}
           type="submit"
         />
-        {submitted ? (
-          <Text
-            style={{ color: "red", marginTop: "0.25em" }}
-            content="Incorrect username or password."
-          />
-        ) : (
-          <Text
-            style={{ color: "transparent", marginTop: "0.25em" }}
-            content="."
-          />
-        )}
-        {login ? (
-          <Text
-            style={{ color: "green", marginTop: "0.25em" }}
-            as="h3"
-            content="Welcome to the Rapic!"
-          />
-        ) : (
-          <Text
-            style={{ color: "transparent", marginTop: "0.25em" }}
-            content="."
-          />
-        )}
+        <Text
+          style={{ color: info.color, marginTop: "0.25em" }}
+          content={info.message}
+        />
       </Fragment>
     );
   };
@@ -188,14 +155,8 @@ const Login = () => {
           <BannerContent>
             <h1> Login </h1>
             <Subscribe>
-              {login ? (
-                <>
-                  {showLogin()}
-                  <Loading />
-                </>
-              ) : (
-                showLogin()
-              )}
+              {showLogin()}
+              {isLoading && <Loading />}
             </Subscribe>
           </BannerContent>
         </ContentWrapper>

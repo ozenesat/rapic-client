@@ -26,6 +26,11 @@ export const data = {
       path: "#product",
       offset: "70",
     },
+    {
+      label: "Go to dashboard",
+      path: "/dashboard",
+      offset: "70",
+    },
     /*{
       label: 'Pricing',
       path: '#pricing',
@@ -39,8 +44,14 @@ export const data = {
   ],
   navLogItems: [
     {
-      path: "/#",
-      offset: "0",
+      label: "Docs",
+      path: "/",
+      offset: "70",
+    },
+    {
+      label: "Projects",
+      path: "/dashboard",
+      offset: "70",
     },
   ],
   // navDashboardItems: [
@@ -50,7 +61,7 @@ export const data = {
   //     offset: "70",
   //   },
   // ],
-   footerItems: {
+  footerItems: {
     // first: [
     //   {
     //     label: 'Home',

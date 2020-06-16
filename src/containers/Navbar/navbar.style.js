@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { themeGet } from 'styled-system';
-import navBg from 'common/src/assets/image/app/nav-bg.png';
+import styled from "styled-components";
+import { themeGet } from "styled-system";
+import navBg from "common/src/assets/image/app/nav-bg.png";
 
 const NavbarWrapper = styled.header`
   width: 100%;
@@ -20,6 +20,9 @@ const NavbarWrapper = styled.header`
   .main-logo {
     min-width: 145px;
     max-width: 145px;
+  }
+  .menu-button {
+    min-height: 0px;
   }
 `;
 
@@ -67,19 +70,19 @@ export const MenuArea = styled.nav`
       padding: 10px 0;
       margin: 0 19px;
       a {
-        color: ${themeGet('colors.menu', '#02073E')};
+        color: ${themeGet("colors.menu", "#02073E")};
         font-family: DM Sans;
         font-size: 16px;
         font-weight: 400;
         transition: all 0.3s ease;
         &:hover {
-          color: ${themeGet('colors.menu', '#FF7B00')};
+          color: ${themeGet("colors.menu", "#FF7B00")};
         }
       }
       &.is-current {
         background: transparent url(${navBg}) no-repeat center bottom / contain;
         a {
-          color: ${themeGet('colors.menu', '#FF7B00')};
+          color: ${themeGet("colors.menu", "#FF7B00")};
         }
       }
       @media only screen and (max-width: 1366px) {
@@ -128,13 +131,13 @@ export const NavbarRight = styled.ul`
       }
     }
     a {
-      color: ${themeGet('colors.menu', '#02073E')};
+      color: ${themeGet("colors.menu", "#02073E")};
       font-family: DM Sans;
       font-size: 16px;
       font-weight: 400;
       transition: all 0.3s ease;
       &:hover {
-        color: ${themeGet('colors.menu', '#FF7B00')};
+        color: ${themeGet("colors.menu", "#FF7B00")};
       }
     }
   }
@@ -152,14 +155,14 @@ export const MobileMenu = styled.div`
     position: absolute;
     top: 82px;
     flex-direction: column;
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet("colors.white", "#ffffff")};
     transition: all 0.3s ease;
-    color: ${themeGet('colors.secondary', '#000')};
+    color: ${themeGet("colors.secondary", "#000")};
     &.active {
       opacity: 1;
       visibility: visible;
       box-shadow: 0 3px 12px
-        ${themeGet('colors.shadow', 'rgba(38, 78, 118, 0.1)')};
+        ${themeGet("colors.shadow", "rgba(38, 78, 118, 0.1)")};
     }
     .container {
       width: 100%;
@@ -176,12 +179,12 @@ export const MobileMenu = styled.div`
           padding: 13px 0;
           border-radius: 5px;
           transition: all 0.3s ease;
-          color: ${themeGet('colors.textPrimary', '#02073E')};
+          color: ${themeGet("colors.textPrimary", "#02073E")};
         }
         &:hover {
           a {
             padding: 13px 15px;
-            color: ${themeGet('colors.primary')};
+            color: ${themeGet("colors.primary")};
           }
         }
       }

@@ -65,23 +65,19 @@ class Api {
         },
       })
         .then((response) => {
+          console.log({ response });
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
-            if (response.status === 500) {
-              reject("failed to login");
-            }
-
-            reject(response.json());
+            reject("failed to login");
           }
+
           this.refresh = data.refresh;
           this.access = data.access;
           let refresh = data.refresh;
           setSessionCookie({ refresh }, null);
           resolve(data);
         })
-        .catch(function(error) {
-          reject("failed to login" + error);
-        });
+        .catch((error) => reject(error));
     });
   }
 
