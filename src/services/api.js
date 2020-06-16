@@ -77,7 +77,7 @@ class Api {
           this.access = data.access;
           let refresh = data.refresh;
           setSessionCookie({ refresh }, null);
-          resolve("success");
+          resolve(data);
         })
         .catch(function(error) {
           reject("failed to login" + error);

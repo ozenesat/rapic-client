@@ -37,6 +37,18 @@ export const data = {
       offset: '70',
     },*/
   ],
+  navLogItems: [
+    {
+      path: '/#',
+      offset: '0',
+    }
+  ],
+  navUserItems: [
+    {
+      path: '/dashboard',
+      offset: '0',
+    }
+  ],
   footerItems: {
     // first: [
     //   {

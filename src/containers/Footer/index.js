@@ -43,7 +43,7 @@ const Footer = () => {
           <FooterNav>
             {data.footerItems.third.map((menu) => (
               <li key={`menu_key${menu.id}`}>
-                <Link  href={menu.path} style={{ color: 'black', padding: '.25em'}} target="_blank" offset={menu.offset}>
+                <Link  href={menu.path} style={{ color: '#475B5B', padding: '.25em'}} target="_blank" offset={menu.offset}>
                   <i className={menu.icon}/>
                 </Link>
               </li>

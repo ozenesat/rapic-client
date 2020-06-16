@@ -11,19 +11,23 @@ import Button from "common/src/components/Button";
 import Logo from "common/src/components/UIElements/Logo";
 import Container from "common/src/components/UI/ContainerTwo";
 import Login from "../Login";
+import SignUp from "../SignUp";
 import NavbarWrapper, {
   MenuArea,
   MobileMenu,
   NavbarRight,
 } from "./navbar.style";
 import LogoImage from "common/src/assets/image/app/logo.png";
-
+import { useAppState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
+
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isLandingPage, setIsLandingPage] = useState(page === "landing");
-
+  const globalState = useAppState();
+  console.log(globalState, 'GS')
+  let user = globalState.user
   const scrollItems = [];
 
   data.navItems.forEach((item) => {
@@ -52,7 +56,7 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navItems}
+            menuItems={isLandingPage ? data.navItems : data.navLogItems}
             offset={-84}
           />
           <NavbarRight>
@@ -66,7 +70,23 @@ const Navbar = ({ page }) => {
                 >
                   <Button title="LOGIN" type="submit" />
                 </Link>
-              ) : null}
+              ) : user ? (
+                <Link
+                  label="logout"
+                  path="#login"
+                  href="/login"
+                  component={Login}
+                >
+                  <Button title="LOGout" type="submit" />
+                </Link>
+              ) : <Link
+              label="signup"
+              path="#signup"
+              href="/signup"
+              component={SignUp}
+            >
+              <Button title="SIGN UP" type="submit" />
+            </Link>}
             </li>
           </NavbarRight>
           {/* end of main menu */}
