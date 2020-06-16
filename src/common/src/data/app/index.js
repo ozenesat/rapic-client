@@ -43,19 +43,14 @@ export const data = {
       offset: "0",
     },
   ],
-  navDashboardItems: [
-    {
-      label: "Home",
-      path: "/",
-      offset: "70",
-    },
-    {
-      label: "Dashboard",
-      path: "/dashboard",
-      offset: "70",
-    },
-  ],
-  footerItems: {
+  // navDashboardItems: [
+  //   {
+  //     label: "Dashboard",
+  //     path: "/dashboard",
+  //     offset: "70",
+  //   },
+  // ],
+   footerItems: {
     // first: [
     //   {
     //     label: 'Home',

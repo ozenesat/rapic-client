@@ -22,6 +22,7 @@ import { useAppState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
 import Router from "next/router";
 import { removeCookies } from "cookies-next";
+import Dashboard from "../Dashboard";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -34,10 +35,6 @@ const Navbar = ({ page }) => {
     setAuthenticated(globalState.isAuthenticated);
   }, []);
 
-  data.navItems.forEach((item) => {
-    scrollItems.push(item.path.slice(1));
-  });
-
   const handleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
   };
@@ -46,13 +43,39 @@ const Navbar = ({ page }) => {
     setMobileMenu(false);
   };
 
-  function handleLogut() {
+  function handleLogout() {
     removeCookies(null, "rapic_session");
     setAuthenticated(false);
-    Router.replace("/");
+    Router.replace("/#");
   }
 
-  return (
+  const defaultRightBarJsx = (
+            <>
+              { isLandingPage ? (
+                <Link
+                label="login"
+                path="#login"
+                href="/login"
+                component={Login}
+              >
+                <Button title="LOGIN" type="submit" />
+              </Link>
+                ) : (
+                <Link
+                label="signup"
+                path="#signup"
+                href="/signup"
+                component={SignUp}
+              >
+                <Button title="SIGN UP" type="submit" />
+              </Link>)
+            } 
+          </>
+  )
+
+
+  console.log(isAuthenticated, 'isA?')
+  const navbarJsx = (
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
@@ -66,24 +89,23 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navDashboardItems}
+            menuItems={(isLandingPage && isAuthenticated) ?data.navItems : data.navLogItems}
             offset={-84}
           />
-
           <NavbarRight>
             <li>
-              {isAuthenticated ? (
-                <Button title="LOGIN" onClick={handleLogut} />
-              ) : (
+              { isAuthenticated ? (
+                <>
                 <Link
-                  label="login"
-                  path="#login"
-                  href="/login"
-                  component={Login}
-                >
-                  <Button title="LOGOUT" type="submit" />
-                </Link>
-              )}
+                label="dasboard"
+                href="/dashboard"
+                component={Dashboard}
+              >
+                <Button title="Dashboard"/>
+              </Link>
+              <Button title="LOGOUT" onClick={handleLogout} />
+              </>
+                ) : defaultRightBarJsx }  
             </li>
           </NavbarRight>
 
@@ -147,6 +169,10 @@ const Navbar = ({ page }) => {
       {/* end of mobile menu */}
     </NavbarWrapper>
   );
+
+  return (
+    navbarJsx
+  )
 };
 
 export default Navbar;
