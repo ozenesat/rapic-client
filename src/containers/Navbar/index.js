@@ -73,7 +73,7 @@ const Navbar = ({ page }) => {
           <NavbarRight>
             <li>
               {isAuthenticated ? (
-                <Button title="LOGOUT" onClick={handleLogut} />
+                <Button title="LOGIN" onClick={handleLogut} />
               ) : (
                 <Link
                   label="login"
@@ -81,7 +81,7 @@ const Navbar = ({ page }) => {
                   href="/login"
                   component={Login}
                 >
-                  <Button title="LOGIN" type="submit" />
+                  <Button title="LOGOUT" type="submit" />
                 </Link>
               )}
             </li>

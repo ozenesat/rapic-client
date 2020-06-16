@@ -81,8 +81,11 @@ const Login = () => {
           setLogin(true);
           router.push("/dashboard");
         })
-        .catch((err) => console.log(err, "err"));
-    }
+        .catch((err) => {
+          console.log(err, "err")
+          setSubmitted(true)
+    })
+  }
   };
 
   var showLogin = () => {
