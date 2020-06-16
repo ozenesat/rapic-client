@@ -1,5 +1,4 @@
 import { createContext, useContext, useReducer } from "react";
-import { useEffect } from "react/cjs/react.production.min";
 import API from "../services/api";
 
 const AppStateContext = createContext();
@@ -11,6 +10,8 @@ function reducer(state, action) {
       return { projects: state.projects.concat(action.payload) };
     case "SET_USER":
       return { ...state, ...action.payload };
+    case "SET_USER_AUTH":
+      return { ...state, isAuthenticated: action.payload };
     default:
       throw new Error();
   }
@@ -22,6 +23,7 @@ export const AppProvider = ({ children }) => {
     endpoints: {},
     user: null,
     token: null,
+    isAuthenticated: false,
   });
 
   return (

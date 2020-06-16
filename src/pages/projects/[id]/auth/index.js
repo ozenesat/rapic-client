@@ -9,8 +9,9 @@ import Button from "common/src/components/Button";
 import Radio from "common/src/components/Radio";
 import API from "services/api";
 import { useState } from "react";
+import Error from "pages/_error";
 
-function Auth({ project }) {
+function AuthPage({ project }) {
   const [authType, changeAuthType] = useState(
     convertAuthType(project.auth_method)
   );
@@ -24,6 +25,8 @@ function Auth({ project }) {
     };
     return types[type];
   }
+
+  if (!project) return <Error status={404} />;
   return (
     <Projects endpoints={project && project.endpoints}>
       <Container>
@@ -55,10 +58,14 @@ function Auth({ project }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
-  const project = await API.getRapicProjectById(params.id);
+AuthPage.getInitialProps = async (ctx) => {
+  try {
+    const project = await API.getRapicProjectById(ctx, ctx.query.id);
+    return { project };
+  } catch (err) {
+    console.log({ err });
+    return { project: null };
+  }
+};
 
-  return { props: { project } };
-}
-
-export default Auth;
+export default AuthPage;

@@ -30,6 +30,7 @@ const Login = () => {
   const [disable, setDisable] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const setGlobalState = useActionState();
+  const router = useRouter();
 
   const handleEmailChange = (mail) => {
     setEmail(mail);
@@ -46,6 +47,7 @@ const Login = () => {
       }
     }
   };
+
   const handleUser = (user) => {
     setUsername(user);
   };
@@ -65,28 +67,21 @@ const Login = () => {
       }
     }
   };
-  const router = useRouter();
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (email !== "" && password !== "") {
       Api.login(email, password)
         .then((res) => {
-          console.log(res, 'res')
+          console.log(res, "res");
           setGlobalState({
             type: "SET_USER",
-            payload: { token: res.access, user: email }
-          })
+            payload: { token: res.access, user: email },
+          });
+          setLogin(true);
+          router.push("/dashboard");
         })
-        .catch((err) => console.log(err, "err"))
-        .finally(() => {
-          if (document.cookie) {
-            setLogin(true);
-            router.push("/dashboard");
-          } else {
-            setLogin(false);
-            setSubmitted(true);
-          }
-        });
+        .catch((err) => console.log(err, "err"));
     }
   };
 
@@ -158,13 +153,13 @@ const Login = () => {
         )}
         {login ? (
           <Text
-            style={{ color: 'green', marginTop: '0.25em' }}
-            as='h3'
-            content='Welcome to the Rapic!'
+            style={{ color: "green", marginTop: "0.25em" }}
+            as="h3"
+            content="Welcome to the Rapic!"
           />
         ) : (
           <Text
-            style={{ color: 'transparent', marginTop: '0.25em' }}
+            style={{ color: "transparent", marginTop: "0.25em" }}
             content="."
           />
         )}

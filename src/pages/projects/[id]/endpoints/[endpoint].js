@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Projects from "../../../../containers/Projects";
 import Heading from "common/src/components/Heading";
 import {

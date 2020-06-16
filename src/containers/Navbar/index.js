@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Fade from "react-reveal/Fade";
 import ScrollSpyMenu from "common/src/components/ScrollSpyMenu";
 import Scrollspy from "react-scrollspy";
@@ -20,15 +20,19 @@ import NavbarWrapper, {
 import LogoImage from "common/src/assets/image/app/logo.png";
 import { useAppState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
-
+import Router from "next/router";
+import { removeCookies } from "cookies-next";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isLandingPage, setIsLandingPage] = useState(page === "landing");
+  const [isAuthenticated, setAuthenticated] = useState(false);
   const globalState = useAppState();
-  console.log(globalState, 'GS')
-  let user = globalState.user
   const scrollItems = [];
+
+  useEffect(() => {
+    setAuthenticated(globalState.isAuthenticated);
+  }, []);
 
   data.navItems.forEach((item) => {
     scrollItems.push(item.path.slice(1));
@@ -41,6 +45,12 @@ const Navbar = ({ page }) => {
   const handleHandleMenuClose = () => {
     setMobileMenu(false);
   };
+
+  function handleLogut() {
+    removeCookies(null, "rapic_session");
+    setAuthenticated(false);
+    Router.replace("/");
+  }
 
   return (
     <NavbarWrapper className="navbar">
@@ -56,12 +66,15 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navLogItems}
+            menuItems={isLandingPage ? data.navItems : data.navDashboardItems}
             offset={-84}
           />
+
           <NavbarRight>
             <li>
-              {isLandingPage ? (
+              {isAuthenticated ? (
+                <Button title="LOGOUT" onClick={handleLogut} />
+              ) : (
                 <Link
                   label="login"
                   path="#login"
@@ -70,25 +83,10 @@ const Navbar = ({ page }) => {
                 >
                   <Button title="LOGIN" type="submit" />
                 </Link>
-              ) : user ? (
-                <Link
-                  label="logout"
-                  path="#login"
-                  href="/login"
-                  component={Login}
-                >
-                  <Button title="LOGout" type="submit" />
-                </Link>
-              ) : <Link
-              label="signup"
-              path="#signup"
-              href="/signup"
-              component={SignUp}
-            >
-              <Button title="SIGN UP" type="submit" />
-            </Link>}
+              )}
             </li>
           </NavbarRight>
+
           {/* end of main menu */}
           <Button
             className="menubar"
