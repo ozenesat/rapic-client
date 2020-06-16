@@ -4,7 +4,6 @@ import { Modal } from "@redq/reuse-modal";
 
 import "@redq/reuse-modal/es/index.css";
 import { AppProvider } from "../components/AppContext";
-import { AuthProvider } from "../components/AuthProvider";
 
 class MyApp extends App {
   render() {
@@ -14,9 +13,7 @@ class MyApp extends App {
       <Fragment>
         <Modal />
         <AppProvider>
-          <AuthProvider>
-            <Component {...pageProps} />
-          </AuthProvider>
+          <Component {...pageProps} />
         </AppProvider>
       </Fragment>
     );

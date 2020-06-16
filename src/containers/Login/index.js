@@ -69,6 +69,7 @@ const Login = () => {
   };
 
   const onSubmit = (e) => {
+    setLogin(true);
     e.preventDefault();
     if (email !== "" && password !== "") {
       Api.login(email, password)
@@ -78,7 +79,7 @@ const Login = () => {
             type: "SET_USER",
             payload: { token: res.access, user: email },
           });
-          setLogin(true);
+          setLogin(false);
           router.push("/dashboard");
         })
         .catch((err) => {

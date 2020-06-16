@@ -9,6 +9,7 @@ import { DrawerProvider } from "common/src/contexts/DrawerContext";
 import Navbar from "../../containers/Navbar";
 import Login from "../../containers/Login";
 import Footer from "../../containers/Footer";
+import { withAuth } from "../../components/withAuth";
 
 function LoginPage() {
   return (
@@ -41,4 +42,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default withAuth(LoginPage);

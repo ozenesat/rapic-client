@@ -18,21 +18,23 @@ import NavbarWrapper, {
   NavbarRight,
 } from "./navbar.style";
 import LogoImage from "common/src/assets/image/app/logo.png";
-import { useAppState } from "../../components/AppContext";
+import { useActionState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
 import Router from "next/router";
-import { removeCookies } from "cookies-next";
 import Dashboard from "../Dashboard";
+import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isLandingPage, setIsLandingPage] = useState(page === "landing");
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const globalState = useAppState();
+  const setGlobalState = useActionState();
   const scrollItems = [];
 
   useEffect(() => {
-    setAuthenticated(globalState.isAuthenticated);
+    const isAuthedticated = getSessionCookie(null).refresh != undefined;
+    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthedticated });
+    setAuthenticated(isAuthedticated);
   }, []);
 
   const handleMobileMenu = () => {
@@ -43,8 +45,8 @@ const Navbar = ({ page }) => {
     setMobileMenu(false);
   };
 
-  function handleLogout() {
-    removeCookies(null, "rapic_session");
+  function handleLogut() {
+    clearSessionCookie(null, "rapic_session");
     setAuthenticated(false);
     Router.replace("/#");
   }

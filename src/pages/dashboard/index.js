@@ -10,6 +10,7 @@ import Navbar from "containers/Navbar";
 import Dashboard from "containers/Dashboard";
 import API from "services/api";
 import { useActionState, useAppState } from "components/AppContext";
+import { withAuth } from "components/withAuth";
 
 function DashboardPage({ projects }) {
   const globalState = useAppState();
@@ -70,4 +71,5 @@ DashboardPage.getInitialProps = async (ctx) => {
     return { projects: [] };
   }
 };
-export default DashboardPage;
+
+export default withAuth(DashboardPage);
