@@ -13,10 +13,6 @@ import LogoImage from "../../assets/image/app/logo.png";
 export const data = {
   navItems: [
     {
-      path: "/#",
-      offset: "0",
-    },
-    {
       label: "Features",
       path: "#features",
       offset: "70",
@@ -29,6 +25,7 @@ export const data = {
     {
       label: "Go to dashboard",
       path: "/dashboard",
+      staticLink: "/dashboard",
       offset: "70",
     },
     /*{
@@ -46,11 +43,13 @@ export const data = {
     {
       label: "Docs",
       path: "/",
+      staticLink: "/",
       offset: "70",
     },
     {
       label: "Projects",
       path: "/dashboard",
+      staticLink: "/dashboard",
       offset: "70",
     },
   ],

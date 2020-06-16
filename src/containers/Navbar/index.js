@@ -27,7 +27,9 @@ import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const router = useRouter();
-  const [isLandingPage, setIsLandingPage] = useState(page === "landing");
+  const [isLandingPage, setIsLandingPage] = useState(
+    router.pathname == "/login" || router.pathname == "/"
+  );
   const [isAuthenticated, setAuthenticated] = useState(false);
   const setGlobalState = useActionState();
   const scrollItems = [];
