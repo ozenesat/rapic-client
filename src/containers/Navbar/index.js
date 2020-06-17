@@ -77,13 +77,17 @@ const Navbar = ({ page }) => {
         <>
         <Link label="Dasboard" href="/dashboard" component={Dashboard}>
                 <Button title="Dashboard"/>
-              </Link>
-        <Button title="Logout" className="menu-button" onClick={handleLogout} />
+        </Link>
+        <Link label="Dasboard" href="/dashboard" component={Dashboard}>
+          <Button title="Logout" className="menu-button" onClick={handleLogout} />
+        </Link>
         </>
       )
     }
     return (
+    <Link label="Dasboard" href="/dashboard" component={Dashboard}>
       <Button title="Logout" className="menu-button" onClick={handleLogout} />
+     </Link>
     );
   };
 

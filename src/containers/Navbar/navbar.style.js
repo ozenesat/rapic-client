@@ -172,6 +172,17 @@ export const MobileMenu = styled.div`
     ul {
       padding-bottom: 20px;
       li {
+        justify-content: space-between;
+        button {
+          background-color: transparent;
+          color: black;
+          border: 0.05em dashed black;
+          border-radius: 0.35em;
+          margin-top: 0.5em;
+          @media only screen and (max-width: 480px) {
+            min-width: 100%;
+            margin-top: 15px;
+          }
         a {
           display: block;
           padding: 13px 0;
