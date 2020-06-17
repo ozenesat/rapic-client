@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import Link from "next/link";
-import API from "../../services/api";
-
 import {
   MenuButton,
   MenuContainer,
@@ -11,13 +9,14 @@ import {
   TitleWrapper,
   Section,
 } from "./projects.style";
-import { useState } from "react";
 import { useActionState, useAppState } from "../../components/AppContext";
+import EndpointAddModal from "../EndpointModal";
+import { useState } from "react";
+
 function Menu({ endpoints }) {
   const router = useRouter();
   const { id } = router.query;
-
-  const [isLoading, setLoading] = useState(true);
+  const [isModalOpen, setModal] = useState(false);
   const setGlobalState = useActionState();
   const globalState = useAppState();
 
@@ -29,10 +28,13 @@ function Menu({ endpoints }) {
           <Title>Settings</Title>
         </TitleWrapper>
         <Link href="/projects/[id]" as={`/projects/${id}`}>
-          <MenuButton>Project</MenuButton>
-        </Link>
-        <Link href="/projects/[id]/auth/" as={`/projects/${id}/auth/`}>
-          <MenuButton>Authentication</MenuButton>
+          <MenuButton
+            backgroundColor={
+              router.pathname == `/projects/[id]` ? "#d6f3d6" : "white"
+            }
+          >
+            Project
+          </MenuButton>
         </Link>
       </Section>
       <Section>
@@ -41,19 +43,32 @@ function Menu({ endpoints }) {
           <Button
             title="Add New"
             className="add-button"
-            onClick={() => router.push(`/projects/${id}/endpoints/add`)}
+            onClick={() => setModal(true)}
           />
         </TitleWrapper>
 
-        {endpoints && endpoints.map((enpoint) => (
-          <Link
-            href={`/projects/[id]/endpoints/${enpoint.name}`}
-            as={`/projects/${id}/endpoints/${enpoint.name}`}
-          >
-            <MenuButton>{enpoint.name}</MenuButton>
-          </Link>
-        ))}
+        {endpoints &&
+          endpoints.map((endpoint) => (
+            <Link
+              href={`/projects/[id]/endpoints/[endpoint]`}
+              as={`/projects/${id}/endpoints/${endpoint.model_name}`}
+            >
+              <MenuButton
+                backgroundColor={
+                  router.query.endpoint == endpoint.model_name
+                    ? "#d6f3d6"
+                    : "white"
+                }
+              >
+                {endpoint.model_name}
+              </MenuButton>
+            </Link>
+          ))}
       </Section>
+      <EndpointAddModal
+        isModalOpen={isModalOpen}
+        closeModal={() => setModal(false)}
+      />
     </MenuContainer>
   );
 }

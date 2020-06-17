@@ -43,6 +43,7 @@ export const MenuButton = styled.a`
   cursor: pointer;
   border-bottom: 1px solid #dedfe0;
   padding-left: 5px;
+  background-color: ${(props) => props.backgroundColor};
   :hover {
     background-color: #d6f3d6;
   }

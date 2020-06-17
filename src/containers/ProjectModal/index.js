@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Modal from "react-modal";
 import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
+
 import { useActionState } from "../../components/AppContext";
 import API from "../../services/api";
 import { Loading } from "../../components/Loading";
@@ -14,15 +15,18 @@ import {
   ModalStyles,
 } from "./projectmodal.style";
 
+import MessageBox from "../MessageBox";
+
 function ProjectModal({ isModalOpen, closeModal }) {
-  const [name, onChangeName] = React.useState("");
-  const [description, onChangeDescription] = React.useState("");
-  const [isLoading, setLoading] = React.useState(false);
+  const [name, onChangeName] = useState("");
+  const [description, onChangeDescription] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const setGlobalState = useActionState();
 
   function checkInputs() {
     if (!name || !description) {
-      alert("Please fill all field.");
+      setError("Please fill all fields.");
     } else {
       createProject(name, description);
     }
@@ -46,6 +50,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
   }
 
   function handleCloseModal() {
+    setError("");
     onChangeName("");
     onChangeDescription("");
     closeModal();
@@ -97,6 +102,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
           <Button title="Cancel" id="cancel" onClick={handleCloseModal} />
         </ButtonWrapper>
         {isLoading && <Loading />}
+        <MessageBox message={error} type="error" />
       </Content>
     </Modal>
   );

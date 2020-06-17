@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Projects from "../../../../../containers/Projects";
 import Heading from "common/src/components/Heading";
 import {
   Container,
@@ -16,69 +15,97 @@ import { Icon } from "react-icons-kit";
 import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
 import DropdownMenu from "common/src/components/Dropdown";
 import API from "services/api";
-
-function EndpointAddPage({ project }) {
+import { Loading } from "components/Loading";
+import MessageBox from "containers/MessageBox";
+import { ModalStyles } from "../ProjectModal/projectmodal.style";
+import Modal from "react-modal";
+function EndpointAddModal({ isModalOpen, closeModal }) {
   const router = useRouter();
   const { id } = router.query;
-
   const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
-  const [fields, addField] = useState([{ name: "", fieldtype: "" }]);
+  const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
-  function handleAddField() {
-    addField(fields.concat({ name: "", fieldtype: "" }));
-  }
+  //   function handleAddField() {
+  //     fields.push({ name: "", fieldtype: "" });
+  //     addField([].concat(fields));
+  //   }
 
-  function deleteField(index) {
-    fields.splice(index, 1);
-    addField([].concat(fields));
-  }
+  //   function deleteField(index) {
+  //     fields.splice(index, 1);
+  //     addField([].concat(fields));
+  //   }
 
-  function changeType(index, fieldtype) {
-    fields[index].fieldtype = fieldtype;
-    addField([].concat(fields));
-  }
+  //   function changeType(index, fieldtype) {
+  //     fields[index].fieldtype = fieldtype;
+  //     addField([].concat(fields));
+  //   }
 
-  function handleOnChangeField(index, name) {
-    fields[index].name = name;
-    addField([].concat(fields));
+  //   function handleOnChangeField(index, name) {
+  //     fields[index].name = name;
+  //     addField([].concat(fields));
+  //   }
+
+  function resetModalState() {
+    onChangeDescription("");
+    onChangeName("");
+    setLoading(false);
+    closeModal();
   }
 
   function createEnpoint() {
+    setLoading(true);
     let enpoint = {
       app: id * 1,
       model_name: name,
       description,
-      rapicfields:
-        fields &&
-        fields.map((item) => {
-          item.fieldtype = 1;
-          return item;
-        }),
+      rapicfields: [],
     };
-    API.createRapicEndpoint(enpoint)
-      .then((response) => {
-        console.log({ response });
+    API.createRapicEndpoint(null, enpoint)
+      .then(async (response) => {
+        await router.push(
+          "/projects/[id]/endpoints/[endpoint]",
+          `/projects/${id}/endpoints/${response.model_name}`
+        );
+        resetModalState();
       })
-      .catch((err) => console.log({ err }));
+      .catch((err) => {
+        setLoading(false);
+        setMessage({
+          text: err,
+          type: "error",
+        });
+      });
   }
 
   function checkFields() {
-    if (fields.length < 1) {
-      alert("There should be at least one field.");
-      return;
-    }
-    for (var field of fields) {
-      if (field.fieldtype == "" || field.name == "") {
-        alert("Please fill the all fields.");
-        return;
-      }
-    }
+    // if (fields.length < 1) {
+    //   setMessage({
+    //     text: "There should be at least one field.",
+    //     type: "error",
+    //   });
+    //   return;
+    // }
+    // for (var field of fields) {
+    //   if (field.fieldtype == "" || field.name == "") {
+    //     setMessage({
+    //       text: "Please fill the all fields.",
+    //       type: "error",
+    //     });
+    //     return;
+    //   }
+    // }
     createEnpoint();
   }
 
   return (
-    <Projects endpoints={project.endpoints}>
+    <Modal
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
+      style={ModalStyles}
+      ariaHideApp={false}
+    >
       <Container>
         <Heading as="h2" content="Add a new endpoint" />
         <Content>
@@ -106,7 +133,7 @@ function EndpointAddPage({ project }) {
               className="endpoint-description"
             />
           </Section>
-          <Button
+          {/* <Button
             title="+ Add Fields"
             id="add-fields"
             onClick={() => handleAddField()}
@@ -137,38 +164,17 @@ function EndpointAddPage({ project }) {
                   />
                 </Field>
               ))}
-          </FieldsWrapper>
+          </FieldsWrapper> */}
           <ButtonWrapper>
-            <Button
-              title="Create Endpoint"
-              id="create"
-              onClick={createEnpoint}
-            />
+            <Button title="Create Endpoint" id="create" onClick={checkFields} />
+            <Button title="Cancel" id="cancel" onClick={closeModal} />
           </ButtonWrapper>
+          <MessageBox message={message.text} type={message.type} />
+          {isLoading && <Loading />}
         </Content>
       </Container>
-    </Projects>
+    </Modal>
   );
 }
 
-export async function getServerSideProps(context) {
-  const project = {
-    id: 104,
-    name: "Deneme",
-    description: "deneme project",
-    auth_method: "undefined",
-    endpoints: [
-      {
-        id: 1,
-        name: "getproject",
-        description: "return all projects",
-        fields: [{ id: 1, name: "id", fieldtype: 1 }],
-      },
-    ],
-  };
-  return {
-    props: { project },
-  };
-}
-
-export default EndpointAddPage;
+export default EndpointAddModal;

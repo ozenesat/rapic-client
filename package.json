@@ -52,6 +52,7 @@
     "next-fonts": "1.0.3",
     "next-optimized-images": "^2.5.4",
     "next-transpile-modules": "^3.0.2",
+    "nprogress": "^0.2.0",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "rc-drawer": "^3.1.3",
