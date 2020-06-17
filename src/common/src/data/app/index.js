@@ -14,7 +14,7 @@ export const data = {
   navItems: [
     {
       path: "/#",
-      offset: "0",
+      offset: "70",
     },
 
     {
