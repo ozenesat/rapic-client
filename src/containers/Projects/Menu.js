@@ -52,6 +52,7 @@ function Menu({ endpoints }) {
             <Link
               href={`/projects/[id]/endpoints/[endpoint]`}
               as={`/projects/${id}/endpoints/${endpoint.model_name}`}
+              key={`menu-item-${endpoint.id}`}
             >
               <MenuButton
                 backgroundColor={

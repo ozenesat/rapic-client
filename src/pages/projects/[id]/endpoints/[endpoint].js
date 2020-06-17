@@ -83,7 +83,8 @@ function Endpoints({ project }) {
   function updateEndpoints() {
     setLoading(true);
     let payload = {
-      app: description,
+      app: id * 1,
+      description: description,
       auth_method: authMethod,
     };
     API.updateRapicEndpoint(null, endpoint.id, payload).then((response) => {

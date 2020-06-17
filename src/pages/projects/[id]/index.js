@@ -43,8 +43,8 @@ const ProjectPage = ({ project }) => {
   function handleDelete() {
     setLoading(true);
     API.deleteRapicProject(null, id).then(async () => {
-      await Router.push("/dashboard");
       setLoading(false);
+      Router.push("/dashboard");
     });
   }
 

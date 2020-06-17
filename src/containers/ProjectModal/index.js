@@ -40,7 +40,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
     })
       .then((project) => {
         setLoading(false);
-        setGlobalState({ type: "ADD_PROJECTS", payload: [project] });
+        setGlobalState({ type: "ADD_NEW_PROJECTS", payload: project });
         handleCloseModal();
       })
       .catch((err) => {
