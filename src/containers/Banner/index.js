@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Text from "common/src/components/Text";
 import Input from "common/src/components/Input";
 import Image from "common/src/components/Image";
 import Button from "common/src/components/Button";
+import Link from "common/src/components/Link";
 import Heading from "common/src/components/Heading";
 import Container from "common/src/components/UI/ContainerTwo";
 import Section, {
@@ -11,16 +12,24 @@ import Section, {
   Subscribe,
   ImageGroup,
 } from './banner.style';
-import { validateEmail } from '../../utils/utils';
+import { getSessionCookie, clearSessionCookie, validateEmail } from "../../utils/utils";
 import Api from '../../services/api';
-import { useAppState } from "../../components/AppContext";
+import { useAppState, useActionState } from "../../components/AppContext";
 
 const Banner = () => {
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState({ email: false });
+  const [isAuthenticated, setAuthenticated] = useState(false);
   const globalState = useAppState();
-  console.log(globalState, 'GS')
+  const setGlobalState = useActionState();
+
+  useEffect(() => {
+    const isAuthenticated = getSessionCookie(null).refresh != undefined;
+    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthenticated });
+    setAuthenticated(isAuthenticated);
+  }, []);
+
   const handleEmailChange = event => {
     setEmail(String(event));
     if (!validateEmail(event) && event !== "") {
@@ -82,14 +91,18 @@ const Banner = () => {
               content="Rapic gives you API endpoints that can store data and run codelets all together by rest calls. With ready to use user authentication, lots of integration, and easy to plug client libraries..."
             />
             <Subscribe>
-              {registered ? (
+              { isAuthenticated ? (
+              <Link label="Dasboard" href="/dashboard">
+                <Button title="Dashboard" style={{ background: "#35BF2E"  }}/>
+              </Link>) : (
+                registered ? (
                 <Text
                   className="banner-thanks"
                   content={`Thank you! We will notify you on ${email}.`}
                 />
-              ) : (
-                showRegister()
-              )}
+              ) : ( showRegister())
+              )
+              }
             </Subscribe>
           </BannerContent>
         </ContentWrapper>
