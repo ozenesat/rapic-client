@@ -80,12 +80,11 @@ const Navbar = ({ page }) => {
         </Link>
       );
     }
+    // this if statement is meaningless now, we'll discuss it tomorrow, and then update it.
     if (isLandingPage) {
       return (
         <>
-          <Link label="Dasboard" href="/dashboard" component={Dashboard}>
-            <Button title="Dashboard" />
-          </Link>
+          <Button title="Dashboard" onClick={onLoading}/>
           <Button
             title="Logout"
             className="menu-button"
@@ -95,9 +94,12 @@ const Navbar = ({ page }) => {
       );
     }
     return (
+      <>
+    <Button title="Dashboard" onClick={onLoading}/>
     <Link label="Dasboard" href="/dashboard" component={Dashboard}>
       <Button title="Logout" className="menu-button" onClick={handleLogout} />
      </Link>
+     </>
     );
   };
   // it looks meaningless but with this function browser loads landing page 
