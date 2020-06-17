@@ -12,7 +12,7 @@ import Navbar from "../../containers/Navbar";
 import Menu from "../../containers/Projects/Menu";
 import { Content, ProjectContainer } from "./projects.style";
 
-function Projects({ children, endpoints }) {
+function Projects({ children, project }) {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -36,7 +36,7 @@ function Projects({ children, endpoints }) {
           </Sticky>
           <Container>
             <ProjectContainer>
-              <Menu endpoints={endpoints} />
+              <Menu project={project} />
               <Content>{children}</Content>
             </ProjectContainer>
           </Container>

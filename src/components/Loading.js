@@ -7,17 +7,17 @@ const LoadingContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 30px;
+
+  padding: 20px;
   border-radius: 10px;
 `;
 export const Loading = () => (
   <LoadingContainer>
     <ReactLoading
-      type="balls"
+      type="spin"
       color="#32c02f"
-      height={100}
-      width={100}
+      height={50}
+      width={50}
       className="loading"
     />
   </LoadingContainer>

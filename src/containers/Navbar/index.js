@@ -28,7 +28,7 @@ import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const router = useRouter();
-  const [isLandingPage, setIsLandingPage] = useState( router.pathname == "/");
+  const [isLandingPage, setIsLandingPage] = useState(router.pathname == "/");
   const [isAuthenticated, setAuthenticated] = useState(false);
   const setGlobalState = useActionState();
   const scrollItems = [];
@@ -69,24 +69,30 @@ const Navbar = ({ page }) => {
     if (router.pathname == "/login") {
       return (
         <Link href="/signup" component={SignUp}>
-          <Button title="Sign Up"/>
+          <Button title="Sign Up" />
         </Link>
       );
     }
     if (!isAuthenticated) {
       return (
         <Link label="login" href="/login" component={Login}>
-          <Button title="Login"/>
+          <Button title="Login" />
         </Link>
       );
     }
     if (isLandingPage) {
       return (
         <>
-        <Button title="Dashboard" onClick={onLoading}/>
-        <Button title="Logout"  onClick={handleLogout} />
+          <Link label="Dasboard" href="/dashboard" component={Dashboard}>
+            <Button title="Dashboard" />
+          </Link>
+          <Button
+            title="Logout"
+            className="menu-button"
+            onClick={handleLogout}
+          />
         </>
-      )
+      );
     }
     return (
     <Link label="Dasboard" href="/dashboard" component={Dashboard}>
@@ -120,7 +126,7 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navLogItems}
+            menuItems={isLandingPage ? data.navItems : data.navDashboardItems}
             offset={-84}
           />
           <NavbarRight>

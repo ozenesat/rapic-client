@@ -106,5 +106,5 @@ export const ButtonWrapper = styled.div`
     background-color: #34bf2f;
     margin-right: 20px;
   }
-  ${(props) => props.style}
+  ${(props) => props.customStyle}
 `;

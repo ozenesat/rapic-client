@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Projects from "../../../../containers/Projects";
+import Projects from "containers/Projects";
 import Heading from "common/src/components/Heading";
 import {
   Container,
@@ -7,16 +7,14 @@ import {
   FieldsWrapper,
   Field,
   ButtonWrapper,
-} from "../../../../pagestyles/projects/endpoints/add/add.style";
-import {
-  Title,
-  Section,
-} from "./../../../../containers/ProjectModal/projectmodal.style";
+} from "pagestyles/projects/endpoints/add/add.style";
+import { Title, Section } from "containers/ProjectModal/projectmodal.style";
 import { useRouter } from "next/router";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
 import { Icon } from "react-icons-kit";
 import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
+import { androidSettings } from "react-icons-kit/ionicons/androidSettings";
 import DropdownMenu from "common/src/components/Dropdown";
 import API from "services/api";
 import Error from "pages/_error";
@@ -24,26 +22,29 @@ import { withAuth } from "components/withAuth";
 import { getSessionCookie } from "utils/utils";
 import { Loading } from "components/Loading";
 import MessageBox from "containers/MessageBox";
-import AccessLevel from "../../../../containers/AccessLevel";
+import AccessLevel from "containers/AccessLevel";
+import CodeEditorModal from "containers/CodeEditorModal";
+import { HeaderWrapping } from "pagestyles/projects/endpoints/enpoint.style";
 
 function Endpoints({ project }) {
   const router = useRouter();
   const { id } = router.query;
-  const endpoint = project.rapic_models.find(
-    (item) => item.model_name == router.query.endpoint
-  );
+
   const { username } = getSessionCookie(null);
-  const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
-  const [authMethod, onChangeAuthMethod] = useState(endpoint.auth_method);
+  const [authMethod, onChangeAuthMethod] = useState("");
   const [fields, addField] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [isModalOpen, setModalOpen] = useState(false);
+  const endpoint = project.rapic_models.find(
+    (item) => item.model_name == router.query.endpoint
+  );
 
   useEffect(() => {
-    onChangeName(endpoint.model_name);
     onChangeDescription(endpoint.description);
-    addField(endpoint.rapicfields);
+    onChangeAuthMethod(endpoint.auth_method);
+    console.log(authMethod);
   }, [router.query.endpoint]);
 
   // function covertFieldType(type) {
@@ -87,14 +88,14 @@ function Endpoints({ project }) {
       description: description,
       auth_method: authMethod,
     };
-    API.updateRapicEndpoint(null, endpoint.id, payload).then((response) => {
+    API.updateRapicEndpoint(null, endpoint.id, payload).then(() => {
       setLoading(false);
       setMessage({ text: "Updated successfully.", type: "success" });
     });
   }
 
   function checkFields() {
-    if (!name || !description) {
+    if (!description) {
       setMessage({ text: "Please fill the all fields.", type: "error" });
     }
     // if (fields.length < 1) {
@@ -115,11 +116,18 @@ function Endpoints({ project }) {
 
   if (!endpoint) return <Error status={404} />;
   return (
-    <Projects endpoints={project && project.rapic_models}>
+    <Projects project={project}>
       <Container>
-        <Heading as="h2" content="Enpoint Settings" />
+        <HeaderWrapping>
+          <Heading as="h2" content={`${endpoint.model_name} Actions`} />
+          <Button
+            icon={<Icon icon={androidSettings} />}
+            title="Code Editor"
+            onClick={() => setModalOpen(true)}
+          />
+        </HeaderWrapping>
         <Content>
-          <Section style={"margin-top: 20px;"}>
+          <Section customStyle={"margin-top: 20px;"}>
             <Title>Endpoint URL</Title>
             <Input
               disabled
@@ -129,10 +137,7 @@ function Endpoints({ project }) {
               className="endpoint-url"
             />
           </Section>
-          <AccessLevel
-            authMethod={endpoint.auth_method}
-            onChange={onChangeAuthMethod}
-          />
+          <AccessLevel authMethod={authMethod} onChange={onChangeAuthMethod} />
           <Section>
             <Title>API Endpoint Name</Title>
             <Input
@@ -141,8 +146,7 @@ function Endpoints({ project }) {
               inputType="text"
               placeholder="Example: orders"
               name="endpoint-name"
-              value={name}
-              onChange={onChangeName}
+              value={endpoint.model_name}
               className="endpoint-name"
             />
           </Section>
@@ -196,10 +200,15 @@ function Endpoints({ project }) {
               ))}
           </FieldsWrapper> */}
 
-          <ButtonWrapper style="margin-top: 70px;">
+          <ButtonWrapper customStyle="margin-top: 20px;">
             <Button title="Save Changes" id="create" onClick={checkFields} />
           </ButtonWrapper>
           <MessageBox message={message.text} type={message.type} />
+          <CodeEditorModal
+            isModalOpen={isModalOpen}
+            closeModal={() => setModalOpen(false)}
+            endpoint={endpoint}
+          />
           {isLoading && <Loading />}
         </Content>
       </Container>

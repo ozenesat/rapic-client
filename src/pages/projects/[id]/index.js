@@ -10,6 +10,7 @@ import {
   Container,
   DangerZoneWrapper,
   Line,
+  HeaderWrapping,
 } from "pagestyles/projects/project.style";
 import API from "services/api";
 import Heading from "common/src/components/Heading";
@@ -74,7 +75,7 @@ const ProjectPage = ({ project }) => {
 
   if (!project) return <Error status={404} />;
   return (
-    <Projects endpoints={project && project.rapic_models}>
+    <Projects project={project}>
       <Container>
         <Heading as="h2" content="Projects Settings" />
         <Content>
@@ -85,7 +86,7 @@ const ProjectPage = ({ project }) => {
               inputType="text"
               placeholder="Enter your project name"
               name="project-name"
-              value={String(name)}
+              value={name}
               onChange={onChangeName}
               className="project-name"
             />
@@ -97,7 +98,7 @@ const ProjectPage = ({ project }) => {
               inputType="textarea"
               placeholder="Describe your project"
               name="project-description"
-              value={String(description)}
+              value={description}
               onChange={onChangeDescription}
               className="project-description"
             />
@@ -129,6 +130,7 @@ const ProjectPage = ({ project }) => {
               onClick={() => handleDelete()}
             />
           </DangerZoneWrapper>
+
           {isLoading && <Loading />}
         </Content>
       </Container>

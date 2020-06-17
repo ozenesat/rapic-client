@@ -15,15 +15,17 @@ function Dashboard() {
     if (globalState.projects.length < 1) {
       return <div>There is no projects...</div>;
     }
-    return globalState.projects.map(({ name, description, id }) => (
-      <Link href="/projects/[id]" as={`/projects/${id}`}>
-        <Card>
-          <Heading as="h2" content={name} />
-          <Heading as="h3" content={description} />
-          <Heading as="h3" content={`${0} objects`} />
-        </Card>
-      </Link>
-    ));
+    return globalState.projects.map(
+      ({ name, description, id, rapic_models }) => (
+        <Link href="/projects/[id]" as={`/projects/${id}`}>
+          <Card>
+            <Heading as="h2" content={name} />
+            <Heading as="h3" content={description} />
+            <Heading as="h3" content={`${rapic_models.length} endpoints`} />
+          </Card>
+        </Link>
+      )
+    );
   }
 
   return (

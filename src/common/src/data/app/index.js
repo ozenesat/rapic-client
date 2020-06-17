@@ -48,12 +48,13 @@ export const data = {
     {
       path: "",
       offset: "0",
-    }
+    },
   ],
   navDashboardItems: [
     {
       label: "Dashboard",
       path: "/dashboard",
+      staticLink: "/dashboard",
       offset: "70",
     },
   ],

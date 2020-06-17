@@ -13,7 +13,7 @@ import { useActionState, useAppState } from "../../components/AppContext";
 import EndpointAddModal from "../EndpointModal";
 import { useState } from "react";
 
-function Menu({ endpoints }) {
+function Menu({ project }) {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setModal] = useState(false);
@@ -22,7 +22,7 @@ function Menu({ endpoints }) {
 
   return (
     <MenuContainer>
-      <Heading as="h1" content="My Awsome Idea" />
+      <Heading as="h1" content={project.name} />
       <Section>
         <TitleWrapper>
           <Title>Settings</Title>
@@ -47,8 +47,8 @@ function Menu({ endpoints }) {
           />
         </TitleWrapper>
 
-        {endpoints &&
-          endpoints.map((endpoint) => (
+        {project &&
+          project.rapic_models.map((endpoint) => (
             <Link
               href={`/projects/[id]/endpoints/[endpoint]`}
               as={`/projects/${id}/endpoints/${endpoint.model_name}`}

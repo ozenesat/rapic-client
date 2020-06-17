@@ -45,7 +45,7 @@ const Section = styled.div`
   flex-direction: column;
   justify-content: space-around;
   margin-bottom: 10px;
-  ${(props) => props.style};
+  ${(props) => props.customStyle};
 `;
 
 const ButtonWrapper = styled.div`
@@ -60,6 +60,7 @@ const ModalStyles = {
     bottom: "auto",
     transform: "translate(-50%, -50%)",
     width: "50%",
+    marginBottom: "100px;",
   },
 };
 

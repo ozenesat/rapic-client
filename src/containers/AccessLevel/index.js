@@ -1,27 +1,8 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
 import { Text, RadioWrapper } from "pagestyles/projects/auth/auth.style";
 
 import Radio from "common/src/components/Radio";
 
 function AccessLevel({ onChange, authMethod }) {
-  const [authType, changeAuthType] = useState(convertAuthType(authMethod));
-
-  function convertAuthType(type) {
-    const types = {
-      undefined: 1,
-      public: 1,
-      authenticated: 2,
-      owner: 3,
-    };
-    return types[type];
-  }
-
-  function handleChange(value) {
-    onChange(value);
-    changeAuthType(convertAuthType(value));
-  }
-
   return (
     <>
       <Text>Control access to your Rapic API endpoints: </Text>
@@ -29,20 +10,20 @@ function AccessLevel({ onChange, authMethod }) {
         <Radio
           labelText="Public"
           className="radio"
-          isChecked={authType === 1}
-          onChange={() => handleChange("public")}
+          isChecked={authMethod === "public" || authMethod === "undefined"}
+          onChange={() => onChange("public")}
         />
         <Radio
           labelText="Authenticated"
           className="radio"
-          isChecked={authType === 2}
-          onChange={() => handleChange("authenticated")}
+          isChecked={authMethod === "authenticated"}
+          onChange={() => onChange("authenticated")}
         />
         <Radio
           labelText="Owner"
           className="radio"
-          isChecked={authType === 3}
-          onChange={() => handleChange("owner")}
+          isChecked={authMethod === "owner"}
+          onChange={() => onChange("owner")}
         />
       </RadioWrapper>
     </>

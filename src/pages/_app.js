@@ -1,32 +1,18 @@
 import React, { Fragment } from "react";
 import App from "next/app";
 import { Modal } from "@redq/reuse-modal";
-
+import "nprogress/nprogress.css";
 import "@redq/reuse-modal/es/index.css";
 import { AppProvider } from "../components/AppContext";
-
+import NProgress from "nprogress";
 import Router from "next/router";
-import { Loading } from "../components/Loading";
-
+import "../pagestyles/app/ngprogress.css";
 class MyApp extends App {
-  state = {
-    isLoading: false,
-  };
   componentDidMount() {
-    Router.onRouteChangeStart = () => {
-      // console.log('onRouteChnageStart triggered');
-      this.setState({ isLoading: true });
-    };
-
-    Router.onRouteChangeComplete = () => {
-      // console.log('onRouteChnageComplete triggered');
-      this.setState({ isLoading: false });
-    };
-
-    Router.onRouteChangeError = () => {
-      // console.log('onRouteChnageError triggered');
-      this.setState({ isLoading: false });
-    };
+    NProgress.configure({ color: "red" });
+    Router.onRouteChangeStart = () => NProgress.start();
+    Router.onRouteChangeComplete = () => NProgress.done();
+    Router.onRouteChangeError = () => NProgress.done();
   }
   render() {
     const { Component, pageProps } = this.props;
@@ -36,7 +22,6 @@ class MyApp extends App {
         <Modal />
         <AppProvider>
           <Component {...pageProps} />
-          {this.state.isLoading && <Loading />}
         </AppProvider>
       </Fragment>
     );

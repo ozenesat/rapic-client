@@ -1,11 +1,13 @@
 import React from "react";
 import { getSessionCookie } from "../utils/utils";
+import { useAppState } from "./AppContext";
 
 const withAuth = (Page) => {
   return class extends React.Component {
     static async getInitialProps(ctx) {
       const { refresh } = getSessionCookie(ctx);
       const { res, req } = ctx;
+
       // if there is no refresh token, force to target location
       if (req && res) {
         if (req.url == "/login" && refresh != undefined) {
