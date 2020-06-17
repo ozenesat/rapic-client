@@ -126,7 +126,7 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navDashboardItems}
+            menuItems={isLandingPage ? data.navItems : data.navLogItems}
             offset={-84}
           />
           <NavbarRight>
