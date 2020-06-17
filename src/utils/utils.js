@@ -31,3 +31,10 @@ export const getSessionCookie = (ctx) => {
     return JSON.parse(sessionCookie);
   }
 };
+
+export const splitText = (text, count) => {
+  if (text.length > count) {
+    return text.slice(0, count + 2) + "...";
+  }
+  return text;
+};

@@ -12,6 +12,7 @@ import {
 import { useActionState, useAppState } from "../../components/AppContext";
 import EndpointAddModal from "../EndpointModal";
 import { useState } from "react";
+import { splitText } from "../../utils/utils";
 
 function Menu({ project }) {
   const router = useRouter();
@@ -22,7 +23,7 @@ function Menu({ project }) {
 
   return (
     <MenuContainer>
-      <Heading as="h1" content={project.name} />
+      <Heading as="h1" content={splitText(project.name, 12)} />
       <Section>
         <TitleWrapper>
           <Title>Settings</Title>
