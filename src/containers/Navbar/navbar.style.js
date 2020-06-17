@@ -172,6 +172,17 @@ export const MobileMenu = styled.div`
     ul {
       padding-bottom: 20px;
       li {
+        justify-content: space-between;
+        button {
+          background-color: transparent;
+          color: black;
+          border: 0.05em dashed black;
+          border-radius: 0.35em;
+          margin-top: 0.5em;
+          @media only screen and (max-width: 480px) {
+            min-width: 100%;
+            margin-top: 15px;
+          }
         a {
           display: block;
           padding: 13px 0;
@@ -185,28 +196,6 @@ export const MobileMenu = styled.div`
             color: ${themeGet("colors.primary")};
           }
         }
-      }
-    }
-    .reusecore__button {
-      width: 100%;
-      border-radius: 4px;
-      background-image: -moz-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      background-image: -webkit-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      background-image: -ms-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      @media only screen and (max-width: 480px) {
-        margin-top: 20px;
       }
     }
   }
