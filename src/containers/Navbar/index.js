@@ -41,6 +41,7 @@ const Navbar = ({ page }) => {
   data.navItems.forEach((item) => {
     scrollItems.push(item.path.slice(1));
   });
+  
 
   const handleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
@@ -141,11 +142,11 @@ const Navbar = ({ page }) => {
         <Container>
           <Scrollspy
             className="menu"
-            items={scrollItems}
+            items={isLandingPage ? scrollItems : data.navLogItems}
             offset={-84}
             currentClassName="active"
           >
-            {data.navItems.map((menu, index) => (
+            {isLandingPage ? (data.navItems.map((menu, index) => (
               <li key={`menu_key${index}`}>
                 <AnchorLink
                   href={menu.path}
@@ -155,11 +156,20 @@ const Navbar = ({ page }) => {
                   {menu.label}
                 </AnchorLink>
               </li>
-            ))}
+            ))) : ((data.navLogItems.map((menu, index) => (
+              <li key={`menu_key${index}`}>
+                <AnchorLink
+                  href={menu.path}
+                  offset={menu.offset}
+                  onClick={handleHandleMenuClose}
+                >
+                  {menu.label}
+                </AnchorLink>
+              </li>
+            ))))
+          }
             <li>
-              <Link href="/login" component={Login}>
-                Login
-              </Link>
+            {renderDefaultRightBar()}
             </li>
           </Scrollspy>
         </Container>

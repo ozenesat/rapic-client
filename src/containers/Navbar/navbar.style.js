@@ -187,28 +187,6 @@ export const MobileMenu = styled.div`
         }
       }
     }
-    .reusecore__button {
-      width: 100%;
-      border-radius: 4px;
-      background-image: -moz-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      background-image: -webkit-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      background-image: -ms-linear-gradient(
-        -31deg,
-        rgb(64, 219, 216) 0%,
-        rgb(44, 31, 132) 100%
-      );
-      @media only screen and (max-width: 480px) {
-        margin-top: 20px;
-      }
-    }
   }
 `;
 
