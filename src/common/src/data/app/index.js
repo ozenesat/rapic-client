@@ -13,6 +13,11 @@ import LogoImage from "../../assets/image/app/logo.png";
 export const data = {
   navItems: [
     {
+      path: "/#",
+      offset: "0",
+    },
+
+    {
       label: "Features",
       path: "#features",
       offset: "70",
@@ -22,12 +27,12 @@ export const data = {
       path: "#product",
       offset: "70",
     },
-    {
-      label: "Go to dashboard",
-      path: "/dashboard",
-      staticLink: "/dashboard",
-      offset: "70",
-    },
+    // {
+    //   label: "Go to dashboard",
+    //   path: "/dashboard",
+    //   staticLink: "/dashboard",
+    //   offset: "70",
+    // },
     /*{
       label: 'Pricing',
       path: '#pricing',
@@ -41,25 +46,17 @@ export const data = {
   ],
   navLogItems: [
     {
-      label: "Docs",
-      path: "/",
-      staticLink: "/",
-      offset: "70",
-    },
+      path: "",
+      offset: "0",
+    }
+  ],
+  navDashboardItems: [
     {
-      label: "Projects",
+      label: "Dashboard",
       path: "/dashboard",
-      staticLink: "/dashboard",
       offset: "70",
     },
   ],
-  // navDashboardItems: [
-  //   {
-  //     label: "Dashboard",
-  //     path: "/dashboard",
-  //     offset: "70",
-  //   },
-  // ],
   footerItems: {
     // first: [
     //   {
@@ -101,21 +98,21 @@ export const data = {
         label: "Github",
         path: "https://github.com/rapic",
         offset: "70",
-        icon: "fab fa-github fa-3x",
+        icon: "fab fa-github fa-2x",
       },
       {
         id: 2,
         label: "Facebook",
         path: "https://www.facebook.com/getrapic/",
         offset: "70",
-        icon: "fab fa-facebook fa-3x",
+        icon: "fab fa-facebook fa-2x",
       },
       {
         id: 3,
         label: "Instagram",
         path: "https://www.instagram.com/getrapic/",
         offset: "70",
-        icon: "fab fa-instagram fa-3x",
+        icon: "fab fa-instagram fa-2x",
       },
     ],
   },

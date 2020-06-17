@@ -9,7 +9,6 @@ import { data } from 'common/src/data/app';
 import Logo from 'common/src/assets/image/app/footer_logo.png';
 
 const Footer = () => {
-  // Find & Add `Help & Follow Us` items into data/app then call on lists below.
   return (
     <Section>
       <Container>

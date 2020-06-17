@@ -71,6 +71,10 @@ const Login = () => {
     if (email !== "" && password !== "") {
       API.login(email, password)
         .then(async (res) => {
+          setInfo({
+            message: "Welcome to Rapic!",
+            color: "#35BF2E",
+          });
           setGlobalState({
             type: "SET_USER",
             payload: { token: res.access, user: email },
@@ -81,7 +85,7 @@ const Login = () => {
         .catch((err) => {
           console.log(err.message, "err");
           setInfo({
-            message: "No active account found with the given credentials",
+            message: "Incorrect username or password.",
             color: "red",
           });
           setLoading(false);
@@ -131,7 +135,8 @@ const Login = () => {
           type="submit"
         />
         <Text
-          style={{ color: info.color, marginTop: "0.25em" }}
+          as = "h3"
+          style={{ color: info.color, marginTop: "0.5em" }}
           content={info.message}
         />
       </Fragment>

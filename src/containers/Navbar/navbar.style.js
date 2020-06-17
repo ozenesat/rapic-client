@@ -21,9 +21,6 @@ const NavbarWrapper = styled.header`
     min-width: 145px;
     max-width: 145px;
   }
-  .menu-button {
-    min-height: 0px;
-  }
 `;
 
 export const MenuArea = styled.nav`
@@ -122,9 +119,10 @@ export const NavbarRight = styled.ul`
       background-color: transparent;
       color: black;
       border: 0.05em solid black;
-      min-width: 6.5em;
-      min-height: 3.5em;
+      width: 8em;
+      height: 4em;
       border-radius: 0.35em;
+      margin: 0.5em;
       @media only screen and (max-width: 480px) {
         min-width: 100%;
         margin-top: 15px;
