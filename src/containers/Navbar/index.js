@@ -33,9 +33,9 @@ const Navbar = ({ page }) => {
   const scrollItems = [];
 
   useEffect(() => {
-    const isAuthedticated = getSessionCookie(null).refresh != undefined;
-    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthedticated });
-    setAuthenticated(isAuthedticated);
+    const isAuthenticated = getSessionCookie(null).refresh != undefined;
+    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthenticated });
+    setAuthenticated(isAuthenticated);
   }, []);
 
   data.navItems.forEach((item) => {
