@@ -67,8 +67,8 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
     if (email !== "" && password !== "") {
+      setLoading(true);
       API.login(email, password)
         .then(async (res) => {
           setInfo({
@@ -79,8 +79,9 @@ const Login = () => {
             type: "SET_USER",
             payload: { token: res.access, user: email },
           });
-          await router.push("/dashboard");
+
           setLoading(false);
+          router.push("/dashboard");
         })
         .catch((err) => {
           console.log(err.message, "err");
@@ -135,7 +136,7 @@ const Login = () => {
           type="submit"
         />
         <Text
-          as = "h3"
+          as="h3"
           style={{ color: info.color, marginTop: "0.5em" }}
           content={info.message}
         />

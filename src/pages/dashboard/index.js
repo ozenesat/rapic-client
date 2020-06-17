@@ -15,11 +15,7 @@ import { withAuth } from "components/withAuth";
 function DashboardPage({ projects }) {
   const setGlobalState = useActionState();
 
-  useEffect(() => {
-    if (projects) {
-      setGlobalState({ type: "ADD_PROJECTS", payload: projects });
-    }
-  }, []);
+  setGlobalState({ type: "ADD_PROJECTS", payload: projects });
 
   return (
     <ThemeProvider theme={theme}>

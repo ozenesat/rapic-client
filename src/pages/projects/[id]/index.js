@@ -18,29 +18,58 @@ import Button from "common/src/components/Button";
 import { useAppState } from "components/AppContext";
 import Router, { useRouter } from "next/router";
 import { Loading } from "components/Loading";
-import Error from "../../_error";
+import Error from "pages/_error";
+import MessageBox from "containers/MessageBox";
+import AccessLevel from "containers/AccessLevel";
 
 const ProjectPage = ({ project }) => {
   const router = useRouter();
   const { id } = router.query;
   const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
+  const [authMethod, onChangeAuthMethod] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
   const globalState = useAppState();
 
   useEffect(() => {
     if (project) {
       onChangeDescription(project.description);
       onChangeName(project.name);
+      onChangeAuthMethod(project.auth_method);
     }
   }, []);
 
-  async function handleDelete() {
+  function handleDelete() {
     setLoading(true);
-    API.deleteRapicProject(null, id).then(() => {
+    API.deleteRapicProject(null, id).then(async () => {
+      await Router.push("/dashboard");
       setLoading(false);
-      Router.push("/dashboard", undefined, { shallow: true });
     });
+  }
+
+  async function handleUpdate() {
+    setLoading(true);
+    try {
+      await API.updateRapicProject(null, id, {
+        name,
+        description,
+        auth_method: authMethod,
+      });
+      setLoading(false);
+      setMessage({ type: "success", text: "Updated successfully." });
+    } catch (err) {
+      setLoading(false);
+      setMessage({ type: "error", text: err.message });
+    }
+  }
+
+  function checkInputs() {
+    if (!name || !description) {
+      setMessage({ type: "error", text: "Please fill all fields." });
+      return;
+    }
+    handleUpdate();
   }
 
   if (!project) return <Error status={404} />;
@@ -73,6 +102,12 @@ const ProjectPage = ({ project }) => {
               className="project-description"
             />
           </Section>
+          <Section>
+            <AccessLevel
+              onChange={onChangeAuthMethod}
+              authMethod={project.auth_method}
+            />
+          </Section>
           <ButtonWrapper>
             <Button
               title="Save Changes"
@@ -80,8 +115,9 @@ const ProjectPage = ({ project }) => {
               onClick={() => checkInputs()}
             />
           </ButtonWrapper>
+          <MessageBox message={message.text} type={message.type} />
+          <Line />
           <DangerZoneWrapper>
-            <Line />
             <Heading as="h2" content="Danger Zone" />
             <Title>
               Deleting a project will make its API unavaiable immediately. This

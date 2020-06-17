@@ -74,7 +74,7 @@ class Api {
           this.refresh = data.refresh;
           this.access = data.access;
           let refresh = data.refresh;
-          setSessionCookie({ refresh }, null);
+          setSessionCookie({ refresh, username: email }, null);
           resolve(data);
         })
         .catch((error) => reject(error));
@@ -231,7 +231,35 @@ class Api {
     });
   }
 
-  async createRapicEndpoint(endpoint) {
+  async updateRapicProject(ctx, id, payload) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "PUT",
+        url: rapicUrl + `rapicapp/${id}/`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
+        },
+        data: JSON.stringify(payload),
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to update project");
+          }
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+
+  async createRapicEndpoint(ctx, endpoint) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
     return new Promise((resolve, reject) => {
       axios({
         method: "POST",
@@ -249,7 +277,32 @@ class Api {
           }
           resolve(data);
         })
-        .catch((err) => reject(err));
+        .catch((err) => reject("Enpoint name must be a unique set."));
+    });
+  }
+
+  async updateRapicEndpoint(ctx, id, payload) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "PATCH",
+        url: rapicUrl + `rapicmodel/${id}/`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
+        },
+        data: JSON.stringify(payload),
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to update enpoint");
+          }
+          resolve(data);
+        })
+        .catch((err) => reject(JSON.stringify(err.response)));
     });
   }
 

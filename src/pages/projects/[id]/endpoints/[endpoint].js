@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Projects from "../../../../containers/Projects";
 import Heading from "common/src/components/Heading";
 import {
@@ -18,91 +18,125 @@ import Button from "common/src/components/Button";
 import { Icon } from "react-icons-kit";
 import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
 import DropdownMenu from "common/src/components/Dropdown";
-import API from "../../../../services/api";
-import Error from "../../../_error";
+import API from "services/api";
+import Error from "pages/_error";
+import { withAuth } from "components/withAuth";
+import { getSessionCookie } from "utils/utils";
+import { Loading } from "components/Loading";
+import MessageBox from "containers/MessageBox";
+import AccessLevel from "../../../../containers/AccessLevel";
 
-function Endpoints({ project, endpoint }) {
+function Endpoints({ project }) {
   const router = useRouter();
   const { id } = router.query;
-
-  const [name, onChangeName] = useState(endpoint && endpoint.name);
-  const [description, onChangeDescription] = useState(
-    endpoint && endpoint.description
+  const endpoint = project.rapic_models.find(
+    (item) => item.model_name == router.query.endpoint
   );
+  const { username } = getSessionCookie(null);
+  const [name, onChangeName] = useState("");
+  const [description, onChangeDescription] = useState("");
+  const [authMethod, onChangeAuthMethod] = useState(endpoint.auth_method);
+  const [fields, addField] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [fields, addField] = useState(endpoint && endpoint.fields);
+  useEffect(() => {
+    onChangeName(endpoint.model_name);
+    onChangeDescription(endpoint.description);
+    addField(endpoint.rapicfields);
+  }, [router.query.endpoint]);
 
-  function covertFieldType(type) {
-    const types = {
-      1: "boolean",
-      2: "integer",
-      3: "float",
-      4: "text",
-      text: 4,
-      float: 3,
-      integer: 2,
-      boolean: 1,
-    };
-    return types[type];
-  }
+  // function covertFieldType(type) {
+  //   const types = {
+  //     1: "boolean",
+  //     2: "integer",
+  //     3: "float",
+  //     4: "text",
+  //     text: 4,
+  //     float: 3,
+  //     integer: 2,
+  //     boolean: 1,
+  //   };
+  //   return types[type];
+  // }
 
-  function handleAddField() {
-    addField(fields.concat({ name: "", fieldtype: "" }));
-  }
+  // function handleAddField() {
+  //   fields.push({ name: "", fieldtype: "" });
+  //   addField([].concat(fields));
+  // }
 
-  function deleteField(index) {
-    fields.splice(index, 1);
-    addField([].concat(fields));
-  }
+  // function deleteField(index) {
+  //   fields.splice(index, 1);
+  //   addField([].concat(fields));
+  // }
 
-  function changeType(index, fieldtype) {
-    fields[index].fieldtype = covertFieldType(fieldtype);
-    addField([].concat(fields));
-  }
+  // function changeType(index, fieldtype) {
+  //   fields[index].fieldtype = covertFieldType(fieldtype);
+  //   addField([].concat(fields));
+  // }
 
-  function handleOnChangeField(index, name) {
-    fields[index].name = name;
-    addField([].concat(fields));
-  }
+  // function handleOnChangeField(index, name) {
+  //   fields[index].name = name;
+  //   addField([].concat(fields));
+  // }
 
   function updateEndpoints() {
-    let enpoint = {
-      app: id * 1,
-      model_name: name,
-      description,
-      rapicfields:
-        fields &&
-        fields.map((item) => {
-          item.fieldtype = 1;
-          return item;
-        }),
+    setLoading(true);
+    let payload = {
+      app: description,
+      auth_method: authMethod,
     };
+    API.updateRapicEndpoint(null, endpoint.id, payload).then((response) => {
+      setLoading(false);
+      setMessage({ text: "Updated successfully.", type: "success" });
+    });
   }
 
   function checkFields() {
-    if (fields.length < 1) {
-      alert("There should be at least one field.");
-      return;
+    if (!name || !description) {
+      setMessage({ text: "Please fill the all fields.", type: "error" });
     }
-    for (var field of fields) {
-      if (field.fieldtype == "" || field.name == "") {
-        alert("Please fill the all fields.");
-        return;
-      }
-    }
+    // if (fields.length < 1) {
+    //   setMessage({
+    //     text: "There should be at least one field.",
+    //     type: "red",
+    //   });
+    //   return;
+    // }
+    // for (var field of fields) {
+    //   if (field.fieldtype == "" || field.name == "") {
+    //     setMessage({ text: "Please fill the all fields.", type: "error" });
+    //     return;
+    //   }
+    // }
     updateEndpoints();
   }
 
   if (!endpoint) return <Error status={404} />;
   return (
-    <Projects endpoints={project && project.endpoints}>
+    <Projects endpoints={project && project.rapic_models}>
       <Container>
         <Heading as="h2" content="Enpoint Settings" />
         <Content>
+          <Section style={"margin-top: 20px;"}>
+            <Title>Endpoint URL</Title>
+            <Input
+              disabled
+              inputType="text"
+              placeholder=""
+              value={`${username}.rapic.io/${endpoint.model_name}`}
+              className="endpoint-url"
+            />
+          </Section>
+          <AccessLevel
+            authMethod={endpoint.auth_method}
+            onChange={onChangeAuthMethod}
+          />
           <Section>
             <Title>API Endpoint Name</Title>
             <Input
               required
+              disabled
               inputType="text"
               placeholder="Example: orders"
               name="endpoint-name"
@@ -123,6 +157,7 @@ function Endpoints({ project, endpoint }) {
               className="endpoint-description"
             />
           </Section>
+          {/* 
           <Button
             title="+ Add Fields"
             id="add-fields"
@@ -158,34 +193,27 @@ function Endpoints({ project, endpoint }) {
                   />
                 </Field>
               ))}
-          </FieldsWrapper>
-          <Section style={"margin-top: 20px;"}>
-            <Title>Endpoint URL</Title>
-            <Input
-              disable
-              inputType="text"
-              placeholder=""
-              value="gokhan.rapic.io/getproject"
-              className="endpoint-url"
-            />
-          </Section>
+          </FieldsWrapper> */}
+
           <ButtonWrapper style="margin-top: 70px;">
             <Button title="Save Changes" id="create" onClick={checkFields} />
           </ButtonWrapper>
+          <MessageBox message={message.text} type={message.type} />
+          {isLoading && <Loading />}
         </Content>
       </Container>
     </Projects>
   );
 }
 
-export async function getServerSideProps({ params }) {
-  const project = await API.getRapicProjectById(params.id);
+Endpoints.getInitialProps = async (ctx) => {
+  try {
+    const project = await API.getRapicProjectById(ctx, ctx.query.id);
+    return { project };
+  } catch (err) {
+    console.log({ err });
+    return { project: null };
+  }
+};
 
-  const endpoint = project
-    ? project.rapic_models.find((item) => item.name === params.endpoint)
-    : null;
-
-  return { props: { project, endpoint: endpoint || null } };
-}
-
-export default Endpoints;
+export default withAuth(Endpoints);
