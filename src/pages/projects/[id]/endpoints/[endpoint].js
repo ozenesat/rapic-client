@@ -19,13 +19,17 @@ import { Icon } from "react-icons-kit";
 import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
 import DropdownMenu from "common/src/components/Dropdown";
 import API from "../../../../services/api";
+import Error from "../../../_error";
 
 function Endpoints({ project, endpoint }) {
   const router = useRouter();
   const { id } = router.query;
 
   const [name, onChangeName] = useState(endpoint && endpoint.name);
-  const [description, onChangeDescription] = useState(endpoint && endpoint.description);
+  const [description, onChangeDescription] = useState(
+    endpoint && endpoint.description
+  );
+
   const [fields, addField] = useState(endpoint && endpoint.fields);
 
   function covertFieldType(type) {
@@ -66,10 +70,12 @@ function Endpoints({ project, endpoint }) {
       app: id * 1,
       model_name: name,
       description,
-      rapicfields: fields && fields.map((item) => {
-        item.fieldtype = 1;
-        return item;
-      }),
+      rapicfields:
+        fields &&
+        fields.map((item) => {
+          item.fieldtype = 1;
+          return item;
+        }),
     };
   }
 
@@ -87,6 +93,7 @@ function Endpoints({ project, endpoint }) {
     updateEndpoints();
   }
 
+  if (!endpoint) return <Error status={404} />;
   return (
     <Projects endpoints={project && project.endpoints}>
       <Container>
@@ -122,34 +129,35 @@ function Endpoints({ project, endpoint }) {
             onClick={() => handleAddField()}
           />
           <FieldsWrapper>
-            {fields && fields.map((item, index) => (
-              <Field>
-                <DropdownMenu
-                  content={
-                    item.fieldtype !== ""
-                      ? covertFieldType(item.fieldtype)
-                      : "TYPE >"
-                  }
-                  dropdownItems={["boolean", "float", "integer", "text"]}
-                  className={`field-type dropdown-${index}`}
-                  onSelect={(fieldtype) => changeType(index, fieldtype)}
-                />
-                <Input
-                  required
-                  inputType="text"
-                  placeholder="Example: id"
-                  name="field-name"
-                  value={item.name}
-                  onChange={(value) => handleOnChangeField(index, value)}
-                  className={`field-name input-${index}`}
-                />
-                <Icon
-                  icon={iosTrash}
-                  className={`delete button-${index}`}
-                  onClick={() => deleteField(index)}
-                />
-              </Field>
-            ))}
+            {fields &&
+              fields.map((item, index) => (
+                <Field>
+                  <DropdownMenu
+                    content={
+                      item.fieldtype !== ""
+                        ? covertFieldType(item.fieldtype)
+                        : "TYPE >"
+                    }
+                    dropdownItems={["boolean", "float", "integer", "text"]}
+                    className={`field-type dropdown-${index}`}
+                    onSelect={(fieldtype) => changeType(index, fieldtype)}
+                  />
+                  <Input
+                    required
+                    inputType="text"
+                    placeholder="Example: id"
+                    name="field-name"
+                    value={item.name}
+                    onChange={(value) => handleOnChangeField(index, value)}
+                    className={`field-name input-${index}`}
+                  />
+                  <Icon
+                    icon={iosTrash}
+                    className={`delete button-${index}`}
+                    onClick={() => deleteField(index)}
+                  />
+                </Field>
+              ))}
           </FieldsWrapper>
           <Section style={"margin-top: 20px;"}>
             <Title>Endpoint URL</Title>
@@ -170,31 +178,14 @@ function Endpoints({ project, endpoint }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const project = {
-    id: 104,
-    name: "Deneme",
-    description: "deneme project",
-    auth_method: "undefined",
-    endpoints: [
-      {
-        id: 1,
-        name: "getproject",
-        description: "return all projects",
-        fields: [{ id: 1, name: "id", fieldtype: 1 }],
-      },
-    ],
-  };
+export async function getServerSideProps({ params }) {
+  const project = await API.getRapicProjectById(params.id);
 
-  const endpoint = {
-    id: 1,
-    name: "getproject",
-    description: "return all projects",
-    fields: [{ id: 1, name: "id", fieldtype: 1 }],
-  };
-  return {
-    props: { project, endpoint },
-  };
+  const endpoint = project
+    ? project.rapic_models.find((item) => item.name === params.endpoint)
+    : null;
+
+  return { props: { project, endpoint: endpoint || null } };
 }
 
 export default Endpoints;

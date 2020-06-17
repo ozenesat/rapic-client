@@ -9,13 +9,11 @@ const Section = styled.section`
   background-size: 45%;
   background-position: right center;
   background-repeat: no-repeat;
-  min-height: 70vh;
+  min-height: 80vh;
   @media only screen and (max-width: 1440px) {
     min-height: auto;
-    background-size: 55%;
-  }
-  @media only screen and (max-width: 1024px) {
-    background-size: 55%;
+    background-size: 45%;
+    min-height: 70vh;
   }
   @media only screen and (max-width: 899px) {
     background: transparent;
@@ -29,9 +27,9 @@ export const ContentWrapper = styled.div``;
 export const Illustration = styled.div``;
 
 export const BannerContent = styled.div`
-  max-width: 38%;
+  max-width: 48%;
   width: 100%;
-  padding-top: 100px;
+  padding-top: 60px;
   padding-bottom: 150px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
@@ -43,8 +41,8 @@ export const BannerContent = styled.div`
   @media only screen and (max-width: 1024px) {
     max-width: 44%;
   }
-  @media only screen and (max-width: 899px) {
-    max-width: 30em;
+  @media only screen and (max-width: 999px) {
+    max-width: 100%;
     padding-top: 30px;
     padding-bottom: 80px;
   }
@@ -55,8 +53,8 @@ export const BannerContent = styled.div`
   h1 {
     font-family: Imprima;
     font-size: 48px;
-    line-height: 70px;
-    font-weight: 700;
+    line-height: 54px;
+    font-weight: 500;
     color: #000;
     margin-bottom: 24px;
     letter-spacing: -1px;
@@ -87,7 +85,7 @@ export const BannerContent = styled.div`
   .banner-caption {
     color: #000;
     font-size: 18px;
-    line-height: 33px;
+    line-height: 28px;
     font-weight: 400;
     margin-bottom: 0;
     @media only screen and (max-width: 1440px) {

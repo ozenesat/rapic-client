@@ -1,31 +1,38 @@
-import serviceIcon1 from '../../assets/image/app/services/1.png';
-import serviceIcon2 from '../../assets/image/app/services/2.png';
-import serviceIcon3 from '../../assets/image/app/services/3.png';
-import serviceIcon4 from '../../assets/image/app/services/4.png';
-import support1 from '../../assets/image/app/support1.png';
-import support2 from '../../assets/image/app/support2.png';
-import news1 from '../../assets/image/app/news/1.png';
-import news2 from '../../assets/image/app/news/2.png';
-import news3 from '../../assets/image/app/news/3.png';
-import news4 from '../../assets/image/app/news/4.png';
-import LogoImage from '../../assets/image/app/logo.png';
+import serviceIcon1 from "../../assets/image/app/services/1.png";
+import serviceIcon2 from "../../assets/image/app/services/2.png";
+import serviceIcon3 from "../../assets/image/app/services/3.png";
+import serviceIcon4 from "../../assets/image/app/services/4.png";
+import support1 from "../../assets/image/app/support1.png";
+import support2 from "../../assets/image/app/support2.png";
+import news1 from "../../assets/image/app/news/1.png";
+import news2 from "../../assets/image/app/news/2.png";
+import news3 from "../../assets/image/app/news/3.png";
+import news4 from "../../assets/image/app/news/4.png";
+import LogoImage from "../../assets/image/app/logo.png";
 
 export const data = {
   navItems: [
     {
-      path: '/#',
-      offset: '0',
+      path: "/#",
+      offset: "0",
+    },
+
+    {
+      label: "Features",
+      path: "#features",
+      offset: "70",
     },
     {
-      label: 'Features',
-      path: '#features',
-      offset: '70',
+      label: "Product",
+      path: "#product",
+      offset: "70",
     },
-    {
-      label: 'Product',
-      path: '#product',
-      offset: '70',
-    },
+    // {
+    //   label: "Go to dashboard",
+    //   path: "/dashboard",
+    //   staticLink: "/dashboard",
+    //   offset: "70",
+    // },
     /*{
       label: 'Pricing',
       path: '#pricing',
@@ -36,6 +43,19 @@ export const data = {
       path: '#docs',
       offset: '70',
     },*/
+  ],
+  navLogItems: [
+    {
+      path: "",
+      offset: "0",
+    }
+  ],
+  navDashboardItems: [
+    {
+      label: "Dashboard",
+      path: "/dashboard",
+      offset: "70",
+    },
   ],
   footerItems: {
     // first: [
@@ -75,24 +95,24 @@ export const data = {
     third: [
       {
         id: 1,
-        label: 'Github',
-        path: 'https://github.com/rapic',
-        offset: '70',
-        icon:"fab fa-github fa-3x"
+        label: "Github",
+        path: "https://github.com/rapic",
+        offset: "70",
+        icon: "fab fa-github fa-2x",
       },
       {
         id: 2,
-        label: 'Facebook',
-        path: 'https://www.facebook.com/getrapic/',
-        offset: '70',
-        icon:"fab fa-facebook fa-3x"
+        label: "Facebook",
+        path: "https://www.facebook.com/getrapic/",
+        offset: "70",
+        icon: "fab fa-facebook fa-2x",
       },
       {
-        id:3,
-        label: 'Instagram',
-        path: 'https://www.instagram.com/getrapic/',
-        offset: '70',
-        icon:"fab fa-instagram fa-3x"
+        id: 3,
+        label: "Instagram",
+        path: "https://www.instagram.com/getrapic/",
+        offset: "70",
+        icon: "fab fa-instagram fa-2x",
       },
     ],
   },
@@ -100,31 +120,31 @@ export const data = {
     {
       id: 1,
       icon: serviceIcon1,
-      title: 'Client Libraries',
+      title: "Client Libraries",
       desc:
-        'Send a HTTP request to an API and use data in your function. Conditions, filters & checks. You can process the data and act accordingly.',
+        "Send a HTTP request to an API and use data in your function. Conditions, filters & checks. You can process the data and act accordingly.",
       // link: '#',
     },
     {
       id: 2,
       icon: serviceIcon2,
-      title: 'Serverless Database',
+      title: "Serverless Database",
       desc:
-        'File management that allows you to upload or download files. Manage your users, send emails, text messages, and more with auto-scaling database.',
+        "File management that allows you to upload or download files. Manage your users, send emails, text messages, and more with auto-scaling database.",
       // link: '#',
     },
     {
       id: 3,
       icon: serviceIcon3,
-      title: 'Integrated Parties',
+      title: "Integrated Parties",
       desc:
-        'You can integrate listed third-party tools that allows you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe (soon).',
+        "You can integrate listed third-party tools that allows you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe (soon).",
       // link: '#',
     },
     {
       id: 4,
       icon: serviceIcon4,
-      title: 'API Endpoints',
+      title: "API Endpoints",
       desc:
         "Pre-configured connection to endpoints provide you enabling the user's data to browser. Queries happen client-side, and there is nothing to manage or worry about.",
       // link: '#',
@@ -150,21 +170,21 @@ export const data = {
   products: [
     {
       id: 1,
-      title: 'Logic',
+      title: "Logic",
       desc:
-        'Transfrom data to fit any schema. You can also make a conditional flow using methods.',
+        "Transfrom data to fit any schema. You can also make a conditional flow using methods.",
     },
     {
       id: 2,
-      title: 'Data',
+      title: "Data",
       desc:
-        'Insert any data to your database. Simply connect the dots by using the method including GET/POST/DELETE!',
+        "Insert any data to your database. Simply connect the dots by using the method including GET/POST/DELETE!",
     },
     {
       id: 3,
-      title: 'Integrations',
+      title: "Integrations",
       desc:
-        'Build entire workflows are super easy to have Zapier, Stripe, and launching more...',
+        "Build entire workflows are super easy to have Zapier, Stripe, and launching more...",
     },
   ],
   // workHardList: [

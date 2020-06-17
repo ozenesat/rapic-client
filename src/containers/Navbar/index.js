@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Fade from "react-reveal/Fade";
 import ScrollSpyMenu from "common/src/components/ScrollSpyMenu";
 import Scrollspy from "react-scrollspy";
@@ -11,20 +11,32 @@ import Button from "common/src/components/Button";
 import Logo from "common/src/components/UIElements/Logo";
 import Container from "common/src/components/UI/ContainerTwo";
 import Login from "../Login";
+import SignUp from "../SignUp";
 import NavbarWrapper, {
   MenuArea,
   MobileMenu,
   NavbarRight,
 } from "./navbar.style";
 import LogoImage from "common/src/assets/image/app/logo.png";
-
+import { useActionState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
+import { useRouter } from "next/router";
+import Dashboard from "../Dashboard";
+import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 
 const Navbar = ({ page }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [isLandingPage, setIsLandingPage] = useState(page === "landing");
-
+  const router = useRouter();
+  const [isLandingPage, setIsLandingPage] = useState( router.pathname == "/");
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const setGlobalState = useActionState();
   const scrollItems = [];
+
+  useEffect(() => {
+    const isAuthedticated = getSessionCookie(null).refresh != undefined;
+    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthedticated });
+    setAuthenticated(isAuthedticated);
+  }, []);
 
   data.navItems.forEach((item) => {
     scrollItems.push(item.path.slice(1));
@@ -38,7 +50,43 @@ const Navbar = ({ page }) => {
     setMobileMenu(false);
   };
 
-  return (
+  async function handleLogout() {
+    clearSessionCookie(null, "rapic_session");
+    await router.replace("/#");
+    setAuthenticated(false);
+  }
+
+  const renderDefaultRightBar = () => {
+    if (router.pathname == "/login") {
+      return (
+        <Link href="/signup" component={SignUp}>
+          <Button title="Sign Up"/>
+        </Link>
+      );
+    }
+    if (!isAuthenticated) {
+      return (
+        <Link label="login" href="/login" component={Login}>
+          <Button title="Login"/>
+        </Link>
+      );
+    }
+    if (isLandingPage) {
+      return (
+        <>
+        <Link label="Dasboard" href="/dashboard" component={Dashboard}>
+                <Button title="Dashboard"/>
+              </Link>
+        <Button title="Logout" className="menu-button" onClick={handleLogout} />
+        </>
+      )
+    }
+    return (
+      <Button title="Logout" className="menu-button" onClick={handleLogout} />
+    );
+  };
+
+  const navbarJsx = (
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
@@ -52,23 +100,13 @@ const Navbar = ({ page }) => {
         <MenuArea>
           <ScrollSpyMenu
             className="menu-items menu-left"
-            menuItems={isLandingPage ? data.navItems : data.navItems}
+            menuItems={isLandingPage ? data.navItems : data.navLogItems}
             offset={-84}
           />
           <NavbarRight>
-            <li>
-              {isLandingPage ? (
-                <Link
-                  label="login"
-                  path="#login"
-                  href="/login"
-                  component={Login}
-                >
-                  <Button title="LOGIN" type="submit" />
-                </Link>
-              ) : null}
-            </li>
+            <li>{renderDefaultRightBar()}</li>
           </NavbarRight>
+
           {/* end of main menu */}
           <Button
             className="menubar"
@@ -129,6 +167,8 @@ const Navbar = ({ page }) => {
       {/* end of mobile menu */}
     </NavbarWrapper>
   );
+
+  return navbarJsx;
 };
 
 export default Navbar;

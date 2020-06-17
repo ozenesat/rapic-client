@@ -54,7 +54,7 @@ export const FooterWidget = styled.div`
 
 export const FooterBottom = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-top: 1px solid #d9e0e7;
   padding: 20px 0;
   @media screen and (max-width: 768px) {

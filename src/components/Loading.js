@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 import styled from "styled-components";
 
 const LoadingContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

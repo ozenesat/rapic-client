@@ -7,18 +7,15 @@ import {
   FieldsWrapper,
   Field,
   ButtonWrapper,
-} from "../../../../../pagestyles/projects/endpoints/add/add.style";
-import {
-  Title,
-  Section,
-} from "./../../../../../containers/ProjectModal/projectmodal.style";
+} from "pagestyles/projects/endpoints/add/add.style";
+import { Title, Section } from "containers/ProjectModal/projectmodal.style";
 import { useRouter } from "next/router";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
 import { Icon } from "react-icons-kit";
 import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
 import DropdownMenu from "common/src/components/Dropdown";
-import API from "../../../../../services/api";
+import API from "services/api";
 
 function EndpointAddPage({ project }) {
   const router = useRouter();
@@ -52,10 +49,12 @@ function EndpointAddPage({ project }) {
       app: id * 1,
       model_name: name,
       description,
-      rapicfields: fields && fields.map((item) => {
-        item.fieldtype = 1;
-        return item;
-      }),
+      rapicfields:
+        fields &&
+        fields.map((item) => {
+          item.fieldtype = 1;
+          return item;
+        }),
     };
     API.createRapicEndpoint(enpoint)
       .then((response) => {
@@ -113,30 +112,31 @@ function EndpointAddPage({ project }) {
             onClick={() => handleAddField()}
           />
           <FieldsWrapper>
-            {fields && fields.map((item, index) => (
-              <Field>
-                <DropdownMenu
-                  content={item.fieldtype !== "" ? item.fieldtype : "TYPE >"}
-                  dropdownItems={["boolean", "float", "integer", "text"]}
-                  className={`field-type dropdown-${index}`}
-                  onSelect={(fieldtype) => changeType(index, fieldtype)}
-                />
-                <Input
-                  required
-                  inputType="text"
-                  placeholder="Example: id"
-                  name="field-name"
-                  value={item.name}
-                  onChange={(value) => handleOnChangeField(index, value)}
-                  className={`field-name input-${index}`}
-                />
-                <Icon
-                  icon={iosTrash}
-                  className={`delete button-${index}`}
-                  onClick={() => deleteField(index)}
-                />
-              </Field>
-            ))}
+            {fields &&
+              fields.map((item, index) => (
+                <Field>
+                  <DropdownMenu
+                    content={item.fieldtype !== "" ? item.fieldtype : "TYPE >"}
+                    dropdownItems={["boolean", "float", "integer", "text"]}
+                    className={`field-type dropdown-${index}`}
+                    onSelect={(fieldtype) => changeType(index, fieldtype)}
+                  />
+                  <Input
+                    required
+                    inputType="text"
+                    placeholder="Example: id"
+                    name="field-name"
+                    value={item.name}
+                    onChange={(value) => handleOnChangeField(index, value)}
+                    className={`field-name input-${index}`}
+                  />
+                  <Icon
+                    icon={iosTrash}
+                    className={`delete button-${index}`}
+                    onClick={() => deleteField(index)}
+                  />
+                </Field>
+              ))}
           </FieldsWrapper>
           <ButtonWrapper>
             <Button
@@ -167,7 +167,7 @@ export async function getServerSideProps(context) {
     ],
   };
   return {
-    props: { project }, // will be passed to the page component as props
+    props: { project },
   };
 }
 

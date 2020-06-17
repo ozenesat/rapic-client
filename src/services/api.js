@@ -1,12 +1,15 @@
 import axios from "axios";
-
+import {
+  getSessionCookie,
+  clearSessionCookie,
+  setSessionCookie,
+} from "../utils/utils";
+var jwtDecode = require("jwt-decode");
 // var jwtDecode = require('jwt-decode');
 const rapicUrl = "https://rapicapi.herokuapp.com/";
 const loginUrl = rapicUrl + "api/token/";
 const valideteUrl = rapicUrl + "users/"; // check it!
-const refreshUrl = rapicUrl + "refresh/"; // learn the related url!
-const faketoken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMTMzNTgyLCJqdGkiOiJiNGRmOGFkNmJkMmI0ZDA5YTMyMGYwMDk3ZmM2ZmFhYSIsInVzZXJfaWQiOjUxOH0.gje8xpkBz2vnDz7VKKKjMR-_HEB8RYhTtOiVMmxdRFo";
+const refreshUrl = rapicUrl + "api/token/refresh/"; // learn the related url!cc
 
 class Api {
   // observe that using e-mail as username !!!
@@ -62,101 +65,134 @@ class Api {
         },
       })
         .then((response) => {
+          console.log({ response });
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
-            if (response.status === 500) {
-              reject("failed to login");
-            }
-            reject(response.json());
+            reject("failed to login");
           }
-          resolve(data);
-          })
-        .catch(function(error) {
-          reject("failed to login" + error);
-        });
-    });
-  }
-  async validateToken() {
-    return new Promise((resolve, reject) => {
-      axios({
-        method: "get",
-        url: valideteUrl,
-        headers: {
-          "Content-type": "application/json",
-          Authorization: "Bearer " + document.cookie.access,
-        },
-      })
-        .then((response) => {
-          if (response.status >= 200 && response.status < 300) {
-            return true;
-          } else {
-            return refreshToken();
-          }
-        })
-        .catch(function(error) {
-          reject("failed to access" + error);
-        });
-    });
-  }
-  async refreshToken() {
-    return new Promise((resolve, reject) => {
-      axios({
-        method: "post",
-        url: refreshUrl,
-        headers: {
-          "Content-type": "application/json",
-        },
-        // add some stuff with JWT and document.cookies.refresh
-      })
-        .then((response) => {
-          if (response.status < 200 || response.status >= 300) {
-            reject("Failed to get access token");
-          }
-          return response.json();
-        })
-        .then(async (data) => {
+
+          this.refresh = data.refresh;
           this.access = data.access;
-          resolve("success");
+          let refresh = data.refresh;
+          setSessionCookie({ refresh }, null);
+          resolve(data);
         })
-        .catch(function(error) {
-          reject("failed to access" + error);
-        });
+        .catch((error) => reject(error));
     });
   }
 
-  async getRapicProjects() {
+  async getAccessToken(ctx) {
+    const session = getSessionCookie(ctx);
+    if (session) {
+      const refreshToken = session.refresh;
+      if (refreshToken) {
+        var refreshDecoded = jwtDecode(refreshToken);
+        let now = Date.now() / 1000;
+        // if refreshtoken is 1 hours away from expiry, force logout
+        if (refreshDecoded.exp - now <= 1 * 60 * 60) {
+          this.access = null;
+          this.logout();
+          return;
+        }
+      }
+      let body = {
+        refresh: refreshToken,
+      };
+      return new Promise((resolve, reject) => {
+        fetch(loginUrl + "refresh/", {
+          body: JSON.stringify(body),
+          headers: {
+            "Content-type": "application/json",
+          },
+          method: "POST",
+        })
+          .then((response) => {
+            if (response.status < 200 || response.status >= 300) {
+              if (response.status == 401) {
+                this.logout();
+              }
+              reject("failed to getAccessToken");
+            }
+            return response.json();
+          })
+          .then(async (data) => {
+            this.access = data.access;
+            resolve("success");
+          })
+          .catch((err) => console.log({ err }));
+      });
+    }
+  }
+
+  logout(ctx) {
+    clearSessionCookie(ctx);
+  }
+
+  async getRapicProjects(ctx) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+
     return new Promise((resolve, reject) => {
       axios({
         method: "GET",
         url: rapicUrl + "rapicapp/",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${faketoken}`,
+          Authorization: `Bearer ${this.access}`,
+        },
+      })
+        .then((response) => {
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to get projects");
+          }
+          resolve(response.data);
+        })
+        .catch((err) => {
+          reject(err.message);
+        });
+    });
+  }
+
+  async getRapicProjectById(ctx, id) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "GET",
+        url: `${rapicUrl}rapicapp/${id}/`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
         },
       })
         .then((response) => {
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
             console.log("failed to get projects");
-            reject([]);
+            reject();
           }
           resolve(data);
         })
         .catch((err) => {
           console.log(err.message);
-          reject([]);
+          reject();
         });
     });
   }
 
   async createProject(project) {
+    if (!this.access) {
+      await this.getAccessToken(null);
+    }
     return new Promise((resolve, reject) => {
       axios({
         method: "POST",
         url: rapicUrl + "rapicapp/",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${faketoken}`,
+          Authorization: `Bearer ${this.access}`,
         },
         data: JSON.stringify(project),
       })
@@ -171,6 +207,30 @@ class Api {
     });
   }
 
+  async deleteRapicProject(ctx, id) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "DELETE",
+        url: rapicUrl + `rapicapp/${id}`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
+        },
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to delete project");
+          }
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+
   async createRapicEndpoint(endpoint) {
     return new Promise((resolve, reject) => {
       axios({
@@ -178,7 +238,7 @@ class Api {
         url: rapicUrl + "rapicmodel/",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${faketoken}`,
+          Authorization: `Bearer ${this.access}`,
         },
         data: JSON.stringify(endpoint),
       })
@@ -193,25 +253,25 @@ class Api {
     });
   }
 
-  getEndpointsByProjeId(id) {
+  async getEndpointsByProjeId(id) {
     return new Promise((resolve, reject) => {
       axios({
         method: "GET",
         url: `${rapicUrl}rapicapp/${id}/models/`,
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${faketoken}`,
+          Authorization: `Bearer ${this.access}`,
         },
       })
         .then((response) => {
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
             console.log("failed to create enpoint");
-            reject([]);
+            reject("failed to create enpoint");
           }
           resolve(data);
         })
-        .catch((err) => reject([]));
+        .catch((err) => reject(err));
     });
   }
 }
