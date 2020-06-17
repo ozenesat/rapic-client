@@ -18,6 +18,7 @@ import NavbarWrapper, {
   NavbarRight,
 } from "./navbar.style";
 import LogoImage from "common/src/assets/image/app/logo.png";
+import { Loading } from "../../components/Loading";
 import { useActionState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
 import { useRouter } from "next/router";
@@ -42,6 +43,13 @@ const Navbar = ({ page }) => {
     scrollItems.push(item.path.slice(1));
   });
   
+  const onLoading = (e) => {
+    e.preventDefault()
+    router.push("/dashboard")
+    return (
+      <Loading />
+    )
+  }
 
   const handleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
@@ -53,7 +61,7 @@ const Navbar = ({ page }) => {
 
   async function handleLogout() {
     clearSessionCookie(null, "rapic_session");
-    await router.replace("/#");
+    await router.replace("/login");
     setAuthenticated(false);
   }
 
@@ -75,12 +83,8 @@ const Navbar = ({ page }) => {
     if (isLandingPage) {
       return (
         <>
-        <Link label="Dasboard" href="/dashboard" component={Dashboard}>
-                <Button title="Dashboard"/>
-        </Link>
-        <Link label="Dasboard" href="/dashboard" component={Dashboard}>
-          <Button title="Logout" className="menu-button" onClick={handleLogout} />
-        </Link>
+        <Button title="Dashboard" onClick={onLoading}/>
+        <Button title="Logout"  onClick={handleLogout} />
         </>
       )
     }
@@ -90,12 +94,23 @@ const Navbar = ({ page }) => {
      </Link>
     );
   };
-
+  // it looks meaningless but with this function browser loads landing page 
+  // faster and smoother, we can discuss about it.
+  const esat = (e) => {
+    if(!isLandingPage) {
+    e.preventDefault()
+    router.push("/#")
+    return (
+      <Loading />
+    )
+    }
+  }
   const navbarJsx = (
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
           href="/#"
+          onClick={esat}
           logoSrc={LogoImage}
           title="Rapic.io"
           className="main-logo"

@@ -4,6 +4,7 @@ import Input from "common/src/components/Input";
 import Image from "common/src/components/Image";
 import Button from "common/src/components/Button";
 import Link from "common/src/components/Link";
+import { Loading } from "../../components/Loading";
 import Heading from "common/src/components/Heading";
 import Container from "common/src/components/UI/ContainerTwo";
 import Section, {
@@ -14,6 +15,7 @@ import Section, {
 } from './banner.style';
 import { getSessionCookie, clearSessionCookie, validateEmail } from "../../utils/utils";
 import Api from '../../services/api';
+import Router, { useRouter } from "next/router";
 import { useAppState, useActionState } from "../../components/AppContext";
 
 const Banner = () => {
@@ -23,6 +25,7 @@ const Banner = () => {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const globalState = useAppState();
   const setGlobalState = useActionState();
+  const router = useRouter();
 
   useEffect(() => {
     const isAuthenticated = getSessionCookie(null).refresh != undefined;
@@ -51,6 +54,14 @@ const Banner = () => {
       setRegistered(true);
     }
   };
+
+  const onLoading = (e) => {
+    e.preventDefault()
+    router.push("/dashboard")
+    return (
+      <Loading />
+    )
+  }
 
   var showRegister = () => {
     return (
@@ -92,9 +103,8 @@ const Banner = () => {
             />
             <Subscribe>
               { isAuthenticated ? (
-              <Link label="Dasboard" href="/dashboard">
-                <Button title="Dashboard" style={{ background: "#35BF2E"  }}/>
-              </Link>) : (
+                <Button title="Dashboard" onClick={onLoading} style={{ background: "#35BF2E"  }}/>
+               ) : (
                 registered ? (
                 <Text
                   className="banner-thanks"
