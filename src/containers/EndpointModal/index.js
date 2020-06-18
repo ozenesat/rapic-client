@@ -60,6 +60,7 @@ function EndpointAddModal({ isModalOpen, closeModal }) {
       app: id * 1,
       model_name: name,
       description,
+      rapicfields: [],
     };
     API.createRapicEndpoint(null, enpoint)
       .then(async (response) => {

@@ -1,0 +1,8 @@
+#nprogress .bar {
+  background: #34bf2f !important;
+  z-index: 99997 !important;
+}
+
+.ReactModal__Overlay {
+  z-index: 99997 !important;
+}

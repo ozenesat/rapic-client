@@ -6,7 +6,7 @@ import "@redq/reuse-modal/es/index.css";
 import { AppProvider } from "../components/AppContext";
 import NProgress from "nprogress";
 import Router from "next/router";
-import "../pagestyles/app/ngprogress.css";
+import "../pagestyles/app/style.css";
 class MyApp extends App {
   componentDidMount() {
     NProgress.configure({ color: "red" });

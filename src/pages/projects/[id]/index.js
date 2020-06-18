@@ -22,6 +22,7 @@ import { Loading } from "components/Loading";
 import Error from "pages/_error";
 import MessageBox from "containers/MessageBox";
 import AccessLevel from "containers/AccessLevel";
+import { withAuth } from "../../../components/withAuth";
 
 const ProjectPage = ({ project }) => {
   const router = useRouter();
@@ -106,7 +107,7 @@ const ProjectPage = ({ project }) => {
           <Section>
             <AccessLevel
               onChange={onChangeAuthMethod}
-              authMethod={project.auth_method}
+              authMethod={authMethod}
             />
           </Section>
           <ButtonWrapper>
@@ -167,4 +168,4 @@ ProjectPage.getInitialProps = async (ctx) => {
   }
 };
 
-export default ProjectPage;
+export default withAuth(ProjectPage);

@@ -6,7 +6,7 @@ import Button from "common/src/components/Button";
 import Heading from "common/src/components/Heading";
 import Container from "common/src/components/UI/ContainerTwo";
 
-import { Loading } from "../../components/Loading";
+import { Loading } from "components/Loading";
 import { EyeButton } from "./login.style";
 import Router, { useRouter } from "next/router";
 import Section, {
@@ -15,10 +15,9 @@ import Section, {
   Subscribe,
   ImageGroup,
 } from "./login.style";
-import { validateEmail } from "../../utils/utils";
-import { validatePassword } from "../../utils/utils";
-import API from "../../services/api";
-import { useActionState, useAppState } from "../../components/AppContext";
+import { validateEmail, validatePassword } from "utils/utils";
+import API from "services/api";
+import { useActionState, useAppState } from "components/AppContext";
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
