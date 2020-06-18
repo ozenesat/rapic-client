@@ -7,11 +7,11 @@ import Heading from "common/src/components/Heading";
 import Container from "common/src/components/UI/ContainerTwo";
 
 import { Loading } from "components/Loading";
-import { EyeButton } from "./login.style";
 import Router, { useRouter } from "next/router";
 import Section, {
   ContentWrapper,
   BannerContent,
+  EyeButton,
   Subscribe,
   ImageGroup,
 } from "./login.style";

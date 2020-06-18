@@ -53,7 +53,7 @@ const Navbar = ({ page }) => {
 
   async function handleLogout() {
     clearSessionCookie(null);
-    await router.push("/login");
+    await router.push("/#");
     setAuthenticated(false);
   }
 
@@ -94,6 +94,7 @@ const Navbar = ({ page }) => {
           logoSrc={LogoImage}
           title="Rapic.io"
           className="main-logo"
+          href="/#"
           onClick={() => router.push("/#")}
         />
 
