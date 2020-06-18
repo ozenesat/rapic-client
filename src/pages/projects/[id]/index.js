@@ -10,7 +10,6 @@ import {
   Container,
   DangerZoneWrapper,
   Line,
-  HeaderWrapping,
 } from "pagestyles/projects/project.style";
 import API from "services/api";
 import Heading from "common/src/components/Heading";

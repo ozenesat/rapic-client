@@ -25,6 +25,7 @@ import MessageBox from "containers/MessageBox";
 import AccessLevel from "containers/AccessLevel";
 import CodeEditorModal from "containers/CodeEditorModal";
 import { HeaderWrapping } from "pagestyles/projects/endpoints/enpoint.style";
+import { DangerZoneWrapper, Line } from "pagestyles/projects/project.style";
 
 function Endpoints({ project }) {
   const router = useRouter();
@@ -92,6 +93,10 @@ function Endpoints({ project }) {
       setLoading(false);
       setMessage({ text: "Updated successfully.", type: "success" });
     });
+  }
+
+  function handleDelete() {
+    setLoading(true);
   }
 
   function checkFields() {
@@ -209,6 +214,19 @@ function Endpoints({ project }) {
             closeModal={() => setModalOpen(false)}
             endpoint={endpoint}
           />
+          <Line />
+          <DangerZoneWrapper>
+            <Heading as="h2" content="Danger Zone" />
+            <Title>
+              Deleting a project will make its API unavaiable immediately. This
+              action cannot be undone.
+            </Title>
+            <Button
+              title="Delete Endpoint"
+              id="delete"
+              onClick={() => handleDelete()}
+            />
+          </DangerZoneWrapper>
           {isLoading && <Loading />}
         </Content>
       </Container>

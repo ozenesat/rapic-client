@@ -11,14 +11,14 @@ const withAuth = (Page) => {
       // if there is no refresh token, force to target location
       if (req && res) {
         if (refresh != undefined && req.url == "/login") {
-          res.writeHead(301, {
+          res.writeHead(302, {
             Location: "/dashboard",
           });
           res.end();
           return {};
         }
         if (req.url != "/" && req.url != "/login" && refresh == undefined) {
-          res.writeHead(301, {
+          res.writeHead(302, {
             Location: "/login",
           });
           res.end();
