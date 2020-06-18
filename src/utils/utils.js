@@ -1,5 +1,6 @@
 // Use this file for common utility functions
 import { getCookies, setCookies, removeCookies } from "cookies-next";
+import Router from "next/router";
 
 export const validateEmail = (email) => {
   const emailRe = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -37,4 +38,13 @@ export const splitText = (text, count) => {
     return text.slice(0, count + 2) + "...";
   }
   return text;
+};
+
+export const redirect = (ctx, target) => {
+  if (ctx.res) {
+    ctx.res.writeHead(303, { Location: target });
+    ctx.res.end();
+  } else {
+    Router.replace(target);
+  }
 };

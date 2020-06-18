@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
+import Link from "next/link";
+
 import Container from "common/src/components/UI/ContainerTwo";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import ProjectModal from "containers/ProjectModal";
 import { Card, CardWrapper, HeadingWrapper } from "./projects.style";
 import { useAppState } from "components/AppContext";
-import Link from "next/link";
 import { splitText } from "utils/utils";
 
 function Dashboard() {

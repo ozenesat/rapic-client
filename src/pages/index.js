@@ -1,24 +1,20 @@
-import React, { Fragment } from 'react';
-import Head from 'next/head';
-import Sticky from 'react-stickynode';
-import styled, { ThemeProvider } from 'styled-components';
-import { theme } from 'common/src/theme/app';
-import { ResetCSS } from 'common/src/assets/css/style';
+import React, { Fragment } from "react";
+import Head from "next/head";
+import Sticky from "react-stickynode";
+import { ThemeProvider } from "styled-components";
+import { theme } from "common/src/theme/app";
+import { ResetCSS } from "common/src/assets/css/style";
 
-import { GlobalStyle, ContentWrapper } from '../containers/rapic.style';
-import { DrawerProvider } from 'common/src/contexts/DrawerContext';
-import Navbar from '../containers/Navbar';
-import Banner from '../containers/Banner';
-import Service from '../containers/Service';
-import Products from '../containers/Products';
+import { GlobalStyle, ContentWrapper } from "../containers/rapic.style";
+import { DrawerProvider } from "common/src/contexts/DrawerContext";
+import Navbar from "../containers/Navbar";
+import Banner from "../containers/Banner";
+import Service from "../containers/Service";
+import Products from "../containers/Products";
 // import Pricing from '../containers/Pricing';
-import Footer from '../containers/Footer';
-import Heading from 'common/src/components/Heading';
-import Container from 'common/src/components/UI/ContainerTwo';
-import Button from 'common/src/components/Button';
-import Projects from '../containers/Projects';
+import Footer from "../containers/Footer";
 
-function LandingPage () {
+function LandingPage() {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -33,7 +29,10 @@ function LandingPage () {
             href="https://fonts.googleapis.com/css?family=Imprima:400,400i,700,700i|DM+Sans:400,400i,500,500i,700,700i&display=swap"
           />
           {/*<!-- Font Awesome icons (free version)-->*/}
-        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+          <script
+            src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
+            crossorigin="anonymous"
+          ></script>
         </Head>
         <ResetCSS />
         <GlobalStyle />
@@ -54,4 +53,4 @@ function LandingPage () {
   );
 }
 
-export default LandingPage
+export default LandingPage;

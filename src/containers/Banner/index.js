@@ -12,28 +12,30 @@ import Section, {
   BannerContent,
   Subscribe,
   ImageGroup,
-} from './banner.style';
-import { getSessionCookie, clearSessionCookie, validateEmail } from "../../utils/utils";
-import Api from '../../services/api';
-import Router, { useRouter } from "next/router";
+} from "./banner.style";
+import {
+  getSessionCookie,
+  clearSessionCookie,
+  validateEmail,
+} from "../../utils/utils";
+import Api from "../../services/api";
+import { useRouter } from "next/router";
 import { useAppState, useActionState } from "../../components/AppContext";
 
 const Banner = () => {
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState({ email: false });
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isAuthenticated, setAuth] = useState(false);
   const globalState = useAppState();
-  const setGlobalState = useActionState();
+
   const router = useRouter();
 
   useEffect(() => {
-    const isAuthenticated = getSessionCookie(null).refresh != undefined;
-    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthenticated });
-    setAuthenticated(isAuthenticated);
-  }, []);
+    setAuth(globalState.isAuthenticated);
+  }, [globalState]);
 
-  const handleEmailChange = event => {
+  const handleEmailChange = (event) => {
     setEmail(String(event));
     if (!validateEmail(event) && event !== "") {
       setValidationError({ email: true });
@@ -54,14 +56,6 @@ const Banner = () => {
       setRegistered(true);
     }
   };
-
-  const onLoading = (e) => {
-    e.preventDefault()
-    router.push("/dashboard")
-    return (
-      <Loading />
-    )
-  }
 
   var showRegister = () => {
     return (
@@ -102,17 +96,20 @@ const Banner = () => {
               content="Rapic gives you API endpoints that can store data and run codelets all together by rest calls. With ready to use user authentication, lots of integration, and easy to plug client libraries..."
             />
             <Subscribe>
-              { isAuthenticated ? (
-                <Button title="Dashboard" onClick={onLoading} style={{ background: "#35BF2E"  }}/>
-               ) : (
-                registered ? (
+              {isAuthenticated ? (
+                <Button
+                  title="Dashboard"
+                  onClick={() => router.push("/dashboard")}
+                  style={{ background: "#35BF2E" }}
+                />
+              ) : registered ? (
                 <Text
                   className="banner-thanks"
                   content={`Thank you! We will notify you on ${email}.`}
                 />
-              ) : ( showRegister())
-              )
-              }
+              ) : (
+                showRegister()
+              )}
             </Subscribe>
           </BannerContent>
         </ContentWrapper>

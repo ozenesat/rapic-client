@@ -53,7 +53,14 @@ const Navbar = ({ page }) => {
 
   async function handleLogout() {
     clearSessionCookie(null);
-    await router.push("/#");
+
+    if (router.pathname == "/") {
+      await router.reload();
+    } else {
+      await router.replace("/#");
+    }
+
+    setGlobalState({ type: "SET_USER_AUTH", payload: false });
     setAuthenticated(false);
   }
 
