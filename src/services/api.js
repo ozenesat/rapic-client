@@ -64,7 +64,6 @@ class Api {
         },
       })
         .then((response) => {
-          console.log({ response });
           let data = response.data;
           if (response.status < 200 || response.status >= 300) {
             reject("failed to login");
