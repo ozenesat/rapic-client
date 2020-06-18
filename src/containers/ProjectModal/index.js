@@ -63,7 +63,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
       style={ModalStyles}
       ariaHideApp={false}
     >
-      <Heading as="h2" content="Add a new projects" />
+      <Heading as="h2" content="Add a new project" />
       <Content>
         <Section>
           <Title>Project Name</Title>

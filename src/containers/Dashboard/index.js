@@ -14,7 +14,7 @@ function Dashboard() {
 
   function renderProjects() {
     if (globalState.projects.length < 1) {
-      return <div>There is no projects...</div>;
+      return <div>There are no projects....</div>;
     }
     return globalState.projects.map(
       ({ name, description, id, rapic_models }) => (
