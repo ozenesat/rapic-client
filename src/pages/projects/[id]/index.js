@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import swal from "sweetalert";
+import Router, { useRouter } from "next/router";
+
 import Projects from "containers/Projects";
 import {
   Title,
@@ -16,12 +19,11 @@ import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
 import { useAppState } from "components/AppContext";
-import Router, { useRouter } from "next/router";
 import { Loading } from "components/Loading";
 import Error from "pages/_error";
 import MessageBox from "containers/MessageBox";
 import AccessLevel from "containers/AccessLevel";
-import { withAuth } from "../../../components/withAuth";
+import { withAuth } from "components/withAuth";
 
 const ProjectPage = ({ project }) => {
   const router = useRouter();
@@ -42,10 +44,25 @@ const ProjectPage = ({ project }) => {
   }, []);
 
   function handleDelete() {
-    setLoading(true);
-    API.deleteRapicProject(null, id).then(async () => {
-      setLoading(false);
-      Router.push("/dashboard");
+    swal({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        setLoading(true);
+        API.deleteRapicProject(null, id)
+          .then(async () => {
+            setLoading(false);
+            Router.push("/dashboard");
+          })
+          .catch(() => {
+            setLoading(false);
+            setMessage({ err: "Failed to delete project", type: "error" });
+          });
+      }
     });
   }
 

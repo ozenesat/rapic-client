@@ -303,6 +303,30 @@ class Api {
         .catch((err) => reject(JSON.stringify(err.response)));
     });
   }
+
+  async deleteRapicEndpoint(ctx, id) {
+    if (!this.access) {
+      await this.getAccessToken(ctx);
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "DELETE",
+        url: rapicUrl + `rapicmodel/${id}`,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
+        },
+      })
+        .then((response) => {
+          let data = response.data;
+          if (response.status < 200 || response.status >= 300) {
+            reject("failed to delete endpoint");
+          }
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  }
 }
 
 const exportApi = new Api();

@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import Projects from "containers/Projects";
+import swal from "sweetalert";
+import { useRouter } from "next/router";
+import { Icon } from "react-icons-kit";
+import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
+import { androidSettings } from "react-icons-kit/ionicons/androidSettings";
+
 import Heading from "common/src/components/Heading";
 import {
   Container,
@@ -9,12 +15,8 @@ import {
   ButtonWrapper,
 } from "pagestyles/projects/endpoints/add/add.style";
 import { Title, Section } from "containers/ProjectModal/projectmodal.style";
-import { useRouter } from "next/router";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
-import { Icon } from "react-icons-kit";
-import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
-import { androidSettings } from "react-icons-kit/ionicons/androidSettings";
 import DropdownMenu from "common/src/components/Dropdown";
 import API from "services/api";
 import Error from "pages/_error";
@@ -96,7 +98,26 @@ function Endpoints({ project }) {
   }
 
   function handleDelete() {
-    setLoading(true);
+    swal({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        setLoading(true);
+        API.deleteRapicEndpoint(null, endpoint.id)
+          .then(async () => {
+            setLoading(false);
+            router.push("/projects/[id]", `/projects/${id}`);
+          })
+          .catch(() => {
+            setLoading(false);
+            setMessage({ err: "Failed to delete endpoint", type: "error" });
+          });
+      }
+    });
   }
 
   function checkFields() {
@@ -120,6 +141,7 @@ function Endpoints({ project }) {
   }
 
   if (!endpoint) return <Error status={404} />;
+
   return (
     <Projects project={project}>
       <Container>
@@ -137,8 +159,7 @@ function Endpoints({ project }) {
             <Input
               disabled
               inputType="text"
-              placeholder=""
-              value={`${username}.rapic.io/${endpoint.model_name}`}
+              value={`${username}.rapic.io/${project.name}/${endpoint.model_name}`}
               className="endpoint-url"
             />
           </Section>
@@ -218,8 +239,7 @@ function Endpoints({ project }) {
           <DangerZoneWrapper>
             <Heading as="h2" content="Danger Zone" />
             <Title>
-              Deleting a project will make its API unavaiable immediately. This
-              action cannot be undone.
+              Deleting an endpoint will make the API unavaiable immediately.
             </Title>
             <Button
               title="Delete Endpoint"
