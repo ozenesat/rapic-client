@@ -8,8 +8,6 @@ var jwtDecode = require("jwt-decode");
 // var jwtDecode = require('jwt-decode');
 const rapicUrl = "https://rapicapi.herokuapp.com/";
 const loginUrl = rapicUrl + "api/token/";
-const valideteUrl = rapicUrl + "users/"; // check it!
-const refreshUrl = rapicUrl + "api/token/refresh/"; // learn the related url!cc
 
 class Api {
   // observe that using e-mail as username !!!
@@ -303,28 +301,6 @@ class Api {
           resolve(data);
         })
         .catch((err) => reject(JSON.stringify(err.response)));
-    });
-  }
-
-  async getEndpointsByProjeId(id) {
-    return new Promise((resolve, reject) => {
-      axios({
-        method: "GET",
-        url: `${rapicUrl}rapicapp/${id}/models/`,
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${this.access}`,
-        },
-      })
-        .then((response) => {
-          let data = response.data;
-          if (response.status < 200 || response.status >= 300) {
-            console.log("failed to create enpoint");
-            reject("failed to create enpoint");
-          }
-          resolve(data);
-        })
-        .catch((err) => reject(err));
     });
   }
 }
