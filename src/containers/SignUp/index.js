@@ -133,6 +133,11 @@ const SignUp = () => {
           value={username}
           onChange={handleUser}
         />
+        <Text
+          style={{ color: "red", marginTop: "0.25em" }}
+          content={(!emailError && !passError && password !== "" && passwordConfirmation === password && username === "") ? (
+            "An unique username is required.") : ""}
+        />
         <h3> Password: </h3>
         <Input
           required
