@@ -6,18 +6,16 @@ import illustration from 'common/src/assets/image/app/home2.gif';
 const Section = styled.section`
   background-image: url(${illustration});
   background-color: transparent;
-  background-size: 37%;
+  background-size: 45%;
   background-position: right center;
   background-repeat: no-repeat;
-  min-height: 70vh;
+  min-height: 80vh;
   @media only screen and (max-width: 1440px) {
     min-height: auto;
     background-size: 45%;
+    min-height: 70vh;
   }
-  @media only screen and (max-width: 1024px) {
-    background-size: 35%;
-  }
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 899px) {
     background: transparent;
     background-image: none;
     min-height: auto;
@@ -29,9 +27,9 @@ export const ContentWrapper = styled.div``;
 export const Illustration = styled.div``;
 
 export const BannerContent = styled.div`
-  max-width: 38%;
+  max-width: 48%;
   width: 100%;
-  padding-top: 100px;
+  padding-top: 60px;
   padding-bottom: 150px;
   @media only screen and (max-width: 1600px) {
     max-width: 38%;
@@ -55,9 +53,9 @@ export const BannerContent = styled.div`
   h1 {
     font-family: Imprima;
     font-size: 48px;
-    line-height: 70px;
-    font-weight: 700;
-    color: ${themeGet('colors.menu', '#02073e')};
+    line-height: 54px;
+    font-weight: 500;
+    color: #000;
     margin-bottom: 24px;
     letter-spacing: -1px;
     margin-top: 0;
@@ -75,21 +73,19 @@ export const BannerContent = styled.div`
       margin-bottom: 20px;
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 899px) {
       font-size: 34px;
       margin-bottom: 10px;
-      text-align: center;
     }
     @media only screen and (max-width: 480px) {
-      font-size: 23px;
       margin-bottom: 20px;
       line-height: 40px;
     }
   }
   .banner-caption {
-    color: ${themeGet('colors.paragraph', '#02073E')};
+    color: #000;
     font-size: 18px;
-    line-height: 33px;
+    line-height: 28px;
     font-weight: 400;
     margin-bottom: 0;
     @media only screen and (max-width: 1440px) {
@@ -107,10 +103,11 @@ export const BannerContent = styled.div`
     }
   }
   .banner-thanks {
-    color: ${themeGet('colors.rapicGreen', '#02073E')};
-    font-size: 18px;
-    line-height: 33px;
+    color: #484848;
+    font-size: 48px;
+    line-height: 53px;
     font-weight: 400;
+    text-align: center;
     margin-bottom: 0;
     @media only screen and (max-width: 1440px) {
       font-size: 16px;
@@ -137,7 +134,6 @@ export const Subscribe = styled.div`
   }
   @media only screen and (max-width: 768px) {
     max-width: 80%;
-    margin: 0 auto;
   }
   @media only screen and (max-width: 480px) {
     max-width: 100%;
@@ -146,7 +142,6 @@ export const Subscribe = styled.div`
   }
 
   @media only screen and (max-width: 480px) {
-    align-items: center;
   }
   .reusecore__input {
     width: 100%;
@@ -162,7 +157,6 @@ export const Subscribe = styled.div`
       min-height: 60px;
       padding: 0 24px;
       border-radius: 8px;
-      margin-bottom: 0.25em;
       ::placeholder {
         color: ${rgba('#02073E', 0.4)};
         opacity: 1; /* Firefox */
@@ -216,7 +210,7 @@ const EyeButton = styled.button`
   outline: none;
   cursor: pointer;
   box-shadow: none;
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
   background-color: transparent;
