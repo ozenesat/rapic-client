@@ -180,7 +180,7 @@ export const MobileMenu = styled.div`
           border-radius: 0.35em;
           margin-top: 0.5em;
           @media only screen and (max-width: 480px) {
-            min-width: 100%;
+            min-width: 25%;
             margin-top: 15px;
           }
         a {
