@@ -45,7 +45,7 @@ function CodeEditorModal({ isModalOpen, closeModal, endpoint }) {
           theme="github"
           onChange={onChangeCode}
           name="ace-editor"
-          height="400px"
+          height="550px"
           editorProps={{ $blockScrolling: false }}
         />
 
