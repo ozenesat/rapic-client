@@ -1,35 +1,27 @@
 import React from "react";
-import { getSessionCookie } from "../utils/utils";
-import { useAppState } from "./AppContext";
+import { getSessionCookie, redirect } from "../utils/utils";
 
 const withAuth = (Page) => {
   return class extends React.Component {
     static async getInitialProps(ctx) {
       const { refresh } = getSessionCookie(ctx);
-      const { res, req } = ctx;
+      const { pathname } = ctx;
 
       // if there is no refresh token, force to target location
-      if (req && res) {
-        if (refresh != undefined && req.url == "/login") {
-          res.writeHead(302, {
-            Location: "/dashboard",
-          });
-          res.end();
-          return {};
-        }
-        if (req.url != "/" && req.url != "/login" && refresh == undefined) {
-          res.writeHead(302, {
-            Location: "/login",
-          });
-          res.end();
-          return {};
-        }
+      if (refresh != undefined && pathname == "/login") {
+        redirect(ctx, "/dashboard");
+      } else if (
+        pathname != "/" &&
+        pathname != "/login" &&
+        refresh == undefined
+      ) {
+        redirect(ctx, "/login");
       }
 
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx));
 
-      return { ...pageProps };
+      return { data: null, ...pageProps };
     }
     render() {
       return <Page {...this.props} />;

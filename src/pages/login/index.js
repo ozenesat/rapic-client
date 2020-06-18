@@ -4,12 +4,12 @@ import Sticky from "react-stickynode";
 import { ThemeProvider } from "styled-components";
 import { theme } from "common/src/theme/app";
 import { ResetCSS } from "common/src/assets/css/style";
-import { GlobalStyle, ContentWrapper } from "../../containers/rapic.style";
+import { GlobalStyle, ContentWrapper } from "containers/rapic.style";
 import { DrawerProvider } from "common/src/contexts/DrawerContext";
-import Navbar from "../../containers/Navbar";
-import Login from "../../containers/Login";
-import Footer from "../../containers/Footer";
-import { withAuth } from "../../components/withAuth";
+import Navbar from "containers/Navbar";
+import Login from "containers/Login";
+import Footer from "containers/Footer";
+import { withAuth } from "components/withAuth";
 
 function LoginPage() {
   return (
@@ -26,7 +26,10 @@ function LoginPage() {
             href="https://fonts.googleapis.com/css?family=Imprima:400,400i,700,700i|DM+Sans:400,400i,500,500i,700,700i&display=swap"
           />
           {/*<!-- Font Awesome icons (free version)-->*/}
-        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+          <script
+            src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
+            crossorigin="anonymous"
+          ></script>
         </Head>
         <ResetCSS />
         <GlobalStyle />

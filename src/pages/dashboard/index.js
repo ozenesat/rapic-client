@@ -9,7 +9,7 @@ import { DrawerProvider } from "common/src/contexts/DrawerContext";
 import Navbar from "containers/Navbar";
 import Dashboard from "containers/Dashboard";
 import API from "services/api";
-import { useActionState, useAppState } from "components/AppContext";
+import { useActionState } from "components/AppContext";
 import { withAuth } from "components/withAuth";
 
 function DashboardPage({ projects }) {
@@ -59,6 +59,7 @@ function DashboardPage({ projects }) {
 // }
 
 DashboardPage.getInitialProps = async (ctx) => {
+  console.log("DashboardPage");
   try {
     const projects = await API.getRapicProjects(ctx);
     return { projects };
