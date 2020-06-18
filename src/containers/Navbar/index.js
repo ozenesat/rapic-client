@@ -42,14 +42,6 @@ const Navbar = ({ page }) => {
   data.navItems.forEach((item) => {
     scrollItems.push(item.path.slice(1));
   });
-  
-  const onLoading = (e) => {
-    e.preventDefault()
-    router.push("/dashboard")
-    return (
-      <Loading />
-    )
-  }
 
   const handleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
@@ -60,69 +52,51 @@ const Navbar = ({ page }) => {
   };
 
   async function handleLogout() {
-    clearSessionCookie(null, "rapic_session");
-    await router.replace("/login");
+    clearSessionCookie(null);
+    await router.push("/login");
     setAuthenticated(false);
   }
 
   const renderDefaultRightBar = () => {
     if (router.pathname == "/login") {
-      return (
-        <Link href="/signup" component={SignUp}>
-          <Button title="Sign Up" />
-        </Link>
-      );
+      return <Button title="Sign Up" onClick={() => router.push("/signup")} />;
     }
     if (!isAuthenticated) {
+      return <Button title="Login" onClick={() => router.push("/login")} />;
+    }
+
+    if (router.pathname == "/dashboard") {
       return (
-        <Link label="login" href="/login" component={Login}>
-          <Button title="Login" />
-        </Link>
+        <Button title="Logout" className="menu-button" onClick={handleLogout} />
       );
     }
-    // this if statement is meaningless now, we'll discuss it tomorrow, and then update it.
-    if (isLandingPage) {
-      return (
-        <>
-          <Button title="Dashboard" onClick={onLoading}/>
-          <Button
-            title="Logout"
-            className="menu-button"
-            onClick={handleLogout}
-          />
-        </>
-      );
-    }
+
     return (
       <>
-    <Button title="Dashboard" onClick={onLoading}/>
-    <Link label="Dasboard" href="/dashboard" component={Dashboard}>
-      <Button title="Logout" className="menu-button" onClick={handleLogout} />
-     </Link>
-     </>
+        <Button title="Dashboard" onClick={() => router.push("/dashboard")} />
+        <Button title="Logout" className="menu-button" onClick={handleLogout} />
+      </>
     );
   };
-  // it looks meaningless but with this function browser loads landing page 
+  // it looks meaningless but with this function browser loads landing page
   // faster and smoother, we can discuss about it.
-  const esat = (e) => {
-    if(!isLandingPage) {
-    e.preventDefault()
-    router.push("/#")
-    return (
-      <Loading />
-    )
-    }
-  }
+  // const esat = (e) => {
+  //   if (!isLandingPage) {
+  //     e.preventDefault();
+  //     router.push("/#");
+  //     return <Loading />;
+  //   }
+  // };
   const navbarJsx = (
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
-          href="/#"
-          onClick={esat}
           logoSrc={LogoImage}
           title="Rapic.io"
           className="main-logo"
+          onClick={() => router.push("/#")}
         />
+
         {/* end of logo */}
 
         <MenuArea>
@@ -173,31 +147,30 @@ const Navbar = ({ page }) => {
             offset={-84}
             currentClassName="active"
           >
-            {isLandingPage ? (data.navItems.map((menu, index) => (
-              <li key={`menu_key${index}`}>
-                <AnchorLink
-                  href={menu.path}
-                  offset={menu.offset}
-                  onClick={handleHandleMenuClose}
-                >
-                  {menu.label}
-                </AnchorLink>
-              </li>
-            ))) : ((data.navLogItems.map((menu, index) => (
-              <li key={`menu_key${index}`}>
-                <AnchorLink
-                  href={menu.path}
-                  offset={menu.offset}
-                  onClick={handleHandleMenuClose}
-                >
-                  {menu.label}
-                </AnchorLink>
-              </li>
-            ))))
-          }
-            <li>
-            {renderDefaultRightBar()}
-            </li>
+            {isLandingPage
+              ? data.navItems.map((menu, index) => (
+                  <li key={`menu_key${index}`}>
+                    <AnchorLink
+                      href={menu.path}
+                      offset={menu.offset}
+                      onClick={handleHandleMenuClose}
+                    >
+                      {menu.label}
+                    </AnchorLink>
+                  </li>
+                ))
+              : data.navLogItems.map((menu, index) => (
+                  <li key={`menu_key${index}`}>
+                    <AnchorLink
+                      href={menu.path}
+                      offset={menu.offset}
+                      onClick={handleHandleMenuClose}
+                    >
+                      {menu.label}
+                    </AnchorLink>
+                  </li>
+                ))}
+            <li>{renderDefaultRightBar()}</li>
           </Scrollspy>
         </Container>
       </MobileMenu>
