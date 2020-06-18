@@ -60,7 +60,8 @@ const ModalStyles = {
     bottom: "auto",
     transform: "translate(-50%, -50%)",
     width: "50%",
-    marginBottom: "100px;",
+    marginTop: "500px;",
+    maxHeight: "90%",
   },
 };
 

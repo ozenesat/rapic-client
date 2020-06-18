@@ -4,9 +4,9 @@ import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
 
-import { useActionState } from "../../components/AppContext";
-import API from "../../services/api";
-import { Loading } from "../../components/Loading";
+import { useActionState } from "components/AppContext";
+import API from "services/api";
+import { Loading } from "components/Loading";
 import {
   Title,
   Content,
