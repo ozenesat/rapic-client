@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "react-modal";
 import AceEditor from "react-ace";
 import Link from "next/link";
@@ -5,13 +6,19 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 
 import Button from "common/src/components/Button";
-import { ModalStyles } from "containers/ProjectModal/projectmodal.style";
 import Heading from "common/src/components/Heading";
+import { Loading } from "components/Loading";
+import { ModalStyles } from "containers/ProjectModal/projectmodal.style";
 import { Text, Content, ButtonWrapper } from "./editor.style";
+import MessageBox from "../MessageBox";
 
 function CodeEditorModal({ isModalOpen, closeModal, endpoint }) {
-  function onChange(newValue) {
-    console.log("change", newValue);
+  const [code, onChangeCode] = useState("");
+  const [message, setMessage] = useState({ text: "", type: "" });
+  const [isLoading, setLoading] = useState(false);
+
+  function handleUpdate() {
+    setLoading(true);
   }
   return (
     <Modal
@@ -29,25 +36,29 @@ function CodeEditorModal({ isModalOpen, closeModal, endpoint }) {
           </Link>
         </Text>
         <ButtonWrapper>
-          <Button title="GET" className="http-method" isActive />
+          <Button title="GET" className="http-method active" />
           <Button title="POST" className="http-method" />
           <Button title="DELETE" className="http-method" />
         </ButtonWrapper>
         <AceEditor
           mode="java"
           theme="github"
-          onChange={onChange}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{ $blockScrolling: true }}
+          onChange={onChangeCode}
+          name="ace-editor"
+          height="400px"
+          editorProps={{ $blockScrolling: false }}
         />
+
         <ButtonWrapper>
           <Button
             title="Save Changes"
             id="save-changes"
-            onClick={() => checkInputs()}
+            onClick={() => handleUpdate()}
           />
           <Button title="Cancel" id="cancel" onClick={closeModal} />
         </ButtonWrapper>
+        <MessageBox message={message.text} type={message.type} />
+        {isLoading && <Loading />}
       </Content>
     </Modal>
   );

@@ -10,12 +10,12 @@ export const Text = styled.div`
   #url {
     color: #34bf2f !important;
   }
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  margin: 30px 0 20px 0;
+  margin: 10px 0 10px 0;
   #save-changes {
     margin-right: 20px;
     background-color: #32c02f;
@@ -25,11 +25,14 @@ export const ButtonWrapper = styled.div`
   }
 
   .http-method {
-    background-color: ${(props) =>
-      props.isActive ? "#E3E3E3" : "transparent"};
+    background-color: transparent;
     color: black;
     border: 1px solid black;
     min-height: 0px;
     margin-left: 10px;
+    padding: 5px;
+  }
+  .active {
+    background-color: #e3e3e3;
   }
 `;
