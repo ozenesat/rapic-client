@@ -59,7 +59,6 @@ function DashboardPage({ projects }) {
 // }
 
 DashboardPage.getInitialProps = async (ctx) => {
-  console.log("DashboardPage");
   try {
     const projects = await API.getRapicProjects(ctx);
     return { projects };

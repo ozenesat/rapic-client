@@ -129,7 +129,7 @@ const Login = () => {
         <EyeButton></EyeButton>
         <Button
           disabled={disable}
-          title="Submit!"
+          title="Login"
           style={!disable ? { background: "#35BF2E" } : { background: "gray" }}
           onClick={onSubmit}
           type="submit"

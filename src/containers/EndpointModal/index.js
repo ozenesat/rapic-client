@@ -22,7 +22,7 @@ import Modal from "react-modal";
 function EndpointAddModal({ isModalOpen, closeModal }) {
   const router = useRouter();
   const { id } = router.query;
-  const [name, onChangeName] = useState("");
+  const [name, onChangeName] = useState("gokhan.rapic.io/app/[endpoint]");
   const [description, onChangeDescription] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -46,6 +46,8 @@ function EndpointAddModal({ isModalOpen, closeModal }) {
   //     fields[index].name = name;
   //     addField([].concat(fields));
   //   }
+
+  function handleOnChange() {}
 
   function resetModalState() {
     onChangeDescription("");
@@ -114,7 +116,7 @@ function EndpointAddModal({ isModalOpen, closeModal }) {
             <Input
               required
               inputType="text"
-              placeholder="Example: orders"
+              placeholder="gokhan.rapic.io/app/[endpoint]"
               name="endpoint-name"
               value={name}
               onChange={onChangeName}

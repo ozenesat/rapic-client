@@ -4,7 +4,7 @@ import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
 
-import { useActionState } from "components/AppContext";
+import { useActionState, useAppState } from "components/AppContext";
 import API from "services/api";
 import { Loading } from "components/Loading";
 import {
@@ -23,12 +23,18 @@ function ProjectModal({ isModalOpen, closeModal }) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const setGlobalState = useActionState();
+  const globalState = useAppState();
 
   function checkInputs() {
-    if (!name || !description) {
-      setError("Please fill all fields.");
+    if (!name) {
+      setError("Please type a project name.");
     } else {
-      createProject(name, description);
+      const index = globalState.projects.findIndex((item) => item.name == name);
+      if (index > -1) {
+        setError("Project name must be a unique set.");
+      } else {
+        createProject(name, description);
+      }
     }
   }
 
