@@ -62,6 +62,7 @@ const SignUp = () => {
         passError ||
         password === "" ||
         user === "" ||
+        user === password ||
         password !== passwordConfirmation
     );
   };
@@ -70,7 +71,7 @@ const SignUp = () => {
     setInfo({ message: "", color: "" });
     setPassword(pass);
 
-    if (!validatePassword(pass) && pass !== "") {
+    if ((!validatePassword(pass) || pass === username) && pass !== "") {
       setPassError(true);
       setDisable(true);
     } else {
@@ -184,7 +185,11 @@ const SignUp = () => {
         />
         <Text
           style={{ color: "red", marginTop: "0.25em" }}
-          content={passError ? "An 8 digit password is required." : ""}
+          content={(password.length < 8 && password !== "") ? "An 8 digit password is required." : ""}
+        />
+        <Text
+          style={{ color: "red", marginTop: "0.25em" }}
+          content={(password === username && password !== "") ? "Password should be different than username." : ""}
         />
         <EyeButton></EyeButton>
         <h3> Password Confirmation: </h3>

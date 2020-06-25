@@ -93,7 +93,7 @@ const Banner = () => {
             />
             <Text
               className="banner-caption"
-              content="Rapic gives you API endpoints that can store data and run codelets all together by rest calls. With ready to use user authentication, lots of integration, and easy to plug client libraries..."
+              content="Rapic gives you API endpoints that can store data and run codelets all together by rest calls, with ready to use user authentication, lots of integration, and easy to plug client libraries..."
             />
             <Subscribe>
               {isAuthenticated ? (
