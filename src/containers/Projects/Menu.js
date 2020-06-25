@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+import { useState } from "react";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import Link from "next/link";
@@ -11,15 +12,13 @@ import {
 } from "./projects.style";
 import { useActionState, useAppState } from "../../components/AppContext";
 import EndpointAddModal from "../EndpointModal";
-import { useState } from "react";
+
 import { splitText } from "../../utils/utils";
 
 function Menu({ project }) {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setModal] = useState(false);
-  const setGlobalState = useActionState();
-  const globalState = useAppState();
 
   return (
     <MenuContainer>
@@ -50,26 +49,29 @@ function Menu({ project }) {
 
         {project &&
           project.rapic_models.map((endpoint) => (
-            <Link
-              href={`/projects/[id]/endpoints/[endpoint]`}
-              as={`/projects/${id}/endpoints/${endpoint.model_name}`}
+            <MenuButton
               key={`menu-item-${endpoint.id}`}
+              onClick={() =>
+                Router.push(
+                  "/projects/[id]/endpoints/[endpoint]",
+                  `/projects/${id}/endpoints/${endpoint.model_name}`,
+                  { shallow: true }
+                )
+              }
+              backgroundColor={
+                router.query.endpoint == endpoint.model_name
+                  ? "#d6f3d6"
+                  : "white"
+              }
             >
-              <MenuButton
-                backgroundColor={
-                  router.query.endpoint == endpoint.model_name
-                    ? "#d6f3d6"
-                    : "white"
-                }
-              >
-                {endpoint.model_name}
-              </MenuButton>
-            </Link>
+              {endpoint.model_name}
+            </MenuButton>
           ))}
       </Section>
       <EndpointAddModal
         isModalOpen={isModalOpen}
         closeModal={() => setModal(false)}
+        project={project}
       />
     </MenuContainer>
   );

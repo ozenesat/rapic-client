@@ -25,9 +25,9 @@ const SignUp = () => {
     color: "",
   });
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
   const [disable, setDisable] = useState(false);
@@ -44,11 +44,17 @@ const SignUp = () => {
       setDisable(true);
     } else {
       setEmailError(false);
-      setDisable(passError || password === "" || mail === "" || username === "" || password !== passwordConfirmation);
+      setDisable(
+        passError ||
+          password === "" ||
+          mail === "" ||
+          username === "" ||
+          password !== passwordConfirmation
+      );
     }
   };
 
-  const handleUser = user => {
+  const handleUser = (user) => {
     setUsername(user);
     setDisable(
       emailError ||
@@ -70,7 +76,13 @@ const SignUp = () => {
       setDisable(true);
     } else {
       setPassError(false);
-      if (emailError || email === "" || pass === "" || username === "" || pass !== passwordConfirmation) {
+      if (
+        emailError ||
+        email === "" ||
+        pass === "" ||
+        username === "" ||
+        pass !== passwordConfirmation
+      ) {
         setDisable(true);
       } else {
         setDisable(false);
@@ -78,9 +90,16 @@ const SignUp = () => {
     }
   };
 
-  const handleConfirmation = confirmation => {
+  const handleConfirmation = (confirmation) => {
     setPasswordConfirmation(confirmation);
-    setDisable(emailError || email === "" || passError || password === "" || username === "" || password !== confirmation);
+    setDisable(
+      emailError ||
+        email === "" ||
+        passError ||
+        password === "" ||
+        username === "" ||
+        password !== confirmation
+    );
   };
 
   const onSubmit = (e) => {
@@ -143,8 +162,15 @@ const SignUp = () => {
         />
         <Text
           style={{ color: "red", marginTop: "0.25em" }}
-          content={(!emailError && !passError && password !== "" && passwordConfirmation === password && username === "") ? (
-            "An unique username is required.") : ""}
+          content={
+            !emailError &&
+            !passError &&
+            password !== "" &&
+            passwordConfirmation === password &&
+            username === ""
+              ? "An unique username is required."
+              : ""
+          }
         />
         <h3> Password: </h3>
         <Input
@@ -179,12 +205,16 @@ const SignUp = () => {
         />
         <Text
           style={{ color: "red", marginTop: "0.25em" }}
-          content={(password !== passwordConfirmation && passwordConfirmation.length > 0) ? "Passwords are not same." : ""}
+          content={
+            password !== passwordConfirmation && passwordConfirmation.length > 0
+              ? "Passwords are not same."
+              : ""
+          }
         />
         <EyeButton></EyeButton>
         <Button
           disabled={disable}
-          title="Submit!"
+          title="Sign Up"
           style={!disable ? { background: "#35BF2E" } : { background: "gray" }}
           onClick={onSubmit}
           type="submit"

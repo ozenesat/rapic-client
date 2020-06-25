@@ -19,13 +19,16 @@ import { Loading } from "components/Loading";
 import MessageBox from "containers/MessageBox";
 import { ModalStyles } from "../ProjectModal/projectmodal.style";
 import Modal from "react-modal";
-function EndpointAddModal({ isModalOpen, closeModal }) {
+import { getSessionCookie } from "utils/utils";
+
+function EndpointAddModal({ isModalOpen, closeModal, project }) {
   const router = useRouter();
   const { id } = router.query;
   const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const { username } = getSessionCookie(null);
 
   //   function handleAddField() {
   //     fields.push({ name: "", fieldtype: "" });
@@ -46,6 +49,8 @@ function EndpointAddModal({ isModalOpen, closeModal }) {
   //     fields[index].name = name;
   //     addField([].concat(fields));
   //   }
+
+  function handleOnChange() {}
 
   function resetModalState() {
     onChangeDescription("");
@@ -114,7 +119,7 @@ function EndpointAddModal({ isModalOpen, closeModal }) {
             <Input
               required
               inputType="text"
-              placeholder="Example: orders"
+              placeholder={`${username}.rapic.io/${project.name}/[endpoint-name]`}
               name="endpoint-name"
               value={name}
               onChange={onChangeName}

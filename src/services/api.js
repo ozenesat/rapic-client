@@ -10,7 +10,35 @@ const rapicUrl = "https://rapicapi.herokuapp.com/";
 const loginUrl = rapicUrl + "api/token/";
 
 class Api {
-  // observe that using e-mail as username !!!
+  async getMyUser() {
+    if (!this.access) {
+      await this.getAccessToken();
+    }
+    return new Promise((resolve, reject) => {
+      axios({
+        url: rapicUrl + "users/",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.access}`,
+        },
+        method: "GET",
+      }).then((response) => {
+        if (response.status < 200 || response.status >= 300) {
+          reject("Failed to get user");
+        }
+        if (!response.data.length) {
+          reject("Failed to get user");
+          return;
+        }
+        setSessionCookie(
+          { refresh: this.refresh, username: response.data[0].username },
+          null
+        );
+        resolve(this.username);
+      });
+    });
+  }
+
   async register(username, email, password, registerOnly) {
     let data = {
       username: username,
@@ -27,7 +55,7 @@ class Api {
         },
       })
         .then((response) => {
-          console.log(response, 'hi')
+          console.log(response, "hi");
           if (response.status < 200 || response.status >= 300) {
             if (response.status === 500) {
               reject("failed to register");
@@ -71,8 +99,8 @@ class Api {
 
           this.refresh = data.refresh;
           this.access = data.access;
-          let refresh = data.refresh;
-          setSessionCookie({ refresh, username: email }, null);
+          setSessionCookie({ refresh: data.refresh }, null);
+          this.getMyUser();
           resolve(data);
         })
         .catch((error) => reject(error));

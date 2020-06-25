@@ -14,7 +14,7 @@ function AccessLevel({ onChange, authMethod }) {
           onChange={() => onChange("public")}
         />
         <Radio
-          labelText="Authenticated"
+          labelText="JWT Authentication"
           className="radio"
           isChecked={authMethod === "authenticated"}
           onChange={() => onChange("authenticated")}
