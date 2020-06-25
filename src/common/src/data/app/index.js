@@ -139,7 +139,7 @@ export const data = {
       icon: serviceIcon3,
       title: "Integrated Parties",
       desc:
-        "You can integrate listed third-party tools that allows you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe (soon).",
+        "You can integrate listed third-party tools that allow you to either charge your customers, email them, and more messaging features. The tools are Zapier and Stripe (soon).",
       // link: '#',
     },
     {
