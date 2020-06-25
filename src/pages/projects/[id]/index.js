@@ -18,30 +18,63 @@ import API from "services/api";
 import Heading from "common/src/components/Heading";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
-import { useAppState } from "components/AppContext";
+import { useAppState, useActionState } from "components/AppContext";
 import { Loading } from "components/Loading";
 import Error from "pages/_error";
 import MessageBox from "containers/MessageBox";
 import AccessLevel from "containers/AccessLevel";
 import { withAuth } from "components/withAuth";
 
-const ProjectPage = ({ project }) => {
+const ProjectPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const globalState = useAppState();
+  const setGlobalState = useActionState();
+
   const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
   const [authMethod, onChangeAuthMethod] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [initLoading, setInitLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
-  const globalState = useAppState();
+  const [project, setProject] = useState({
+    name: "",
+    description: "",
+    rapic_models: [],
+  });
 
   useEffect(() => {
-    if (project) {
+    const { projects } = globalState;
+    const index = projects ? projects.findIndex((item) => item.id == id) : -1;
+    if (index < 0) {
+      getProject();
+    } else {
+      handleSetProject(projects[index]);
+    }
+  }, []);
+
+  function handleSetProject(project) {
+    setProject(project);
+    setInitLoading(false);
+    setLoading(false);
+
+    if (project != null) {
       onChangeDescription(project.description);
       onChangeName(project.name);
       onChangeAuthMethod(project.auth_method);
     }
-  }, []);
+  }
+
+  async function getProject() {
+    setLoading(false);
+    setInitLoading(true);
+    try {
+      const project = await API.getRapicProjectById(null, id);
+      handleSetProject(project);
+    } catch (err) {
+      handleSetProject(null);
+    }
+  }
 
   function handleDelete() {
     swal({
@@ -56,6 +89,7 @@ const ProjectPage = ({ project }) => {
         API.deleteRapicProject(null, id)
           .then(async () => {
             setLoading(false);
+            setGlobalState({ type: "DELETE_PROJECT", payload: { id } });
             Router.push("/dashboard");
           })
           .catch(() => {
@@ -69,11 +103,12 @@ const ProjectPage = ({ project }) => {
   async function handleUpdate() {
     setLoading(true);
     try {
-      await API.updateRapicProject(null, id, {
+      const updatedProject = await API.updateRapicProject(null, id, {
         name,
         description,
         auth_method: authMethod,
       });
+      setGlobalState({ type: "UPDATE_PROJECT", payload: updatedProject });
       setLoading(false);
       setMessage({ type: "success", text: "Updated successfully." });
     } catch (err) {
@@ -92,6 +127,7 @@ const ProjectPage = ({ project }) => {
   }
 
   if (!project) return <Error status={404} />;
+  if (initLoading) return <Loading />;
   return (
     <Projects project={project}>
       <Container>
@@ -174,14 +210,14 @@ const ProjectPage = ({ project }) => {
 //   };
 // }
 
-ProjectPage.getInitialProps = async (ctx) => {
-  try {
-    const project = await API.getRapicProjectById(ctx, ctx.query.id);
-    return { project };
-  } catch (err) {
-    console.log({ err });
-    return { project: null };
-  }
-};
+// ProjectPage.getInitialProps = async (ctx) => {
+//   try {
+//     const project = await API.getRapicProjectById(ctx, ctx.query.id);
+//     return { project };
+//   } catch (err) {
+//     console.log({ err });
+//     return { project: null };
+//   }
+// };
 
 export default withAuth(ProjectPage);

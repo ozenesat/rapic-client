@@ -28,27 +28,75 @@ import AccessLevel from "containers/AccessLevel";
 import CodeEditorModal from "containers/CodeEditorModal";
 import { HeaderWrapping } from "pagestyles/projects/endpoints/enpoint.style";
 import { DangerZoneWrapper, Line } from "pagestyles/projects/project.style";
+import { useAppState, useActionState } from "components/AppContext";
 
-function Endpoints({ project }) {
+function Endpoints() {
   const router = useRouter();
   const { id } = router.query;
-
+  const globalState = useAppState();
+  const setGlobalState = useActionState();
   const { username } = getSessionCookie(null);
+
   const [description, onChangeDescription] = useState("");
   const [authMethod, onChangeAuthMethod] = useState("");
   const [fields, addField] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [initLoading, setInitLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isModalOpen, setModalOpen] = useState(false);
-  const endpoint = project.rapic_models.find(
-    (item) => item.model_name == router.query.endpoint
-  );
+  const [project, setProject] = useState({
+    name: "",
+    description: "",
+    rapic_models: [],
+  });
+  const [endpoint, setEndpoint] = useState({
+    model_name: "",
+    description: "",
+  });
 
   useEffect(() => {
+    const { projects } = globalState;
+    const index = projects ? projects.findIndex((item) => item.id == id) : -1;
+    if (index < 0) {
+      getProject();
+    } else {
+      handleSetProject(projects[index]);
+    }
+    resetState();
+  }, [router.query.endpoint]);
+
+  function handleSetProject(project) {
+    setProject(project);
+    if (project != null) {
+      handleSetEndpoint(project);
+    }
+    setInitLoading(false);
+    setLoading(false);
+  }
+
+  function handleSetEndpoint(project) {
+    const endpoint = project.rapic_models.find(
+      (item) => item.model_name == router.query.endpoint
+    );
+    setEndpoint(endpoint);
     onChangeDescription(endpoint.description);
     onChangeAuthMethod(endpoint.auth_method);
-    console.log(authMethod);
-  }, [router.query.endpoint]);
+  }
+
+  async function getProject() {
+    setLoading(false);
+    setInitLoading(true);
+    try {
+      const project = await API.getRapicProjectById(null, id);
+      handleSetProject(project);
+    } catch (err) {
+      handleSetProject(null);
+    }
+  }
+
+  function resetState() {
+    setMessage({ text: "", type: "" });
+  }
 
   // function covertFieldType(type) {
   //   const types = {
@@ -91,10 +139,31 @@ function Endpoints({ project }) {
       description: description,
       auth_method: authMethod,
     };
-    API.updateRapicEndpoint(null, endpoint.id, payload).then(() => {
-      setLoading(false);
-      setMessage({ text: "Updated successfully.", type: "success" });
-    });
+    API.updateRapicEndpoint(null, endpoint.id, payload).then(
+      (updatedEndpoint) => {
+        handleUpdateEndpoint(updatedEndpoint);
+        setLoading(false);
+        setMessage({ text: "Updated successfully.", type: "success" });
+      }
+    );
+  }
+
+  function handleUpdateEndpoint(updatedEndpoint) {
+    const index = project.rapic_models.findIndex(
+      (item) => item.id == updatedEndpoint.id
+    );
+    if (index > -1) {
+      project.rapic_models[index] = updatedEndpoint;
+      setGlobalState({ type: "UPDATE_PROJECT", payload: project });
+    }
+  }
+
+  function handleDeleteEndpoint(id) {
+    const index = project.rapic_models.findIndex((item) => item.id == id);
+    if (index > -1) {
+      project.rapic_models.splice(index, 1);
+      setGlobalState({ type: "UPDATE_PROJECT", payload: project });
+    }
   }
 
   function handleDelete() {
@@ -110,6 +179,7 @@ function Endpoints({ project }) {
         API.deleteRapicEndpoint(null, endpoint.id)
           .then(async () => {
             setLoading(false);
+            handleDeleteEndpoint(endpoint.id);
             router.push("/projects/[id]", `/projects/${id}`);
           })
           .catch(() => {
@@ -144,6 +214,7 @@ function Endpoints({ project }) {
   }
 
   if (!endpoint) return <Error status={404} />;
+  if (initLoading) return <Loading />;
 
   return (
     <Projects project={project}>
@@ -257,14 +328,14 @@ function Endpoints({ project }) {
   );
 }
 
-Endpoints.getInitialProps = async (ctx) => {
-  try {
-    const project = await API.getRapicProjectById(ctx, ctx.query.id);
-    return { project };
-  } catch (err) {
-    console.log({ err });
-    return { project: null };
-  }
-};
+// Endpoints.getInitialProps = async (ctx) => {
+//   try {
+//     const project = await API.getRapicProjectById(ctx, ctx.query.id);
+//     return { project };
+//   } catch (err) {
+//     console.log({ err });
+//     return { project: null };
+//   }
+// };
 
 export default withAuth(Endpoints);

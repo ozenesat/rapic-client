@@ -8,8 +8,24 @@ function reducer(state, action) {
     case "ADD_PROJECTS":
       state.projects = action.payload;
       return state;
-    case "ADD_NEW_PROJECTS":
+    case "ADD_NEW_PROJECT":
       state.projects.push(action.payload);
+      return state;
+    case "UPDATE_PROJECT":
+      const index = state.projects
+        ? state.projects.findIndex((item) => item.id == action.payload.id)
+        : -1;
+      if (index > -1) {
+        state.projects[index] = action.payload;
+      }
+      return state;
+    case "DELETE_PROJECT":
+      const deleteIndex = state.projects
+        ? state.projects.findIndex((item) => item.id == action.payload.id)
+        : -1;
+      if (deleteIndex > -1) {
+        state.projects.splice(deleteIndex, 1);
+      }
       return state;
     case "SET_USER":
       return { ...state, ...action.payload };
@@ -23,7 +39,7 @@ function reducer(state, action) {
 
 export const AppProvider = ({ children }) => {
   const [globalState, setGlobalState] = useReducer(reducer, {
-    projects: [],
+    projects: null,
     endpoints: {},
     user: null,
     token: null,

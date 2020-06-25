@@ -1,5 +1,10 @@
 import { useState } from "react";
+import Modal from "react-modal";
+import { useRouter } from "next/router";
 import Heading from "common/src/components/Heading";
+import { Icon } from "react-icons-kit";
+import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
+
 import {
   Container,
   Content,
@@ -8,19 +13,16 @@ import {
   ButtonWrapper,
 } from "pagestyles/projects/endpoints/add/add.style";
 import { Title, Section } from "containers/ProjectModal/projectmodal.style";
-import { useRouter } from "next/router";
 import Input from "common/src/components/Input";
 import Button from "common/src/components/Button";
-import { Icon } from "react-icons-kit";
-import { iosTrash } from "react-icons-kit/ionicons/iosTrash";
 import DropdownMenu from "common/src/components/Dropdown";
-import API from "services/api";
 import { Loading } from "components/Loading";
 import MessageBox from "containers/MessageBox";
-import { ModalStyles } from "../ProjectModal/projectmodal.style";
-import Modal from "react-modal";
-import { getSessionCookie } from "utils/utils";
+import { ModalStyles } from "containers/ProjectModal/projectmodal.style";
 
+import { getSessionCookie } from "utils/utils";
+import API from "services/api";
+import { useActionState } from "components/AppContext";
 function EndpointAddModal({ isModalOpen, closeModal, project }) {
   const router = useRouter();
   const { id } = router.query;
@@ -29,7 +31,7 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
   const [isLoading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const { username } = getSessionCookie(null);
-
+  const setGlobalState = useActionState();
   //   function handleAddField() {
   //     fields.push({ name: "", fieldtype: "" });
   //     addField([].concat(fields));
@@ -50,8 +52,6 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
   //     addField([].concat(fields));
   //   }
 
-  function handleOnChange() {}
-
   function resetModalState() {
     onChangeDescription("");
     onChangeName("");
@@ -68,8 +68,10 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
       rapicfields: [],
     };
     API.createRapicEndpoint(null, enpoint)
-      .then(async (response) => {
-        await router.push(
+      .then((response) => {
+        project.rapic_models.push(response);
+        setGlobalState({ type: "UPDATE_PROJECT", payload: project });
+        router.push(
           "/projects/[id]/endpoints/[endpoint]",
           `/projects/${id}/endpoints/${response.model_name}`
         );
