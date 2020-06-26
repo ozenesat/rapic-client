@@ -35,7 +35,6 @@ const ProjectPage = () => {
   const [description, onChangeDescription] = useState("");
   const [authMethod, onChangeAuthMethod] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [initLoading, setInitLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [project, setProject] = useState({
     name: "",
@@ -45,34 +44,18 @@ const ProjectPage = () => {
 
   useEffect(() => {
     const { projects } = globalState;
-    const index = projects ? projects.findIndex((item) => item.id == id) : -1;
-    if (index < 0) {
-      getProject();
-    } else {
-      handleSetProject(projects[index]);
-    }
+    const project = projects.find((item) => item.id == id);
+    handleSetProject(project);
   }, []);
 
   function handleSetProject(project) {
     setProject(project);
-    setInitLoading(false);
     setLoading(false);
 
     if (project != null) {
       onChangeDescription(project.description);
       onChangeName(project.name);
       onChangeAuthMethod(project.auth_method);
-    }
-  }
-
-  async function getProject() {
-    setLoading(false);
-    setInitLoading(true);
-    try {
-      const project = await API.getRapicProjectById(null, id);
-      handleSetProject(project);
-    } catch (err) {
-      handleSetProject(null);
     }
   }
 
@@ -127,7 +110,7 @@ const ProjectPage = () => {
   }
 
   if (!project) return <Error status={404} />;
-  if (initLoading) return <Loading />;
+
   return (
     <Projects project={project}>
       <Container>

@@ -41,7 +41,6 @@ function Endpoints() {
   const [authMethod, onChangeAuthMethod] = useState("");
   const [fields, addField] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [initLoading, setInitLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isModalOpen, setModalOpen] = useState(false);
   const [project, setProject] = useState({
@@ -56,12 +55,8 @@ function Endpoints() {
 
   useEffect(() => {
     const { projects } = globalState;
-    const index = projects ? projects.findIndex((item) => item.id == id) : -1;
-    if (index < 0) {
-      getProject();
-    } else {
-      handleSetProject(projects[index]);
-    }
+    const project = projects.find((item) => item.id == id);
+    handleSetProject(project);
     resetState();
   }, [router.query.endpoint]);
 
@@ -69,9 +64,9 @@ function Endpoints() {
     setProject(project);
     if (project != null) {
       handleSetEndpoint(project);
+    } else {
+      setLoading(false);
     }
-    setInitLoading(false);
-    setLoading(false);
   }
 
   function handleSetEndpoint(project) {
@@ -81,17 +76,8 @@ function Endpoints() {
     setEndpoint(endpoint);
     onChangeDescription(endpoint.description);
     onChangeAuthMethod(endpoint.auth_method);
-  }
 
-  async function getProject() {
     setLoading(false);
-    setInitLoading(true);
-    try {
-      const project = await API.getRapicProjectById(null, id);
-      handleSetProject(project);
-    } catch (err) {
-      handleSetProject(null);
-    }
   }
 
   function resetState() {
@@ -214,7 +200,6 @@ function Endpoints() {
   }
 
   if (!endpoint) return <Error status={404} />;
-  if (initLoading) return <Loading />;
 
   return (
     <Projects project={project}>

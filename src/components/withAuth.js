@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getSessionCookie, redirect } from "../utils/utils";
 
-const withAuth = (Page) => {
+function withAuth(Page) {
   return class extends React.Component {
     static async getInitialProps(ctx) {
       const { refresh } = getSessionCookie(ctx);
@@ -21,12 +21,12 @@ const withAuth = (Page) => {
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx));
 
-      return { data: null, ...pageProps };
+      return { ...pageProps };
     }
     render() {
       return <Page {...this.props} />;
     }
   };
-};
+}
 
 export { withAuth };

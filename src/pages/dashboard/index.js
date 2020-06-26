@@ -11,7 +11,7 @@ import Dashboard from "containers/Dashboard";
 import API from "services/api";
 import { withAuth } from "components/withAuth";
 
-function DashboardPage({ projects }) {
+function DashboardPage() {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>

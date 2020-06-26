@@ -1,4 +1,14 @@
-import { createContext, useContext, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useState,
+} from "react";
+import Router, { useRouter, withRouter } from "next/router";
+import { getSessionCookie } from "utils/utils";
+import { Loading } from "components/Loading";
+import API from "services/api";
 
 const AppStateContext = createContext();
 const AppActionContext = createContext();
@@ -38,6 +48,8 @@ function reducer(state, action) {
 }
 
 export const AppProvider = ({ children }) => {
+  const [isLoading, setLoading] = useState(true);
+  const router = useRouter();
   const [globalState, setGlobalState] = useReducer(reducer, {
     projects: null,
     endpoints: {},
@@ -45,13 +57,38 @@ export const AppProvider = ({ children }) => {
     token: null,
   });
 
+  useEffect(() => {
+    handleChange();
+  }, [router.pathname]);
+
+  function handleChange() {
+    const { isAuthenticated } = getSessionCookie();
+    if (isAuthenticated && globalState.projects == null) {
+      getProjects();
+    } else {
+      setLoading(false);
+    }
+  }
+  async function getProjects() {
+    try {
+      const projects = await API.getRapicProjects(null);
+      setGlobalState({ type: "ADD_PROJECTS", payload: projects });
+
+      setLoading(false);
+    } catch (err) {
+      console.log({ err });
+      setLoading(false);
+    }
+  }
+
   return (
     <AppActionContext.Provider value={setGlobalState}>
       <AppStateContext.Provider value={globalState}>
-        {children}
+        {isLoading ? <Loading /> : children}
       </AppStateContext.Provider>
     </AppActionContext.Provider>
   );
 };
+
 export const useAppState = () => useContext(AppStateContext);
 export const useActionState = () => useContext(AppActionContext);
