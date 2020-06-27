@@ -46,7 +46,7 @@ const ProjectPage = () => {
     const { projects } = globalState;
     const project = projects.find((item) => item.id == id);
     handleSetProject(project);
-  }, []);
+  }, [id]);
 
   function handleSetProject(project) {
     setProject(project);

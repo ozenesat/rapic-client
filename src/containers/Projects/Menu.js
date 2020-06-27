@@ -11,6 +11,7 @@ import {
   Section,
 } from "./projects.style";
 import { useActionState, useAppState } from "../../components/AppContext";
+import DropdownMenu from "common/src/components/Dropdown";
 import EndpointAddModal from "../EndpointModal";
 
 import { splitText } from "../../utils/utils";
@@ -19,10 +20,28 @@ function Menu({ project }) {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setModal] = useState(false);
+  const globalState = useAppState();
+  const { projects } = globalState;
 
   return (
     <MenuContainer>
-      <Heading as="h1" content={splitText(project.name, 12)} />
+      <DropdownMenu
+        iconSize={25}
+        content={splitText(project.name, 12)}
+        dropdownItems={["All Projects", ...projects.map((item) => item.name)]}
+        className={`dropdown`}
+        onSelect={(title) => {
+          if (title == "All Projects") {
+            router.replace("/dashboard");
+          } else {
+            const p = projects.find((item) => item.name == title);
+            if (p) {
+              router.replace("/projects/[id]", `/projects/${p.id}`);
+            }
+          }
+        }}
+      />
+
       <Section>
         <TitleWrapper>
           <Title>Settings</Title>

@@ -4,6 +4,8 @@ import {
   DropdownMenuItemsWrapper,
   DropdownMenuItemWrapper,
 } from "./dropdown.style";
+import { Icon } from "react-icons-kit";
+import { ic_arrow_drop_down } from "react-icons-kit/md/ic_arrow_drop_down";
 
 const DropdownMenu = (props) => {
   const [menuState, setMenuState] = useState({
@@ -35,7 +37,7 @@ const DropdownMenu = (props) => {
     dropdownItems,
     dropdownDirection,
     className,
-
+    iconSize,
     onSelect,
   } = props;
 
@@ -44,7 +46,10 @@ const DropdownMenu = (props) => {
       onClick={(e) => e.stopPropagation()}
       className={className}
     >
-      <span onClick={handleToggle}>{content}</span>
+      <span onClick={handleToggle}>
+        {content}
+        <Icon icon={ic_arrow_drop_down} size={iconSize} className="icon" />
+      </span>
       {menuState.show && (
         <DropdownMenuItemsWrapper dropdownDirection={dropdownDirection}>
           {dropdownItems &&

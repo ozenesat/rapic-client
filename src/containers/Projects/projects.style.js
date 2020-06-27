@@ -33,6 +33,13 @@ export const MenuContainer = styled.div`
   flex: 0.25;
   height: 100vh;
   overflow-x: hidden;
+  .dropdown span {
+    font-size: 22px;
+    font-weight: bold;
+    .icon {
+      margin-left: 20px;
+    }
+  }
 `;
 
 export const MenuButton = styled.a`
