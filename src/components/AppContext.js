@@ -12,7 +12,11 @@ import API from "services/api";
 
 const AppStateContext = createContext();
 const AppActionContext = createContext();
-
+const initialState = {
+  projects: null,
+  user: null,
+  token: null,
+};
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_PROJECTS":
@@ -38,10 +42,13 @@ function reducer(state, action) {
       }
       return state;
     case "SET_USER":
-      return { ...state, ...action.payload };
+      state.token = action.payload.token;
+      return state;
     case "SET_USER_AUTH":
       state.isAuthenticated = action.payload;
       return state;
+    case "LOGOUT":
+      return initialState;
     default:
       throw new Error();
   }
@@ -49,19 +56,17 @@ function reducer(state, action) {
 
 export const AppProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(true);
-  const router = useRouter();
-  const [globalState, setGlobalState] = useReducer(reducer, {
-    projects: null,
-    endpoints: {},
-    user: null,
-    token: null,
-  });
+  const [globalState, setGlobalState] = useReducer(reducer, initialState);
 
   useEffect(() => {
     handleChange();
-  }, [router.pathname]);
+    Router.events.on("routeChangeStart", handleChange);
+    return () => {
+      Router.events.off("routeChangeStart", handleChange);
+    };
+  }, []);
 
-  function handleChange() {
+  function handleChange(url) {
     const { isAuthenticated } = getSessionCookie();
     if (isAuthenticated && globalState.projects == null) {
       getProjects();
@@ -70,10 +75,10 @@ export const AppProvider = ({ children }) => {
     }
   }
   async function getProjects() {
+    setLoading(true);
     try {
       const projects = await API.getRapicProjects(null);
       setGlobalState({ type: "ADD_PROJECTS", payload: projects });
-
       setLoading(false);
     } catch (err) {
       console.log({ err });

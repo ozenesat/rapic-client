@@ -13,9 +13,9 @@ import { splitText } from "utils/utils";
 function Dashboard() {
   const [isModalOpen, setModalState] = useState(false);
   const globalState = useAppState();
+  const { projects } = globalState;
 
   function renderProjects() {
-    const { projects } = globalState;
     if (projects == null || globalState.projects.length < 1) {
       return <div>There are no projects....</div>;
     }

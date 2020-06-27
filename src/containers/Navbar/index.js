@@ -18,11 +18,9 @@ import NavbarWrapper, {
   NavbarRight,
 } from "./navbar.style";
 import LogoImage from "common/src/assets/image/app/logo.png";
-import { Loading } from "../../components/Loading";
 import { useActionState } from "../../components/AppContext";
 import { data } from "common/src/data/app";
 import { useRouter } from "next/router";
-import Dashboard from "../Dashboard";
 import { getSessionCookie, clearSessionCookie } from "../../utils/utils";
 
 const Navbar = ({ page }) => {
@@ -35,7 +33,6 @@ const Navbar = ({ page }) => {
 
   useEffect(() => {
     const isAuthenticated = getSessionCookie(null).refresh != undefined;
-    setGlobalState({ type: "SET_USER_AUTH", payload: isAuthenticated });
     setAuthenticated(isAuthenticated);
   }, []);
 
@@ -53,14 +50,12 @@ const Navbar = ({ page }) => {
 
   async function handleLogout() {
     clearSessionCookie(null);
-
+    setGlobalState({ type: "LOGOUT" });
     if (router.pathname == "/") {
       await router.reload();
     } else {
       await router.replace("/#");
     }
-
-    setGlobalState({ type: "SET_USER_AUTH", payload: false });
     setAuthenticated(false);
   }
 

@@ -8,7 +8,10 @@ function withAuth(Page) {
       const { pathname } = ctx;
 
       // if there is no refresh token, force to target location
-      if (refresh != undefined && pathname == "/login") {
+      if (
+        refresh != undefined &&
+        (pathname == "/login" || pathname == "/signup")
+      ) {
         redirect(ctx, "/dashboard");
       } else if (
         pathname != "/" &&
