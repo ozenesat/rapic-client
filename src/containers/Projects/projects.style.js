@@ -7,18 +7,20 @@ export const Content = styled.div`
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
     0 1px 3px 1px rgba(60, 64, 67, 0.15);
   margin: 5px 0 40px 40px;
-  margin-top: 5px;
   border-radius: 10px;
   overflow: hidden;
   height: fit-content;
+  @media only screen and (max-width: 640px) {
+    margin: 20px 0 40px 0px;
+  }
 `;
 
 export const ProjectContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
   width: 100%;
-  min-height: 100vh;
   margin-top: 30px;
+  @media only screen and (min-width: 640px) {
+    display: flex;
+  }
 `;
 
 export const Section = styled.div`
@@ -31,7 +33,7 @@ export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0.25;
-  height: 100vh;
+  min-width: 270px;
   overflow-x: hidden;
   .dropdown span {
     font-size: 22px;
