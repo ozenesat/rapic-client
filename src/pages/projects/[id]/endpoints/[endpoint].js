@@ -29,6 +29,7 @@ import CodeEditorModal from "containers/CodeEditorModal";
 import { HeaderWrapping } from "pagestyles/projects/endpoints/enpoint.style";
 import { DangerZoneWrapper, Line } from "pagestyles/projects/project.style";
 import { useAppState, useActionState } from "components/AppContext";
+import Tabs from "containers/Tabs";
 
 function Endpoints() {
   const router = useRouter();
@@ -37,6 +38,7 @@ function Endpoints() {
   const setGlobalState = useActionState();
   const { username } = getSessionCookie(null);
 
+  const [tabIndex, setTabIndex] = useState(0);
   const [description, onChangeDescription] = useState("");
   const [authMethod, onChangeAuthMethod] = useState("");
   const [fields, addField] = useState([]);
@@ -205,49 +207,52 @@ function Endpoints() {
     <Projects project={project}>
       <Container>
         <HeaderWrapping>
-          <Heading as="h2" content={`${endpoint.model_name} Actions`} />
-          <Button
-            icon={<Icon icon={androidSettings} />}
-            title="Code Editor"
-            onClick={() => setModalOpen(true)}
-          />
+          <Heading as="h2" content={`${endpoint.model_name}`} />
         </HeaderWrapping>
-        <Content>
-          <Section customStyle={"margin-top: 20px;"}>
-            <Title>Endpoint URL</Title>
-            <Input
-              disabled
-              inputType="text"
-              value={`${username}.rapic.io/${project.name}/${endpoint.model_name}`}
-              className="endpoint-url"
+        <Tabs
+          items={["Settings", "Users", "Actions"]}
+          onChangeTab={(index) => setTabIndex(index)}
+        />
+        {tabIndex == 0 && (
+          <Content>
+            <Section customStyle={"margin-top: 20px;"}>
+              <Title>Endpoint URL</Title>
+              <Input
+                disabled
+                inputType="text"
+                value={`${username}.rapic.io/${project.name}/${endpoint.model_name}`}
+                className="endpoint-url"
+              />
+            </Section>
+            <AccessLevel
+              authMethod={authMethod}
+              onChange={onChangeAuthMethod}
             />
-          </Section>
-          <AccessLevel authMethod={authMethod} onChange={onChangeAuthMethod} />
-          <Section>
-            <Title>API Endpoint Name</Title>
-            <Input
-              required
-              disabled
-              inputType="text"
-              placeholder="Example: orders"
-              name="endpoint-name"
-              value={endpoint.model_name}
-              className="endpoint-name"
-            />
-          </Section>
-          <Section>
-            <Title>Description</Title>
-            <Input
-              required
-              inputType="textarea"
-              placeholder="Describe your endpoint"
-              name="endpoint-description"
-              value={description}
-              onChange={onChangeDescription}
-              className="endpoint-description"
-            />
-          </Section>
-          {/* 
+            <Section>
+              <Title>API Endpoint Name</Title>
+              <Input
+                required
+                disabled
+                inputType="text"
+                placeholder="Example: orders"
+                name="endpoint-name"
+                value={endpoint.model_name}
+                className="endpoint-name"
+              />
+            </Section>
+            <Section>
+              <Title>Description</Title>
+              <Input
+                required
+                inputType="textarea"
+                placeholder="Describe your endpoint"
+                name="endpoint-description"
+                value={description}
+                onChange={onChangeDescription}
+                className="endpoint-description"
+              />
+            </Section>
+            {/* 
           <Button
             title="+ Add Fields"
             id="add-fields"
@@ -285,29 +290,30 @@ function Endpoints() {
               ))}
           </FieldsWrapper> */}
 
-          <ButtonWrapper customStyle="margin-top: 20px;">
-            <Button title="Save Changes" id="create" onClick={checkFields} />
-          </ButtonWrapper>
-          <MessageBox message={message.text} type={message.type} />
-          <CodeEditorModal
-            isModalOpen={isModalOpen}
-            closeModal={() => setModalOpen(false)}
-            endpoint={endpoint}
-          />
-          <Line />
-          <DangerZoneWrapper>
-            <Heading as="h2" content="Danger Zone" />
-            <Title>
-              Deleting an endpoint will make the API unavaiable immediately.
-            </Title>
-            <Button
-              title="Delete Endpoint"
-              id="delete"
-              onClick={() => handleDelete()}
+            <ButtonWrapper customStyle="margin-top: 20px;">
+              <Button title="Save Changes" id="create" onClick={checkFields} />
+            </ButtonWrapper>
+            <MessageBox message={message.text} type={message.type} />
+            <CodeEditorModal
+              isModalOpen={isModalOpen}
+              closeModal={() => setModalOpen(false)}
+              endpoint={endpoint}
             />
-          </DangerZoneWrapper>
-          {isLoading && <Loading />}
-        </Content>
+            <Line />
+            <DangerZoneWrapper>
+              <Heading as="h2" content="Danger Zone" />
+              <Title>
+                Deleting an endpoint will make the API unavaiable immediately.
+              </Title>
+              <Button
+                title="Delete Endpoint"
+                id="delete"
+                onClick={() => handleDelete()}
+              />
+            </DangerZoneWrapper>
+            {isLoading && <Loading />}
+          </Content>
+        )}
       </Container>
     </Projects>
   );

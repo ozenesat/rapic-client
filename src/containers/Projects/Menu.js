@@ -28,7 +28,12 @@ function Menu({ project }) {
       <DropdownMenu
         iconSize={25}
         content={splitText(project.name, 12)}
-        dropdownItems={["All Projects", ...projects.map((item) => item.name)]}
+        dropdownItems={[
+          "All Projects",
+          ...projects
+            .map((item) => item.name)
+            .filter((item) => item != project.name),
+        ]}
         className={`dropdown`}
         onSelect={(title) => {
           if (title == "All Projects") {
