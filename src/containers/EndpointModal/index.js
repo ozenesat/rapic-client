@@ -118,6 +118,7 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
         <Content>
           <Section>
             <Title>API Endpoint Name</Title>
+
             <Input
               required
               inputType="text"

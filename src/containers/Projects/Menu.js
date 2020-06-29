@@ -1,5 +1,5 @@
 import Router, { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import Link from "next/link";
@@ -16,12 +16,18 @@ import EndpointAddModal from "../EndpointModal";
 
 import { splitText } from "../../utils/utils";
 
-function Menu({ project }) {
+function Menu() {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setModal] = useState(false);
   const globalState = useAppState();
   const { projects } = globalState;
+  const [project, setProject] = useState({ id, name: "", rapic_models: [] });
+
+  useEffect(() => {
+    const project = projects.find((item) => item.id == id);
+    setProject(project);
+  }, []);
 
   return (
     <MenuContainer>

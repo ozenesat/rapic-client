@@ -16,6 +16,7 @@ function withAuth(Page) {
       } else if (
         pathname != "/" &&
         pathname != "/login" &&
+        pathname != "/signup" &&
         refresh == undefined
       ) {
         redirect(ctx, "/login");
