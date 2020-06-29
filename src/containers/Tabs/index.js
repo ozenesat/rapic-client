@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./tabs.css";
+import { Item, Container } from "./tabs.style";
 
 function Tabs({ items, onChangeTab }) {
   const [selected, setSelected] = useState(0);
@@ -8,16 +8,13 @@ function Tabs({ items, onChangeTab }) {
     onChangeTab(index);
   }
   return (
-    <div class="tab-container">
+    <Container>
       {items.map((item, index) => (
-        <div
-          onClick={() => handleOnClick(index)}
-          class={`tab-item ${index == selected && "active"}`}
-        >
+        <Item onClick={() => handleOnClick(index)} isActive={index == selected}>
           {item}
-        </div>
+        </Item>
       ))}
-    </div>
+    </Container>
   );
 }
 
