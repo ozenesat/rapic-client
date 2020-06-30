@@ -27,7 +27,7 @@ function Menu() {
   useEffect(() => {
     const project = projects.find((item) => item.id == id);
     setProject(project);
-  }, []);
+  }, [id]);
 
   return (
     <MenuContainer>
