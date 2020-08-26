@@ -9,8 +9,8 @@ var jwtDecode = require("jwt-decode");
 const rapicUrl = "https://rapicapi.herokuapp.com/";
 const loginUrl = rapicUrl + "api/token/";
 
-class Api {
-  async getMyUser() {
+function Api() {
+  this.getMyUser = async function() {
     if (!this.access) {
       await this.getAccessToken();
     }
@@ -37,9 +37,9 @@ class Api {
         resolve(this.username);
       });
     });
-  }
+  };
 
-  async register(username, email, password, registerOnly) {
+  this.register = async function(username, email, password, registerOnly) {
     let data = {
       username: username,
       email: email,
@@ -75,9 +75,9 @@ class Api {
           reject("failed to register" + error);
         });
     });
-  }
+  };
   // observe that using e-mail as username !!!
-  async login(email, password) {
+  this.login = async function(email, password) {
     let data = {
       username: email,
       password: password,
@@ -105,9 +105,9 @@ class Api {
         })
         .catch((error) => reject(error));
     });
-  }
+  };
 
-  async getAccessToken(ctx) {
+  this.getAccessToken = async function getAccessToken(ctx) {
     const session = getSessionCookie(ctx);
     if (session) {
       const refreshToken = session.refresh;
@@ -148,13 +148,13 @@ class Api {
           .catch((err) => console.log({ err }));
       });
     }
-  }
+  };
 
-  logout(ctx) {
+  this.logout = function(ctx) {
     clearSessionCookie(ctx);
-  }
+  };
 
-  async getRapicProjects(ctx) {
+  this.getRapicProjects = async function(ctx) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -178,9 +178,9 @@ class Api {
           reject(err.message);
         });
     });
-  }
+  };
 
-  async getRapicProjectById(ctx, id) {
+  this.getRapicProjectById = async function(ctx, id) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -206,9 +206,9 @@ class Api {
           reject();
         });
     });
-  }
+  };
 
-  async createProject(project) {
+  this.createProject = async function(project) {
     if (!this.access) {
       await this.getAccessToken(null);
     }
@@ -231,9 +231,9 @@ class Api {
         })
         .catch((err) => reject(err));
     });
-  }
+  };
 
-  async deleteRapicProject(ctx, id) {
+  this.deleteRapicProject = async function(ctx, id) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -255,9 +255,9 @@ class Api {
         })
         .catch((err) => reject(err));
     });
-  }
+  };
 
-  async updateRapicProject(ctx, id, payload) {
+  this.updateRapicProject = async function(ctx, id, payload) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -280,9 +280,9 @@ class Api {
         })
         .catch((err) => reject(err));
     });
-  }
+  };
 
-  async createRapicEndpoint(ctx, endpoint) {
+  this.createRapicEndpoint = async function(ctx, endpoint) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -305,9 +305,9 @@ class Api {
         })
         .catch((err) => reject("Enpoint name must be a unique set."));
     });
-  }
+  };
 
-  async updateRapicEndpoint(ctx, id, payload) {
+  this.updateRapicEndpoint = async function(ctx, id, payload) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -330,9 +330,9 @@ class Api {
         })
         .catch((err) => reject(JSON.stringify(err.response)));
     });
-  }
+  };
 
-  async deleteRapicEndpoint(ctx, id) {
+  this.deleteRapicEndpoint = async function(ctx, id) {
     if (!this.access) {
       await this.getAccessToken(ctx);
     }
@@ -354,8 +354,9 @@ class Api {
         })
         .catch((err) => reject(err));
     });
-  }
+  };
 }
 
 const exportApi = new Api();
+
 export default exportApi;

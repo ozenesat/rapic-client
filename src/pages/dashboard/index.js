@@ -9,14 +9,9 @@ import { DrawerProvider } from "common/src/contexts/DrawerContext";
 import Navbar from "containers/Navbar";
 import Dashboard from "containers/Dashboard";
 import API from "services/api";
-import { useActionState } from "components/AppContext";
 import { withAuth } from "components/withAuth";
 
-function DashboardPage({ projects }) {
-  const setGlobalState = useActionState();
-
-  setGlobalState({ type: "ADD_PROJECTS", payload: projects });
-
+function DashboardPage() {
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
@@ -58,13 +53,13 @@ function DashboardPage({ projects }) {
 //   return { props: { projects } };
 // }
 
-DashboardPage.getInitialProps = async (ctx) => {
-  try {
-    const projects = await API.getRapicProjects(ctx);
-    return { projects };
-  } catch (err) {
-    return { projects: [] };
-  }
-};
+// DashboardPage.getInitialProps = async (ctx) => {
+//   try {
+//     const projects = await API.getRapicProjects(ctx);
+//     return { projects };
+//   } catch (err) {
+//     return { projects: [] };
+//   }
+// };
 
 export default withAuth(DashboardPage);

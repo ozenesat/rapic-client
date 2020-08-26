@@ -28,7 +28,7 @@ function CodeEditorModal({ isModalOpen, closeModal, endpoint }) {
       ariaHideApp={false}
     >
       <Content>
-        <Heading as="h2" content={`${endpoint.model_name} Code Editor`} />
+        <Heading as="h2" content="Add a new action" />
         <Text>
           Learn more about the endpoints'
           <Link href="/code-editor">

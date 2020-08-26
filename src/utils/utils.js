@@ -27,9 +27,9 @@ export const getSessionCookie = (ctx) => {
   const sessionCookie = getCookies(ctx, "rapic_session");
 
   if (sessionCookie === undefined) {
-    return {};
+    return { isAuthenticated: false };
   } else {
-    return JSON.parse(sessionCookie);
+    return { isAuthenticated: true, ...JSON.parse(sessionCookie) };
   }
 };
 

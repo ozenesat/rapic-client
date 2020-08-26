@@ -9,7 +9,6 @@ import Router from "next/router";
 import "../pagestyles/app/style.css";
 class MyApp extends App {
   componentDidMount() {
-    NProgress.configure({ color: "red" });
     Router.onRouteChangeStart = () => NProgress.start();
     Router.onRouteChangeComplete = () => NProgress.done();
     Router.onRouteChangeError = () => NProgress.done();

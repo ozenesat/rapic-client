@@ -1,5 +1,5 @@
 import Router, { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Heading from "common/src/components/Heading";
 import Button from "common/src/components/Button";
 import Link from "next/link";
@@ -11,20 +11,48 @@ import {
   Section,
 } from "./projects.style";
 import { useActionState, useAppState } from "../../components/AppContext";
+import DropdownMenu from "common/src/components/Dropdown";
 import EndpointAddModal from "../EndpointModal";
 
 import { splitText } from "../../utils/utils";
 
-function Menu({ project }) {
+function Menu() {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setModal] = useState(false);
-  const setGlobalState = useActionState();
   const globalState = useAppState();
+  const { projects } = globalState;
+  const [project, setProject] = useState({ id, name: "", rapic_models: [] });
+
+  useEffect(() => {
+    const project = projects.find((item) => item.id == id);
+    setProject(project);
+  }, [id]);
 
   return (
     <MenuContainer>
-      <Heading as="h1" content={splitText(project.name, 12)} />
+      <DropdownMenu
+        iconSize={25}
+        content={splitText(project.name, 12)}
+        dropdownItems={[
+          "All Projects",
+          ...projects
+            .map((item) => item.name)
+            .filter((item) => item != project.name),
+        ]}
+        className={`dropdown`}
+        onSelect={(title) => {
+          if (title == "All Projects") {
+            router.replace("/dashboard");
+          } else {
+            const p = projects.find((item) => item.name == title);
+            if (p) {
+              router.replace("/projects/[id]", `/projects/${p.id}`);
+            }
+          }
+        }}
+      />
+
       <Section>
         <TitleWrapper>
           <Title>Settings</Title>
@@ -73,6 +101,7 @@ function Menu({ project }) {
       <EndpointAddModal
         isModalOpen={isModalOpen}
         closeModal={() => setModal(false)}
+        project={project}
       />
     </MenuContainer>
   );

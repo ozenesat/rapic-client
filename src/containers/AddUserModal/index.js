@@ -13,11 +13,11 @@ import {
   Section,
   ButtonWrapper,
   ModalStyles,
-} from "./projectmodal.style";
+} from "./adduser.style";
 
 import MessageBox from "../MessageBox";
 
-function ProjectModal({ isModalOpen, closeModal }) {
+function AddUserModal({ isModalOpen, closeModal }) {
   const [name, onChangeName] = useState("");
   const [description, onChangeDescription] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
 
   function checkInputs() {
     if (!description) {
-      setError("Please type a description.")
+      setError("Please type a description.");
     } else if (!name) {
       setError("Please type a project name.");
     } else {
@@ -71,40 +71,34 @@ function ProjectModal({ isModalOpen, closeModal }) {
       style={ModalStyles}
       ariaHideApp={false}
     >
-      <Heading as="h2" content="Add a new project" />
+      <Heading as="h2" content="Add a new user" />
       <Content>
         <Section>
-          <Title>Project Name</Title>
+          <Title>Email</Title>
           <Input
             required
             inputType="text"
-            placeholder="Enter your project name"
-            iconPosition="left"
-            aria-label="project-name"
-            name="project-name"
+            placeholder="Type an email adress"
             value={name}
             onChange={onChangeName}
-            className="project-name"
+            className="email"
           />
         </Section>
         <Section>
-          <Title>Description</Title>
+          <Title>Password</Title>
           <Input
             required
-            inputType="textarea"
-            placeholder="Describe your project"
-            iconPosition="left"
-            aria-label="project-description"
-            name="project-description"
+            inputType="password"
+            placeholder="Type a password"
             value={description}
             onChange={onChangeDescription}
-            className="project-description"
+            className="password"
           />
         </Section>
         <ButtonWrapper>
           <Button
-            title="Create Project"
-            id="create-project"
+            title="Create User"
+            id="create-user"
             onClick={() => checkInputs()}
           />
           <Button title="Cancel" id="cancel" onClick={handleCloseModal} />
@@ -116,4 +110,4 @@ function ProjectModal({ isModalOpen, closeModal }) {
   );
 }
 
-export default ProjectModal;
+export default AddUserModal;

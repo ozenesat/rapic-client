@@ -42,7 +42,6 @@ export const BannerContent = styled.div`
     max-width: 44%;
   }
   @media only screen and (max-width: 999px) {
-    max-width: 100%;
     padding-top: 30px;
     padding-bottom: 80px;
   }
