@@ -120,7 +120,7 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
             <Input
               required
               inputType="text"
-              placeholder={`${username}.rapic.io/${project.name}/[endpoint-name]`}
+              placeholder="Enter your endpoint name"
               name="endpoint-name"
               value={name}
               onChange={onChangeName}
