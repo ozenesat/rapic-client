@@ -117,12 +117,10 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
         <Content>
           <Section>
             <Title>API Endpoint Name</Title>
-            <p>Your endpoint should have the format below:</p>
-            {username}.rapic.io/{project.name}/[endpoint-name]
             <Input
               required
               inputType="text"
-              placeholder="Set your endpoint name"
+              placeholder="Enter your endpoint name"
               name="endpoint-name"
               value={name}
               onChange={onChangeName}

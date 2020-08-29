@@ -161,7 +161,7 @@ function Endpoint({ setStatus404 }) {
           className="endpoint-url"
         />
       </Section>
-      <AccessLevel authMethod={authMethod} onChange={onChangeAuthMethod} />
+      <AccessLevel authMethod={authMethod} onChange={onChangeAuthMethod} endPoint={true}/>
       <Section>
         <Title>API Endpoint Name</Title>
         <Input
