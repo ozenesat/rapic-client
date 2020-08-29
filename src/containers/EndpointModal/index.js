@@ -35,7 +35,7 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
     closeModal();
   }
 
-  function createEndPoint() {
+  function createEndpoint() {
     setLoading(true);
     let enpoint = {
       app: id * 1,
