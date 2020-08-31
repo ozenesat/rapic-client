@@ -40,7 +40,7 @@ function EndpointPage() {
           <Heading as="h2" content={`${model_name}`} />
         </HeaderWrapping>
         <Tabs
-          items={["Settings", "Users", "Actions"]}
+          items={["Settings"]}
           onChangeTab={(index) => setTabIndex(index)}
         />
         {renderContent()}
