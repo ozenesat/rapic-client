@@ -18,7 +18,7 @@ import Section, {
 import { validateEmail, validatePassword } from "utils/utils";
 import API from "services/api";
 import { useActionState, useAppState } from "components/AppContext";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
@@ -94,9 +94,9 @@ const Login = () => {
     }
   };
 
-  const responseGoogle = (response) => {
-    console.log('Success', response)
-  }
+  // const responseGoogle = (response) => {
+  //   console.log('Success', response)
+  // }
 
   var showLogin = () => {
     return (
@@ -144,13 +144,13 @@ const Login = () => {
           style={{ color: info.color, marginTop: "0.5em" }}
           content={info.message}
         />
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId="298833457462-mql3vr0vtnvfndih6cascdb4ahrc9mh2.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-          />
+          /> */}
       </Fragment>
     );
   };
