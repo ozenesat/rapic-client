@@ -43,6 +43,7 @@ function Endpoint({ setStatus404 }) {
   const [endpoint, setEndpoint] = useState({
     model_name: "",
     description: "",
+    authMethod: ""
   });
 
   useEffect(() => {

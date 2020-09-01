@@ -119,6 +119,7 @@ const ProjectPage = () => {
           <Section>
             <Title>Project Name</Title>
             <Input
+              disabled
               required
               inputType="text"
               placeholder="Enter your project name"
