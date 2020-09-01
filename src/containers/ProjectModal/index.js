@@ -26,10 +26,13 @@ function ProjectModal({ isModalOpen, closeModal }) {
   const globalState = useAppState();
 
   function checkInputs() {
+    onChangeName()
     if (!description) {
       setError("Please type a description.")
     } else if (!name) {
       setError("Please type a project name.");
+    } else if (/[~`!@#$%\^& *+=\-\[\]\\';,./{}|\\":<>\?]/.test(name)) {
+      setError("Project name cannot contain any special character or space.");
     } else {
       const index = globalState.projects.findIndex((item) => item.name == name);
       if (index > -1) {
@@ -43,7 +46,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
   function createProject(name, description) {
     setLoading(true);
     API.createProject({
-      name,
+      name: name.toLowerCase(),
       description,
     })
       .then((project) => {
@@ -76,7 +79,6 @@ function ProjectModal({ isModalOpen, closeModal }) {
         <Section>
           <Title>Project Name</Title>
           <Input
-            disabled
             required
             inputType="text"
             placeholder="Enter your project name"

@@ -12,7 +12,7 @@ function AccessLevel({ onChange, authMethod, endPoint }) {
         <Radio
           labelText="Anyone"
           className="radio"
-          isChecked={authMethod === "ANYONE" || authMethod === "undefined"}
+          isChecked={authMethod === "ANYONE" || authMethod === "PUBLIC"}
           onChange={() => onChange("ANYONE")}
         />
         <Radio
@@ -33,7 +33,7 @@ function AccessLevel({ onChange, authMethod, endPoint }) {
           <Radio
             labelText="Public"
             className="radio"
-            isChecked={authMethod === "ANYONE" || authMethod === "undefined"}
+            isChecked={authMethod === "ANYONE" || authMethod === "PUBLIC"}
             onChange={() => onChange("ANYONE")}
           />
           <Radio
