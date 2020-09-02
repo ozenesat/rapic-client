@@ -178,6 +178,7 @@ function Endpoint({ setStatus404 }) {
       <Section>
         <Title>Description</Title>
         <Input
+          disabled
           required
           inputType="textarea"
           placeholder="Describe your endpoint"
