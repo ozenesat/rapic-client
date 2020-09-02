@@ -43,6 +43,7 @@ function Endpoint({ setStatus404 }) {
   const [endpoint, setEndpoint] = useState({
     model_name: "",
     description: "",
+    authMethod: ""
   });
 
   useEffect(() => {
@@ -177,6 +178,7 @@ function Endpoint({ setStatus404 }) {
       <Section>
         <Title>Description</Title>
         <Input
+          disabled
           required
           inputType="textarea"
           placeholder="Describe your endpoint"

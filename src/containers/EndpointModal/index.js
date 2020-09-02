@@ -32,14 +32,28 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
     onChangeDescription("");
     onChangeName("");
     setLoading(false);
+    setMessage({ text: "", type: "" })
     closeModal();
   }
 
   function createEndpoint() {
+    if (/[~`!@#$%\^& *+=\-\[\]\\';,./{}()|\\":<>\?]/.test(name)){
+      setLoading(false);
+        setMessage({
+          text: "Endpoint cannot contain any special character or space.",
+          type: "error",
+        });
+    } else if (!description){
+      setLoading(false);
+        setMessage({
+          text: "Description cannot be empty.",
+          type: "error",
+        });
+    } else {
     setLoading(true);
     let enpoint = {
       app: id * 1,
-      model_name: name,
+      model_name: name.toLowerCase(),
       description,
     };
     API.createRapicEndpoint(null, enpoint)
@@ -59,6 +73,12 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
           type: "error",
         });
       });
+    }
+  }
+
+  function onCloseModal () {
+    resetModalState()
+    closeModal
   }
 
   return (
@@ -97,7 +117,7 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
           </Section>
           <ButtonWrapper>
             <Button title="Create Endpoint" id="create" onClick={createEndpoint} />
-            <Button title="Cancel" id="cancel" onClick={closeModal} />
+            <Button title="Cancel" id="cancel" onClick={onCloseModal} />
           </ButtonWrapper>
           <MessageBox message={message.text} type={message.type} />
           {isLoading && <Loading />}
