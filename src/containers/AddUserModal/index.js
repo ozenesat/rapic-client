@@ -26,9 +26,7 @@ function AddUserModal({ isModalOpen, closeModal }) {
   const globalState = useAppState();
 
   function checkInputs() {
-    if (!description) {
-      setError("Please type a description.");
-    } else if (!name) {
+    if (!name) {
       setError("Please type a project name.");
     } else {
       const index = globalState.projects.findIndex((item) => item.name == name);

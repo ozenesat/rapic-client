@@ -143,11 +143,6 @@ function Endpoint({ setStatus404 }) {
   function checkFields() {
     // reset the previous messages
     setMessage({ text: "", type: "error" });
-
-    if (!description) {
-      setMessage({ text: "Please fill the all fields.", type: "error" });
-    }
-
     updateEndpoints();
   }
 
@@ -179,7 +174,6 @@ function Endpoint({ setStatus404 }) {
         <Title>Description</Title>
         <Input
           disabled
-          required
           inputType="textarea"
           placeholder="Describe your endpoint"
           name="endpoint-description"

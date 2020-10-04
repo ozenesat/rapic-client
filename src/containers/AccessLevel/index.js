@@ -7,7 +7,7 @@ function AccessLevel({ onChange, authMethod, endPoint }) {
   if(endPoint) {
     return (
       <>
-      <Text>Control access to your Rapic API endpoints: </Text>
+      <Text>Control access to your Rapic API endpoint: </Text>
       <RadioWrapper value={authMethod}>
         <Radio
           labelText="Anyone"
@@ -18,8 +18,8 @@ function AccessLevel({ onChange, authMethod, endPoint }) {
         <Radio
           labelText="Owner"
           className="radio"
-          isChecked={authMethod === "AUTHENTICATED"}
-          onChange={() => onChange("AUTHENTICATED")}
+          isChecked={authMethod === "OWNER ONLY"}
+          onChange={() => onChange("OWNER ONLY")}
         />
       </RadioWrapper>
     </>
@@ -28,7 +28,7 @@ function AccessLevel({ onChange, authMethod, endPoint }) {
   } else {
     return (
       <>
-        <Text>Control access to your Rapic API endpoints: </Text>
+        <Text>Control access to your Rapic API: </Text>
         <RadioWrapper>
           <Radio
             labelText="Public"

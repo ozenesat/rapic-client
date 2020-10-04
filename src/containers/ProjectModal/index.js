@@ -27,9 +27,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
 
   function checkInputs() {
     onChangeName()
-    if (!description) {
-      setError("Please type a description.")
-    } else if (!name) {
+      if (!name) {
       setError("Please type a project name.");
     } else if (/[~`!@#$%\^& *+=\-\[\]\\';,./{}|\\":<>\?]/.test(name)) {
       setError("Project name cannot contain any special character or space.");
@@ -57,6 +55,7 @@ function ProjectModal({ isModalOpen, closeModal }) {
       .catch((err) => {
         setLoading(false);
         alert(err);
+        onChangeName("");
       });
   }
 
@@ -93,7 +92,6 @@ function ProjectModal({ isModalOpen, closeModal }) {
         <Section>
           <Title>Description</Title>
           <Input
-            required
             inputType="textarea"
             placeholder="Describe your project"
             iconPosition="left"

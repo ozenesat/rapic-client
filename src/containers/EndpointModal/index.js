@@ -43,12 +43,6 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
           text: "Endpoint cannot contain any special character or space.",
           type: "error",
         });
-    } else if (!description){
-      setLoading(false);
-        setMessage({
-          text: "Description cannot be empty.",
-          type: "error",
-        });
     } else {
     setLoading(true);
     let enpoint = {
@@ -106,7 +100,6 @@ function EndpointAddModal({ isModalOpen, closeModal, project }) {
           <Section>
             <Title>Description</Title>
             <Input
-              required
               inputType="textarea"
               placeholder="Describe your endpoint"
               name="endpoint-description"
